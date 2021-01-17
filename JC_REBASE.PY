@@ -5,6 +5,7 @@ from tkinter import messagebox
 from PyDictionary import PyDictionary
 from google_trans_new import google_translator
 
+
 root = Tk()
 root.title("READ ENGLISH BOOK AND STUDY ENGLISH (REBASE)")
 root.resizable(width=True,height=True)
@@ -16,7 +17,7 @@ archivotexto_nombre_resolucion_pantalla.close()
 
 size=float(resolucion_pantalla)
 
-size_options=["1920x1200","1680x1050","1440x900"]
+size_options=["800x600","1280x768","1440x900","1680x1050","1920x1200"]
 
 save_words_setence_options=["SENTENCE","WORD"]
 
@@ -40,8 +41,9 @@ background_image = PhotoImage(file=str(fondo_pantalla))
 background_label = Label(root, image=background_image).place(relwidth=1, relheight=1)
 
 def home():
-#------------------------------- Titulo Pagina Inicio -------------------------------------------
 
+#------------------------------- Titulo Pagina Inicio -------------------------------------------
+        
     titulo=Label(background_label, text="WELCOME TO REBASE", font=("Bookman Old Style",round(30*size)),bg="#e8dabd")
     titulo.place(x=650*size, y=0*size)
     titulo=Label(background_label, text=" READ ENGLISH BOOK AND STUDY ENGLISH", font=("Bookman Old Style",round(30*size)),bg="#e8dabd")
@@ -63,6 +65,11 @@ def home():
                 screen_size="1680x1050"
         elif size == 0.75:
                 screen_size="1440x900"
+        elif size == 0.64:
+                screen_size="1280x768"
+        elif size == 0.42:
+                screen_size="800x504"
+
         ventana_lectura.geometry(screen_size)
         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
         my_label = Label(ventana_lectura, image=my_img).place(relwidth=1, relheight=1)
@@ -294,6 +301,7 @@ def home():
 #3 ------------------------------- Funciones Configuracióm -------------------------------------------
     def configuracion():
         global my_img
+        
         root.withdraw()
         ventana_configuracion=Toplevel()
         if size == 1:
@@ -302,6 +310,10 @@ def home():
                 screen_size="1680x1050"
         elif size == 0.75:
                 screen_size="1440x900"
+        elif size == 0.64:
+                screen_size="1280x768"
+        elif size == 0.42:
+                screen_size="800x504"
         
         ventana_configuracion.geometry(screen_size)
         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
@@ -323,6 +335,10 @@ def home():
                         size=0.875
                 elif clicked.get() == "1440x900":
                         size=0.75
+                elif clicked.get() == "1280x768":
+                        size =0.64
+                elif clicked.get() == "800x504":
+                        size=0.42
                 
                 archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")                
                 
@@ -330,6 +346,9 @@ def home():
                 archivotexto_nombre_resolucion_pantalla.close()
                 messagebox.showinfo("REABSE","*** La resolucion de pantalla ha sido cambiado a ***\n\n"+clicked.get()+"\n\n*** Cierre el programa y vuela a abrirlo para ver cambios ***")
 
+        def restart_program():
+                ventana_configuracion.destroy()
+                
                 
 #3 ------------------------------- Titulo Modo Lectura -------------------------------------------
         titulo=Label(ventana_configuracion, text="SET CONFIGURATION REBASE", font=("Bookman Old Style",round(30*size)),bg="#e8dabd")
@@ -357,6 +376,9 @@ def home():
 
         boton_size_selection=Button(ventana_configuracion, text=("APPLY SIZE RESOLUTION"),font=("Bookman Old Style",round(12*size),"bold"),width=round(25*size), command=size_selection)
         boton_size_selection.place(x=round(1200*size), y=round(600*size))
+
+        boton_reboot=Button(ventana_configuracion, text="REBOOT TO SEE CHANGES", command= restart_program)
+        boton_reboot.place(x=round(839*size),y=round(900*size))
 
 #3 ------------------------------- Cuadro de texto Configuración -------------------------------------------
 
