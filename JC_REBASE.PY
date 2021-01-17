@@ -17,7 +17,7 @@ archivotexto_nombre_resolucion_pantalla.close()
 
 size=float(resolucion_pantalla)
 
-size_options=["800x600","1280x768","1440x900","1680x1050","1920x1200"]
+size_options=["800x504","1280x768","1440x900","1680x1050","1920x1200"]
 
 save_words_setence_options=["SENTENCE","WORD"]
 
@@ -316,15 +316,25 @@ def home():
                 screen_size="800x504"
         
         ventana_configuracion.geometry(screen_size)
+        archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
+        fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
+        archivotexto_nombre_fondo_panatalla.close()
+
         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
         my_label = Label(ventana_configuracion, image=my_img).place(relwidth=1, relheight=1)
 
         def cambiar_fondo():
                 recoger_nombre_fondo_pantalla=imagen_eleccion.get()
                 archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt","w")
-                archivotexto_nombre_fondo_panatalla.write(recoger_nombre_fondo_pantalla)
+                fondo_pantalla=archivotexto_nombre_fondo_panatalla.write(recoger_nombre_fondo_pantalla)
                 archivotexto_nombre_fondo_panatalla.close()
+
+                #archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
+                #fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
+                #archivotexto_nombre_fondo_panatalla.close()
                 messagebox.showinfo("REABSE","*** El fondo de pantalla ha sido cambiado por ***\n\n"+imagen_eleccion.get()+"\n\n*** Cierre el programa y vuela a abrirlo para ver cambios ***")
+                ventana_configuracion.destroy()
+                configuracion()
 
         def size_selection():
                 global size
@@ -340,11 +350,13 @@ def home():
                 elif clicked.get() == "800x504":
                         size=0.42
                 
-                archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")                
-                
+                archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")            
                 resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.write(str(size))
                 archivotexto_nombre_resolucion_pantalla.close()
+
                 messagebox.showinfo("REABSE","*** La resolucion de pantalla ha sido cambiado a ***\n\n"+clicked.get()+"\n\n*** Cierre el programa y vuela a abrirlo para ver cambios ***")
+                ventana_configuracion.destroy()
+                configuracion()
 
         def restart_program():
                 ventana_configuracion.destroy()
