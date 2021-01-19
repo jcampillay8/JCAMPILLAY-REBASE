@@ -51,14 +51,14 @@ background_label = Label(root, image=background_image).place(relwidth=1, relheig
 def home():
         
         if size == 1:
-                #------------------------------- Titulo Pagina Inicio -------------------------------------------
+#1.0------------------------------- Titulo Pagina Inicio -------------------------------------------
                 titulo=Label(background_label, text="WELCOME TO REBASE", font=("Bookman Old Style",round(20)),bg="#e8dabd")
                 titulo.place(x=450, y=10)
                 titulo=Label(background_label, text=" READ ENGLISH BOOK AND STUDY ENGLISH", font=("Bookman Old Style",round(20)),bg="#e8dabd")
                 titulo.place(x=320, y=50)
                 titulo=Label(background_label, text=" PLEASE, CHOOSE AN OPTION", font=("Bookman Old Style",round(20)),bg="#e8dabd")
                 titulo.place(x=410, y=90)                
-                #1 ------------------------------- Ventana Modo Lectura -------------------------------------------
+#1.1 ------------------------------- Ventana Modo Lectura -------------------------------------------
                 def window_read():
                         global my_img
                         global save_words_setence_options
@@ -98,7 +98,7 @@ def home():
                         drop_text.place(x=round(600), y=round(125))
                         drop_text.config(width=round(20), font=("Book Old Style", round(10),"bold"))
 
-                #1 ------------------------------- Funciones Modo Lectura -------------------------------------------
+#1.1 ------------------------------- Funciones Modo Lectura -------------------------------------------
                         def texto_inicio():
                                 num_lista=contador.get()
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
@@ -195,7 +195,7 @@ def home():
                                 dictionary_word=PyDictionary()
                                 meaning_word = dictionary_text.get()
                                 result=dictionary_word.meaning(meaning_word)                                                
-                                messagebox.showinfo("REABSE"," DICTIONARY  \n\n"+str(result)).options
+                                messagebox.showinfo("REABSE"," DICTIONARY  \n\n"+str(result))
                         
                         def page_marker():
                                 
@@ -307,8 +307,7 @@ def home():
                         if size == 1:
                                 screen_size="1366x768"
                         elif size == 0:
-                                screen_size="1920x1080"
-                        
+                                screen_size="1920x1080"                        
                         
                         ventana_configuracion.geometry(screen_size)
                         archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
@@ -319,16 +318,16 @@ def home():
                         my_label = Label(ventana_configuracion, image=my_img).place(relwidth=1, relheight=1)
 
                         def cambiar_fondo():
-                                #recoger_nombre_fondo_pantalla=imagen_eleccion.get()
+                                
 
-                                """"archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt","w")
-                                fondo_pantalla=archivotexto_nombre_fondo_panatalla.write(recoger_nombre_fondo_pantalla)
+                                archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt","w")
+                                fondo_pantalla=archivotexto_nombre_fondo_panatalla.write(str(clicked_fondo_pantalla.get()))
                                 archivotexto_nombre_fondo_panatalla.close()
 
                                 #archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
                                 #fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
                                 #archivotexto_nombre_fondo_panatalla.close()
-                                messagebox.showinfo("REABSE"," El fondo de pantalla ha sido cambiado por \n\n"+imagen_eleccion.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")"""
+                                messagebox.showinfo("REABSE"," El fondo de pantalla ha sido cambiado por \n\n"+clicked_fondo_pantalla.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
                                 ventana_configuracion.destroy()
                                 configuracion()
 
