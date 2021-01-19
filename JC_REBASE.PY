@@ -654,7 +654,121 @@ def home():
 
 #2.2 ------------------------------- Ventana Modo Estudio -------------------------------------------
                 def window_study():
-                        return
+                        global my_img
+                        global save_words_setence_options
+                        global screen_size                       
+
+                        root.withdraw()
+                        ventana_studio=Toplevel()
+                        if  size == 1:
+                                screen_size="1366x768"
+                        elif size == 0:
+                                screen_size="1680x1050"                        
+
+                        ventana_studio.geometry(screen_size)
+                        my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                        my_label = Label(ventana_studio, image=my_img).place(relwidth=1, relheight=1)
+#2.2.1------------------------------Ventana Modo Estudio ---------------------------------------------------
+#2.2.1.1----------------------------Ventana Modo Palabras -------------------------------------------------
+                        def window_words():
+                                
+                                global my_img
+                                global save_words_setence_options
+                                global screen_size                       
+
+                                root.withdraw()
+                                ventana_studio=Toplevel()
+                                if  size == 1:
+                                        screen_size="1366x768"
+                                elif size == 0:
+                                        screen_size="1680x1050"                        
+
+                                ventana_studio.geometry(screen_size)
+                                my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                                my_label = Label(ventana_studio, image=my_img).place(relwidth=1, relheight=1)
+
+#2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
+                                def dar_aleatorio():
+                                        return
+                                def ver_respuesta():
+                                        return
+
+                                def ver_traduccion():
+                                        return
+
+                                button_dar_aleatorio=Button(ventana_studio, text="Give Random",font=("Bookman Old Style",round(10),"bold") , command=dar_aleatorio)
+                                button_dar_aleatorio.place(x=round(755), y=round(425))
+
+                                button_dar_aleatorio=Button(ventana_studio, text="SEE ANSWER",font=("Bookman Old Style",round(10),"bold") , command=ver_respuesta)
+                                button_dar_aleatorio.place(x=round(750), y=round(550))
+
+                                boton_ver_respuesta_espanol=Button(ventana_studio, text="VER TRADDUCIÓN",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
+                                boton_ver_respuesta_espanol.place(x=500, y=620)
+                                boton_ver_respuesta_espanol.config(bg="#FACC2E")
+                                
+                                button_quit = Button(ventana_studio, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                                button_quit.place(x=round(740), y=round(850))
+
+                                titulo=Label(ventana_studio, text="WORKING VOCABULARY", font=("Bookman Old Style",round(30)),bg="#e8dabd")
+                                titulo.place(x=round(500), y=(70))
+
+                                etiqueta_respuesta_propia=Label(ventana_studio, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
+                                etiqueta_respuesta_propia.place(x=round(370), y=(470))
+
+                                etiqueta_respuesta_correcta=Label(ventana_studio, text="CURRENT WORD", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
+                                etiqueta_respuesta_correcta.place(x=round(1000), y=(470))
+
+                                meaning_ENG=Text(ventana_studio, width=round(125), height=round(5), font=("Helvetica",round(13),"bold"),borderwidth=round(5))
+                                meaning_ENG.place(x=round(240),y=round(280))
+
+                                respuesta_propia=Entry(ventana_studio, width=round(25), borderwidth=round(5), justify="center")
+                                respuesta_propia.place(x=round(350), y=round(500))
+                                respuesta_propia.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_corta=Entry(ventana_studio, width=round(15), borderwidth=round(5), justify="center")
+                                respuesta_corta.place(x=round(720), y=round(500))
+                                respuesta_corta.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_correcta=Entry(ventana_studio, width=round(25), borderwidth=round(5), justify="center")
+                                respuesta_correcta.place(x=round(950), y=round(500))
+                                respuesta_correcta.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_espanol=Entry(ventana_studio, width=round(35), borderwidth=round(5), justify="center")
+                                respuesta_espanol.place(x=round(700), y=round(620))
+                                respuesta_espanol.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                contador = Entry(ventana_studio, width=5, borderwidth=5, justify="center")
+                                contador.place(x=round(775) , y=round(465))
+                                contador.config(font=("Bookman Old Style",round(10),"bold"))
+                                
+
+
+
+#2.2.1.2----------------------------Ventana Modo Sentencias -------------------------------------------------
+                        def window_sentences():
+                                global my_img
+                                global save_words_setence_options
+                                global screen_size                       
+
+                                root.withdraw()
+                                ventana_studio=Toplevel()
+                                if  size == 1:
+                                        screen_size="1366x768"
+                                elif size == 0:
+                                        screen_size="1680x1050"                        
+
+                                ventana_studio.geometry(screen_size)
+                                my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                                my_label = Label(ventana_studio, image=my_img).place(relwidth=1, relheight=1)
+
+
+#2.2.1--------------------------------------- Ventana Seleccion Modo Estudio ------------------------------------------------------------------
+                        titulo=Label(ventana_studio, text="PLEASE, CHOOSE STUDY MODE", font=("Bookman Old Style",round(30)),bg="#e8dabd")
+                        titulo.place(x=round(430), y=(70))
+                        boton_WORDS=Button(ventana_studio, text=("WORDS"),font=("Bookman Old Style",round(14),"bold"),width=round(40),height=round(2), command=window_words)
+                        boton_WORDS.place(x=500, y=370)
+                        boton_SETENCE=Button(ventana_studio, text=("SETENCES"),font=("Bookman Old Style",round(14),"bold"), width=round(40),height=round(2),command=window_sentences)
+                        boton_SETENCE.place(x=500, y=520)
 #2.3 ------------------------------- Ventana Configuración -------------------------------------------
 #2.3.1 ------------------------------- Funciones Configuracióm -------------------------------------------
                 def configuracion():
