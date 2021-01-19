@@ -309,7 +309,7 @@ def home():
                         root.withdraw()
                         ventana_configuracion=Toplevel()
 
-                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla_x.txt","r")            
+                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt", encoding="utf8")            
                         resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.read()
                         archivotexto_nombre_resolucion_pantalla.close()
                         
@@ -344,13 +344,13 @@ def home():
                                 global size
                                 #election_size = Label(ventana_configuracion, text=clicked.get())
                                 if clicked.get() == "1366x768": 
-                                        size=1
+                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")            
+                                        archivotexto_nombre_resolucion_pantalla.write(str(1))
+                                        archivotexto_nombre_resolucion_pantalla.close()
                                 elif clicked.get() == "1920x1080":
-                                        size=0
-                                
-                                archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla_x.txt","w")            
-                                resolucion_pantalla_x=archivotexto_nombre_resolucion_pantalla.write(str(size))
-                                archivotexto_nombre_resolucion_pantalla.close()
+                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")            
+                                        archivotexto_nombre_resolucion_pantalla.write(str(0))
+                                        archivotexto_nombre_resolucion_pantalla.close()
 
                                 messagebox.showinfo("REABSE"," La resolucion de pantalla ha sido cambiado a \n\n"+clicked.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
                                 ventana_configuracion.destroy()
@@ -663,7 +663,7 @@ def home():
                         root.withdraw()
                         ventana_configuracion=Toplevel()
                         
-                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla_x.txt","r")            
+                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt",encoding="utf8")            
                         resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.read()
                         archivotexto_nombre_resolucion_pantalla.close()
                         
@@ -697,14 +697,14 @@ def home():
                                 global size
                                 #election_size = Label(ventana_configuracion, text=clicked.get())
                                 if clicked.get() == "1366x768": 
-                                        size=1
+                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")            
+                                        archivotexto_nombre_resolucion_pantalla.write(str(1))
+                                        archivotexto_nombre_resolucion_pantalla.close()
                                 elif clicked.get() == "1920x1080":
-                                        size=0
+                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")            
+                                        archivotexto_nombre_resolucion_pantalla.write(str(0))
+                                        archivotexto_nombre_resolucion_pantalla.close()
                                 
-                                archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla_x.txt","w")            
-                                resolucion_pantalla_x=archivotexto_nombre_resolucion_pantalla.write(str(size))
-                                archivotexto_nombre_resolucion_pantalla.close()
-
                                 messagebox.showinfo("REABSE"," La resolucion de pantalla ha sido cambiado a \n\n"+clicked.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
                                 ventana_configuracion.destroy()
                                 configuracion()
