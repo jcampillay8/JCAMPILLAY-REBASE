@@ -305,7 +305,7 @@ way to do it.
 Although that way may not be obvious at first unless
 you're Dutch.
 Now is better than never.
-Although never is often better than *right* now.
+Although never is often better than right now.
 If the implementation is hard to explain, it's a bad idea.
 If the implementation is easy to explain, it may be a good idea.
 Namespaces are one honking great idea -- let's do more of those!
@@ -1130,7 +1130,7 @@ sector have had their educational needs met by the Python commu‐
 nity: PyLadies is an international network of chapters providing
 mentorship and support for women who want to take a more active
 role in the Python community, Django Girls organizes free Python
-and Django workshops for women, and Trans*Code runs hack days
+and Django workshops for women, and TransCode runs hack days
 that draw attention to transgender issues while focusing on intro‐
 ductory programming courses for those not currently working in
 technology.
