@@ -110,18 +110,19 @@ def home():
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
                         def ingresar_texto():
-                                
-                                texto_nuevo=nombre_texto.get()
+                                texto_nuevo=str(clicked_texto.get())
                                 camino_texto_lectura="texto_lectura/"+texto_nuevo
                                 abrir_texto=open(camino_texto_lectura, encoding="utf8")
                                 lectura_libro_texto=abrir_texto.read()
                                 abrir_texto.close
 
                                 texto_contiene_titulo2=open("memory/titulo_texto.txt","w")
-                                texto_contiene_titulo2.write(nombre_texto.get())
+                                texto_contiene_titulo2.write(clicked_texto.get())
                                 texto_contiene_titulo2.close()
                                 
-                                messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+nombre_texto.get()+"\n\n")
+                                messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_texto.get()+"\n\n")
+                                ventana_lectura.destroy()
+                                window_read()
 
                         def spanish_translate_text():
                                 cntrl=0
