@@ -4,6 +4,7 @@ import os
 from tkinter import messagebox
 from PyDictionary import PyDictionary
 from google_trans_new import google_translator
+import random
 
 
 root = Tk()
@@ -705,6 +706,15 @@ def home():
                                         respuesta_corta.delete(0,END)
                                         respuesta_correcta.delete(0,END)
                                         respuesta_espanol.delete(0,END)
+                                        camino_palabra= str("memory/f_words/"+cuadro_grupo.get())
+                                        archivo_palabras=open(camino_palabra,encoding="utf8")
+                                        for line in archivo_palabras:
+                                                lista=line.rstrip("\n")
+                                                num_aleatorio=len(lista)
+                                                aleatorio_lista=random.randint(0,int(num_aleatorio))
+                                                f_num=int(aleatorio_lista)
+                                                contador.delete(0,END)
+                                                contador.insert(0,f_num)
 
                                 def ver_respuesta():
                                         return
