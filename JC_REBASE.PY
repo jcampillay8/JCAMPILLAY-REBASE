@@ -697,8 +697,23 @@ def home():
                                 grupo_actual=open("memory/memoria_ultimo_grupow","r")
                                 grw=grupo_actual.read()
                                 grupo_actual.close()
-                                
 
+                                archivo_contador_w=open("memory/contador_w.txt","r")
+                                cont_w=archivo_contador_w.read()
+                                archivo_contador_w.close()
+
+                                camino_palabra= str("memory/f_words/"+grw)
+                                archivo_palabras=open(camino_palabra,"r")
+                                
+                                lista_palabras=archivo_palabras.readlines()
+                                lista_formateada=[]
+                                for elemento in lista_palabras:
+                                        linea =elemento.strip("\n")
+                                        lista_formateada.append(linea)
+                                print(lista_palabras)
+                                print(lista_formateada)
+                                print(lista_formateada[1])
+                                
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
                                 def dar_aleatorio():
                                         meaning_ENG.delete(1.0,END)
@@ -706,6 +721,8 @@ def home():
                                         respuesta_corta.delete(0,END)
                                         respuesta_correcta.delete(0,END)
                                         respuesta_espanol.delete(0,END)
+                                        contador.delete(0,END)
+
                                         camino_palabra= str("memory/f_words/"+cuadro_grupo.get())
                                         archivo_palabras=open(camino_palabra,encoding="utf8")
                                         for line in archivo_palabras:
@@ -715,6 +732,11 @@ def home():
                                                 f_num=int(aleatorio_lista)
                                                 contador.delete(0,END)
                                                 contador.insert(0,f_num)
+                                        respuesta_correcta.insert(0,lista_formateada[f_num])
+                                                                                        
+                                        #print(lista_formateada)
+                                        #respuesta_correcta.insert(0,lista_formateada[int(valor)])
+                                        
 
                                 def ver_respuesta():
                                         return
@@ -795,6 +817,8 @@ def home():
                                 contador = Entry(ventana_studio, width=5, borderwidth=5, justify="center")
                                 contador.place(x=round(775) , y=round(465))
                                 contador.config(font=("Bookman Old Style",round(10),"bold"))
+                                contador.insert(0,cont_w)
+
                                 
 
 
