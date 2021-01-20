@@ -1,8 +1,8 @@
-test.
-rescue.
-interfere.
-light.
-woozy.
-fetch.
-wrong.
-bruise.
+test
+rescue
+interfere
+light
+woozy
+fetch
+wrong
+bruise

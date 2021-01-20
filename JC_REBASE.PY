@@ -710,9 +710,6 @@ def home():
                                 for elemento in lista_palabras:
                                         linea =elemento.strip("\n")
                                         lista_formateada.append(linea)
-                                print(lista_palabras)
-                                print(lista_formateada)
-                                print(lista_formateada[1])
                                 
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
                                 def dar_aleatorio():
@@ -733,11 +730,13 @@ def home():
                                                 contador.delete(0,END)
                                                 contador.insert(0,f_num)
                                         respuesta_correcta.insert(0,lista_formateada[f_num])
-                                                                                        
-                                        #print(lista_formateada)
-                                        #respuesta_correcta.insert(0,lista_formateada[int(valor)])
                                         
-
+                                        dictionary_word=PyDictionary()
+                                        recoger_respuesta_correcta=respuesta_correcta.get()
+                                        result=dictionary_word.meaning(recoger_respuesta_correcta)
+                                        meaning_ENG.insert(END,str(result))
+                                        
+                                        
                                 def ver_respuesta():
                                         return
 
