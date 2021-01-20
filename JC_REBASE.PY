@@ -738,10 +738,32 @@ def home():
                                         
                                         
                                 def ver_respuesta():
-                                        return
+                                        recoger_respuesta_propia=respuesta_propia.get()
+                                        recoger_respuesta_correcta=respuesta_correcta.get()
+                                        if recoger_respuesta_correcta == recoger_respuesta_propia:
+                                                respuesta_corta.insert(0,"CORRECT")
+                                                respuesta_corta.configure(bg="#33FF51")
+                                        else:
+                                                respuesta_corta.insert(0,"WRONG")
+                                                respuesta_corta.configure(bg="#FF3333")
 
                                 def ver_traduccion():
-                                        return
+                                        control=0
+                                        while control == 0:
+                                                num_lista=contador.get()                                                
+                                                try:
+                                                        line2= lista_formateada[int(num_lista)]
+                                                        linea_Esp=line2
+                                                        translator=google_translator()
+                                                        translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+                                                        respuesta_espanol.insert(0,translation)
+                                                except:
+                                                        translation = None
+                                                recoger_pregunta=respuesta_espanol.get()
+                                                num_lista2=contador.get()
+                                                if recoger_pregunta!="" or num_lista2==str(len(lista_formateada)):
+                                                        control+=1
+
                                 def cambiar_grupo():
                                         grupo_nuevo=str(clicked_groupw.get())
                                         camino_grupo_estudio="memory/f_words/"+grupo_nuevo
@@ -817,9 +839,6 @@ def home():
                                 contador.place(x=round(775) , y=round(465))
                                 contador.config(font=("Bookman Old Style",round(10),"bold"))
                                 contador.insert(0,cont_w)
-
-                                
-
 
 
 #2.2.1.2----------------------------Ventana Modo Sentencias -------------------------------------------------
