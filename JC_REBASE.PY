@@ -781,6 +781,12 @@ def home():
                                         messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_groupw.get()+"\n\n")
                                         ventana_studio.destroy()
                                         window_words()
+                                
+                                def hablarNormal():
+                                        return
+
+                                def hablarlento():
+                                        return
 #--------------------------------- ------------CLICKED VENTANA PALABRAS --------------------------------------------- 
                                 clicked_groupw=StringVar()
                                 clicked_groupw.set(group_w[0])
@@ -788,7 +794,25 @@ def home():
                                 drop_read_save=OptionMenu(ventana_studio,clicked_groupw, *group_w)
                                 drop_read_save.place(x=round(700),y=round(200))
                                 drop_read_save.config(width=round(25), font=("Book Old Style", round(12),"bold"))
+
+                                clicked_enviar_otro_grupo=StringVar()
+                                clicked_enviar_otro_grupo.set(group_w[0])
+
+                                drop_enviar_palabra=OptionMenu(ventana_studio,clicked_groupw, *group_w)
+                                drop_enviar_palabra.place(x=round(730),y=round(740))
+                                drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
+                                
+                                button_cambiar_grupo=Button(ventana_studio, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
+                                button_cambiar_grupo.place(x=530, y=740)
+                                button_cambiar_grupo.config(bg="#FACC2E")
+                                
+                                button_hablar_normal=Button(ventana_studio, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarNormal)
+                                button_hablar_normal.place(x=round(1270), y=round(460))
+
+                                button_hablar_lento=Button(ventana_studio, text="Speak Slow",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarlento)
+                                button_hablar_lento.place(x=round(1270), y=round(540))
+
                                 button_dar_aleatorio=Button(ventana_studio, text="Give Random",font=("Bookman Old Style",round(10),"bold") , command=dar_aleatorio)
                                 button_dar_aleatorio.place(x=round(755), y=round(425))
 
