@@ -29,8 +29,13 @@ size_options=["1366x768","1920x1080"]
 
 save_words_setence_options=["SENTENCE","WORD"]
 
+group_w=["Group 1","group 2", "group3"]
+group_s=["Group 1","group 2", "group3"]
+
 lista_textos=os.listdir(r"texto_lectura")
 lista_fondo_pantalla=os.listdir(r"images")
+group_w=os.listdir(r"memory\f_words")
+
 
 if size == 1:
         miCanvas=Canvas(root, width=1366, height=768)
@@ -218,7 +223,7 @@ def home():
                                         sentencia_para_estudiar.close()
 
                                 elif clicked_read.get() == "WORD":
-                                        palabra_para_estudiar=open("memory/palabras_para_estudiar.txt","w")
+                                        palabra_para_estudiar=open("memory/f_words/new_words.txt","w")
                                         palabra_para_estudiar.write("\n")
                                         palabra_para_estudiar.write(cuadro_save_words_setence.get())
                                         messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida ")
@@ -573,7 +578,7 @@ def home():
                                         sentencia_para_estudiar.close()
 
                                 elif clicked_read.get() == "WORD":
-                                        palabra_para_estudiar=open("memory/palabras_para_estudiar.txt","w")
+                                        palabra_para_estudiar=open("memory/f_words/new_words.txt","w")
                                         palabra_para_estudiar.write("\n")
                                         palabra_para_estudiar.write(cuadro_save_words_setence.get())
                                         messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida ")
@@ -674,7 +679,8 @@ def home():
                                 
                                 global my_img
                                 global save_words_setence_options
-                                global screen_size                       
+                                global screen_size 
+                                global group_w                      
 
                                 root.withdraw()
                                 ventana_studio=Toplevel()
@@ -686,21 +692,55 @@ def home():
                                 ventana_studio.geometry(screen_size)
                                 my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
                                 my_label = Label(ventana_studio, image=my_img).place(relwidth=1, relheight=1)
+                                
+                                grupo_actual=open("memory/memoria_ultimo_grupow","r")
+                                grw=grupo_actual.read()
+                                grupo_actual.close()
+                                
 
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
                                 def dar_aleatorio():
-                                        return
+                                        meaning_ENG.delete(1.0,END)
+                                        respuesta_propia.delete(0,END)
+                                        respuesta_corta.delete(0,END)
+                                        respuesta_correcta.delete(0,END)
+                                        respuesta_espanol.delete(0,END)
+
                                 def ver_respuesta():
                                         return
 
                                 def ver_traduccion():
                                         return
+                                def cambiar_grupo():
+                                        grupo_nuevo=str(clicked_groupw.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_nuevo
+                                        abrir_grupo=open(camino_grupo_estudio, encoding="utf8")
+                                        estudio_grupo=abrir_grupo.read()
+                                        abrir_grupo.close
 
+                                        grupo_contiene=open("memory/memoria_ultimo_grupow","w")
+                                        grupo_contiene.write(clicked_groupw.get())
+                                        grupo_contiene.close()
+
+                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_groupw.get()+"\n\n")
+                                        ventana_studio.destroy()
+                                        window_words()
+#--------------------------------- ------------CLICKED VENTANA PALABRAS --------------------------------------------- 
+                                clicked_groupw=StringVar()
+                                clicked_groupw.set(group_w[0])
+
+                                drop_read_save=OptionMenu(ventana_studio,clicked_groupw, *group_w)
+                                drop_read_save.place(x=round(700),y=round(200))
+                                drop_read_save.config(width=round(25), font=("Book Old Style", round(12),"bold"))
+# --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
                                 button_dar_aleatorio=Button(ventana_studio, text="Give Random",font=("Bookman Old Style",round(10),"bold") , command=dar_aleatorio)
                                 button_dar_aleatorio.place(x=round(755), y=round(425))
 
-                                button_dar_aleatorio=Button(ventana_studio, text="SEE ANSWER",font=("Bookman Old Style",round(10),"bold") , command=ver_respuesta)
-                                button_dar_aleatorio.place(x=round(750), y=round(550))
+                                button_elegir_grupo=Button(ventana_studio, text="Choose Group",font=("Bookman Old Style",round(10),"bold") , command=cambiar_grupo)
+                                button_elegir_grupo.place(x=round(550), y=round(200))
+
+                                button_ver_respuesta=Button(ventana_studio, text="SEE ANSWER",font=("Bookman Old Style",round(10),"bold") , command=ver_respuesta)
+                                button_ver_respuesta.place(x=round(750), y=round(550))
 
                                 boton_ver_respuesta_espanol=Button(ventana_studio, text="VER TRADDUCIÓN",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
                                 boton_ver_respuesta_espanol.place(x=500, y=620)
@@ -708,7 +748,7 @@ def home():
                                 
                                 button_quit = Button(ventana_studio, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
                                 button_quit.place(x=round(740), y=round(850))
-
+#------------------------------------------- ETIQUETAS VENTANA PALABRAS ------------------------------------------
                                 titulo=Label(ventana_studio, text="WORKING VOCABULARY", font=("Bookman Old Style",round(30)),bg="#e8dabd")
                                 titulo.place(x=round(500), y=(70))
 
@@ -717,9 +757,14 @@ def home():
 
                                 etiqueta_respuesta_correcta=Label(ventana_studio, text="CURRENT WORD", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
                                 etiqueta_respuesta_correcta.place(x=round(1000), y=(470))
-
+#--------------------------------------------CUADRO DE TEXTO VENTANA PALABRAS---------------------------------------------------
                                 meaning_ENG=Text(ventana_studio, width=round(125), height=round(5), font=("Helvetica",round(13),"bold"),borderwidth=round(5))
                                 meaning_ENG.place(x=round(240),y=round(280))
+
+                                cuadro_grupo=Entry(ventana_studio, width=round(25), borderwidth=round(5), justify="center")
+                                cuadro_grupo.place(x=round(690), y=round(145))
+                                cuadro_grupo.config(font=("Bookman Old Style",round(12),"bold"))
+                                cuadro_grupo.insert(0,grw)
 
                                 respuesta_propia=Entry(ventana_studio, width=round(25), borderwidth=round(5), justify="center")
                                 respuesta_propia.place(x=round(350), y=round(500))
