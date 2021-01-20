@@ -730,6 +730,7 @@ def home():
                                                 contador.delete(0,END)
                                                 contador.insert(0,f_num)
                                         respuesta_correcta.insert(0,lista_formateada[f_num])
+                                        respuesta_correcta.configure(fg="white")
                                         
                                         dictionary_word=PyDictionary()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
@@ -743,9 +744,11 @@ def home():
                                         if recoger_respuesta_correcta == recoger_respuesta_propia:
                                                 respuesta_corta.insert(0,"CORRECT")
                                                 respuesta_corta.configure(bg="#33FF51")
+                                                respuesta_correcta.configure(fg="black")
                                         else:
                                                 respuesta_corta.insert(0,"WRONG")
                                                 respuesta_corta.configure(bg="#FF3333")
+                                                respuesta_correcta.configure(fg="black")
 
                                 def ver_traduccion():
                                         control=0
