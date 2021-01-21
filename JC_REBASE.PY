@@ -708,12 +708,16 @@ def home():
                                 camino_palabra= str("memory/f_words/"+grw)
                                 archivo_palabras=open(camino_palabra,"r")
                                 
+                                lista_palabras_temporal=[]
+                                
                                 lista_palabras=archivo_palabras.readlines()
                                 lista_formateada=[]
                                 for elemento in lista_palabras:
                                         linea =elemento.strip("\n")
                                         lista_formateada.append(linea)
                                 
+                                lista_respaldo=lista_formateada[:]
+
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
                                 def dar_aleatorio():
                                         meaning_ENG.delete(1.0,END)
@@ -723,23 +727,51 @@ def home():
                                         respuesta_espanol.delete(0,END)
                                         contador.delete(0,END)
 
-                                        camino_palabra= str("memory/f_words/"+cuadro_grupo.get())
-                                        archivo_palabras=open(camino_palabra,encoding="utf8")
-                                        for line in archivo_palabras:
-                                                lista=line.rstrip("\n")
-                                                num_aleatorio=len(lista)
-                                                aleatorio_lista=random.randint(0,int(num_aleatorio))
+                                        #camino_palabra= str("memory/f_words/"+cuadro_grupo.get())
+                                        #archivo_palabras=open(camino_palabra,encoding="utf8")
+                                        #for line in lista_respaldo:
+                                        #        lista=line.strip("\n")
+                                        num_aleatorio=len(lista_respaldo)
+                                        print(num_aleatorio)
+                                        aleatorio_lista = random.randint(0,int(num_aleatorio))
+                                        sacar=lista_respaldo[aleatorio_lista]
+                                        filtro=(sacar in lista_formateada)
+                                                
+                                        if filtro == False:
+                                                control= 0
+                                                while control == 0:
+                                                        aleatorio_lista=random.randint(0,num_aleatorio)
+                                                        sacar = lista_respaldo[aleatorio_lista]
+                                                        filtro = (sacar in lista_formateada)
+                                                        if filtro == False:
+                                                                control += 1
+
+                                        else:
                                                 f_num=int(aleatorio_lista)
                                                 contador.delete(0,END)
                                                 contador.insert(0,f_num)
-                                        respuesta_correcta.insert(0,lista_formateada[f_num])
+                                                #print(aleatorio_lista)
+                                                #print(lista_respaldo)
+
+                                        respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
                                         respuesta_correcta.configure(fg="white")
                                         
                                         dictionary_word=PyDictionary()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
                                         result=dictionary_word.meaning(recoger_respuesta_correcta)
                                         meaning_ENG.insert(END,str(result))
-                                        
+
+                                def recoger_enviar_otrogrupo():
+                                        w_num=contador.get()
+                                        grupo_nuevo=str(clicked_enviar_otro_grupo.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_nuevo
+                                        text_file=open(camino_grupo_estudio,"a")
+                                        text_file.write("\n")
+                                        text_file.write(lista_respaldo[int(w_num)])
+                                        text_file.close
+                                        #lista_palabras_temporal.append(lista_formateada[int(w_num)])
+                                        del lista_formateada[int(w_num)]                                                
+                                        print(lista_formateada)        
                                         
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
@@ -801,28 +833,33 @@ def home():
                                         engine.say(respuesta_correcta.get())
                                         engine.runAndWait()
                                 
-                                def recoger_enviar_otrogrupo():
+                                """def recoger_enviar_otrogrupo():
                                         w_num=contador.get()
                                         grupo_nuevo=str(clicked_enviar_otro_grupo.get())
                                         camino_grupo_estudio="memory/f_words/"+grupo_nuevo
                                         text_file=open(camino_grupo_estudio,"a")
                                         text_file.write("\n")
-                                        text_file.write(lista_formateada[int(w_num)])
+                                        text_file.write(lista_respaldo[int(w_num)])
                                         text_file.close
-
-                                        grupo_viejo=str(cuadro_grupo.get())
-                                        camino_grupo_estudio2="memory/f_words/"+grupo_viejo
-                                        archivo3=open(camino_grupo_estudio2,"a")
-                                        
+                                        #lista_palabras_temporal.append(lista_formateada[int(w_num)])
                                         for i in lista_formateada:
-                                                if i == lista_formateada[int(w_num)]:
-                                                        pass
-                                                else:
-                                                        archivo3.write("\n")
-                                                        archivo3.write(i)
-                                        archivo3.close
-                                        ventana_studio.destroy()
-                                        window_words()
+                                                if i == lista_respaldo[int(w_num)]:
+                                                        del lista_formateada[i]
+                                                
+                                        print(lista_formateada)"""
+
+
+                                def guardar_cambios():
+                                        
+                                        grupo_viejo=str(cuadro_grupo.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_viejo
+                                        text_file2=open(camino_grupo_estudio,"w")
+                                        for j in lista_formateada:
+                                                text_file2.write("\n")
+                                                text_file2.write(j)
+                                        text_file2.close
+                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")
+                                                                                      
 
 #--------------------------------- ------------CLICKED VENTANA PALABRAS --------------------------------------------- 
 
@@ -841,6 +878,10 @@ def home():
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
                                 
+                                button_guardar_cambios=Button(ventana_studiow, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
+                                button_guardar_cambios.place(x=1030, y=740)
+                                button_guardar_cambios.config(bg="#FACC2E")
+
                                 button_cambiar_grupo=Button(ventana_studiow, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
                                 button_cambiar_grupo.place(x=530, y=740)
                                 button_cambiar_grupo.config(bg="#FACC2E")

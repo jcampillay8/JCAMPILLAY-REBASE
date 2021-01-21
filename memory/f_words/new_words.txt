@@ -1,15 +1,7 @@
-test
-rescue
-interfere
-light
-woozy
-fetch
-wrong
-bruise
-test
-rescue
-interfere
-light
-fetch
-wrong
-bruise
+Paris
+London
+Madrid
+Santiago
+Seattle
+New York
+Roma
