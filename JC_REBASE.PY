@@ -31,12 +31,13 @@ size_options=["1366x768","1920x1080"]
 
 save_words_setence_options=["SENTENCE","WORD"]
 
-group_w=["Group 1","group 2", "group3"]
-group_s=["Group 1","group 2", "group3"]
+#group_w=["Group 1","group 2", "group3"]
+#group_s=["Group 1","group 2", "group3"]
 
 lista_textos=os.listdir(r"texto_lectura")
 lista_fondo_pantalla=os.listdir(r"images")
 group_w=os.listdir(r"memory\f_words")
+grupo_w2=os.listdir(r"memory\f_words")
 
 
 if size == 1:
@@ -682,18 +683,19 @@ def home():
                                 global my_img
                                 global save_words_setence_options
                                 global screen_size 
-                                global group_w                      
+                                global group_w    
 
+                                ventana_studio.destroy()
                                 root.withdraw()
-                                ventana_studio=Toplevel()
+                                ventana_studiow=Toplevel()
                                 if  size == 1:
                                         screen_size="1366x768"
                                 elif size == 0:
                                         screen_size="1680x1050"                        
 
-                                ventana_studio.geometry(screen_size)
+                                ventana_studiow.geometry(screen_size)
                                 my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
-                                my_label = Label(ventana_studio, image=my_img).place(relwidth=1, relheight=1)
+                                my_label = Label(ventana_studiow, image=my_img).place(relwidth=1, relheight=1)
                                 
                                 grupo_actual=open("memory/memoria_ultimo_grupow","r")
                                 grw=grupo_actual.read()
@@ -798,84 +800,107 @@ def home():
                                         engine.setProperty("rate", 80)
                                         engine.say(respuesta_correcta.get())
                                         engine.runAndWait()
+                                
+                                def recoger_enviar_otrogrupo():
+                                        w_num=contador.get()
+                                        grupo_nuevo=str(clicked_enviar_otro_grupo.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_nuevo
+                                        text_file=open(camino_grupo_estudio,"a")
+                                        text_file.write("\n")
+                                        text_file.write(lista_formateada[int(w_num)])
+                                        text_file.close
+
+                                        grupo_viejo=str(cuadro_grupo.get())
+                                        camino_grupo_estudio2="memory/f_words/"+grupo_viejo
+                                        archivo3=open(camino_grupo_estudio2,"a")
+                                        
+                                        for i in lista_formateada:
+                                                if i == lista_formateada[int(w_num)]:
+                                                        pass
+                                                else:
+                                                        archivo3.write("\n")
+                                                        archivo3.write(i)
+                                        archivo3.close
+                                        ventana_studio.destroy()
+                                        window_words()
 
 #--------------------------------- ------------CLICKED VENTANA PALABRAS --------------------------------------------- 
 
                                 clicked_groupw=StringVar()
                                 clicked_groupw.set(group_w[0])
 
-                                drop_read_save=OptionMenu(ventana_studio,clicked_groupw, *group_w)
+                                drop_read_save=OptionMenu(ventana_studiow,clicked_groupw, *group_w)
                                 drop_read_save.place(x=round(700),y=round(200))
                                 drop_read_save.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 
                                 clicked_enviar_otro_grupo=StringVar()
                                 clicked_enviar_otro_grupo.set(group_w[0])
 
-                                drop_enviar_palabra=OptionMenu(ventana_studio,clicked_groupw, *group_w)
+                                drop_enviar_palabra=OptionMenu(ventana_studiow,clicked_groupw, *group_w)
                                 drop_enviar_palabra.place(x=round(730),y=round(740))
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
                                 
-                                button_cambiar_grupo=Button(ventana_studio, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
+                                button_cambiar_grupo=Button(ventana_studiow, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
                                 button_cambiar_grupo.place(x=530, y=740)
                                 button_cambiar_grupo.config(bg="#FACC2E")
                                 
-                                button_hablar_normal=Button(ventana_studio, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarNormal)
+                                button_hablar_normal=Button(ventana_studiow, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarNormal)
                                 button_hablar_normal.place(x=round(1270), y=round(460))
 
-                                button_hablar_lento=Button(ventana_studio, text="Speak Slow",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarlento)
+                                button_hablar_lento=Button(ventana_studiow, text="Speak Slow",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarlento)
                                 button_hablar_lento.place(x=round(1270), y=round(540))
 
-                                button_dar_aleatorio=Button(ventana_studio, text="Give Random",font=("Bookman Old Style",round(10),"bold") , command=dar_aleatorio)
+                                button_dar_aleatorio=Button(ventana_studiow, text="Give Random",font=("Bookman Old Style",round(10),"bold") , command=dar_aleatorio)
                                 button_dar_aleatorio.place(x=round(755), y=round(425))
 
-                                button_elegir_grupo=Button(ventana_studio, text="Choose Group",font=("Bookman Old Style",round(10),"bold") , command=cambiar_grupo)
+                                button_elegir_grupo=Button(ventana_studiow, text="Choose Group",font=("Bookman Old Style",round(10),"bold") , command=cambiar_grupo)
                                 button_elegir_grupo.place(x=round(550), y=round(200))
 
-                                button_ver_respuesta=Button(ventana_studio, text="SEE ANSWER",font=("Bookman Old Style",round(10),"bold") , command=ver_respuesta)
+                                button_ver_respuesta=Button(ventana_studiow, text="SEE ANSWER",font=("Bookman Old Style",round(10),"bold") , command=ver_respuesta)
                                 button_ver_respuesta.place(x=round(750), y=round(550))
 
-                                boton_ver_respuesta_espanol=Button(ventana_studio, text="VER TRADDUCIÓN",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
+                                boton_ver_respuesta_espanol=Button(ventana_studiow, text="VER TRADDUCIÓN",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
                                 boton_ver_respuesta_espanol.place(x=500, y=620)
                                 boton_ver_respuesta_espanol.config(bg="#FACC2E")
                                 
-                                button_quit = Button(ventana_studio, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                                button_quit = Button(ventana_studiow, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
                                 button_quit.place(x=round(740), y=round(850))
 #------------------------------------------- ETIQUETAS VENTANA PALABRAS ------------------------------------------
-                                titulo=Label(ventana_studio, text="WORKING VOCABULARY", font=("Bookman Old Style",round(30)),bg="#e8dabd")
+                                titulo=Label(ventana_studiow, text="WORKING VOCABULARY", font=("Bookman Old Style",round(30)),bg="#e8dabd")
                                 titulo.place(x=round(500), y=(70))
 
-                                etiqueta_respuesta_propia=Label(ventana_studio, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
+                                etiqueta_respuesta_propia=Label(ventana_studiow, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
                                 etiqueta_respuesta_propia.place(x=round(370), y=(470))
 
-                                etiqueta_respuesta_correcta=Label(ventana_studio, text="CURRENT WORD", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
+                                etiqueta_respuesta_correcta=Label(ventana_studiow, text="CURRENT WORD", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
                                 etiqueta_respuesta_correcta.place(x=round(1000), y=(470))
 #--------------------------------------------CUADRO DE TEXTO VENTANA PALABRAS---------------------------------------------------
-                                meaning_ENG=Text(ventana_studio, width=round(125), height=round(5), font=("Helvetica",round(13),"bold"),borderwidth=round(5))
+                                meaning_ENG=Text(ventana_studiow, width=round(125), height=round(5), font=("Helvetica",round(13),"bold"),borderwidth=round(5))
                                 meaning_ENG.place(x=round(240),y=round(280))
 
-                                cuadro_grupo=Entry(ventana_studio, width=round(25), borderwidth=round(5), justify="center")
+                                cuadro_grupo=Entry(ventana_studiow, width=round(25), borderwidth=round(5), justify="center")
                                 cuadro_grupo.place(x=round(690), y=round(145))
                                 cuadro_grupo.config(font=("Bookman Old Style",round(12),"bold"))
                                 cuadro_grupo.insert(0,grw)
 
-                                respuesta_propia=Entry(ventana_studio, width=round(25), borderwidth=round(5), justify="center")
+                                respuesta_propia=Entry(ventana_studiow, width=round(25), borderwidth=round(5), justify="center")
                                 respuesta_propia.place(x=round(350), y=round(500))
                                 respuesta_propia.config(font=("Bookman Old Style",round(12),"bold"))
 
-                                respuesta_corta=Entry(ventana_studio, width=round(15), borderwidth=round(5), justify="center")
+                                respuesta_corta=Entry(ventana_studiow, width=round(15), borderwidth=round(5), justify="center")
                                 respuesta_corta.place(x=round(720), y=round(500))
                                 respuesta_corta.config(font=("Bookman Old Style",round(12),"bold"))
 
-                                respuesta_correcta=Entry(ventana_studio, width=round(25), borderwidth=round(5), justify="center")
+                                respuesta_correcta=Entry(ventana_studiow, width=round(25), borderwidth=round(5), justify="center")
                                 respuesta_correcta.place(x=round(950), y=round(500))
                                 respuesta_correcta.config(font=("Bookman Old Style",round(12),"bold"))
 
-                                respuesta_espanol=Entry(ventana_studio, width=round(35), borderwidth=round(5), justify="center")
+                                respuesta_espanol=Entry(ventana_studiow, width=round(35), borderwidth=round(5), justify="center")
                                 respuesta_espanol.place(x=round(700), y=round(620))
                                 respuesta_espanol.config(font=("Bookman Old Style",round(12),"bold"))
 
-                                contador = Entry(ventana_studio, width=5, borderwidth=5, justify="center")
+                                contador = Entry(ventana_studiow, width=5, borderwidth=5, justify="center")
                                 contador.place(x=round(775) , y=round(465))
                                 contador.config(font=("Bookman Old Style",round(10),"bold"))
                                 contador.insert(0,cont_w)
@@ -884,7 +909,7 @@ def home():
                                 def consulta_elegir_grupo():
                                         messagebox.showinfo("REABSE", "Hola Mundo!")
                                 
-                                button_consulta1 = Button(ventana_studio, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
+                                button_consulta1 = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
                                 button_consulta1.place(x=round(1010), y=round(200))
                                 button_consulta1.config(bg="#0A43B4", fg="white")
 
