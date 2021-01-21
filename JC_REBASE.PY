@@ -5,6 +5,7 @@ from tkinter import messagebox
 from PyDictionary import PyDictionary
 from google_trans_new import google_translator
 import random
+import pyttsx3
 
 
 root = Tk()
@@ -783,11 +784,23 @@ def home():
                                         window_words()
                                 
                                 def hablarNormal():
-                                        return
+                                        engine = pyttsx3.init()
+                                        voices = engine.getProperty("voices")
+                                        engine.setProperty("voice", voices[1].id)
+                                        engine.setProperty("rate", 140)
+                                        engine.say(respuesta_correcta.get())
+                                        engine.runAndWait()
 
                                 def hablarlento():
-                                        return
+                                        engine = pyttsx3.init()
+                                        voices = engine.getProperty("voices")
+                                        engine.setProperty("voice", voices[1].id)
+                                        engine.setProperty("rate", 80)
+                                        engine.say(respuesta_correcta.get())
+                                        engine.runAndWait()
+
 #--------------------------------- ------------CLICKED VENTANA PALABRAS --------------------------------------------- 
+
                                 clicked_groupw=StringVar()
                                 clicked_groupw.set(group_w[0])
 
@@ -866,6 +879,14 @@ def home():
                                 contador.place(x=round(775) , y=round(465))
                                 contador.config(font=("Bookman Old Style",round(10),"bold"))
                                 contador.insert(0,cont_w)
+#------------------------------------- funciones/Botones Consulta Ventana Palabras -------------------------------------
+                                
+                                def consulta_elegir_grupo():
+                                        messagebox.showinfo("REABSE", "Hola Mundo!")
+                                
+                                button_consulta1 = Button(ventana_studio, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
+                                button_consulta1.place(x=round(1010), y=round(200))
+                                button_consulta1.config(bg="#0A43B4", fg="white")
 
 
 #2.2.1.2----------------------------Ventana Modo Sentencias -------------------------------------------------
