@@ -727,40 +727,43 @@ def home():
                                         respuesta_espanol.delete(0,END)
                                         contador.delete(0,END)
 
-                                        #camino_palabra= str("memory/f_words/"+cuadro_grupo.get())
-                                        #archivo_palabras=open(camino_palabra,encoding="utf8")
-                                        #for line in lista_respaldo:
-                                        #        lista=line.strip("\n")
-                                        num_aleatorio=len(lista_respaldo)
-                                        print(num_aleatorio)
-                                        aleatorio_lista = random.randint(0,int(num_aleatorio))
+                                        num_aleatorio=len(lista_respaldo)                                        
+                                        aleatorio_lista = random.randint(0,int(num_aleatorio))                                       
                                         print(aleatorio_lista)
-                                        sacar=lista_respaldo[aleatorio_lista]
-                                        filtro=(sacar in lista_formateada)
-                                                
-                                        if filtro == False:
-                                                control= 0
-                                                while control == 0:
-                                                        aleatorio_lista=random.randint(0,num_aleatorio)
-                                                        sacar = lista_respaldo[aleatorio_lista]
-                                                        filtro = (sacar in lista_formateada)
+
+                                        while respuesta_correcta.get() == "":                                                
+                                                try:
+                                                        sacar=lista_respaldo[aleatorio_lista]
+                                                        filtro=(sacar in lista_formateada)
+                                                                
                                                         if filtro == False:
-                                                                control += 1
+                                                                control= 0
+                                                                while control == 0:
+                                                                        aleatorio_lista=random.randint(0,num_aleatorio)
+                                                                        sacar = lista_respaldo[aleatorio_lista]
+                                                                        filtro = (sacar in lista_formateada)
+                                                                        if filtro == False:
+                                                                                control += 1
+                                                        else:
+                                                                f_num=int(aleatorio_lista)
+                                                                contador.delete(0,END)
+                                                                contador.insert(0,f_num)
+                                                                
+                                                        print("hola")
+                                                        respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
+                                                        respuesta_correcta.configure(fg="black")
+                                                        
+                                                        dictionary_word=PyDictionary()
+                                                        recoger_respuesta_correcta=respuesta_correcta.get()
+                                                        result=dictionary_word.meaning(recoger_respuesta_correcta)
+                                                        meaning_ENG.insert(END,str(result))
+                                                except:
+                                                        respuesta_correcta.insert(0,"")
+                                                
+                                        print("FIN")
+                                                #if contador.get() != "" or contador.get()==str(num_aleatorio):
+                                                
 
-                                        else:
-                                                f_num=int(aleatorio_lista)
-                                                contador.delete(0,END)
-                                                contador.insert(0,f_num)
-                                                #print(aleatorio_lista)
-                                                #print(lista_respaldo)
-
-                                        respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
-                                        respuesta_correcta.configure(fg="black")
-                                        
-                                        dictionary_word=PyDictionary()
-                                        recoger_respuesta_correcta=respuesta_correcta.get()
-                                        result=dictionary_word.meaning(recoger_respuesta_correcta)
-                                        meaning_ENG.insert(END,str(result))
 
                                 def recoger_enviar_otrogrupo():
                                         w_num=contador.get()
