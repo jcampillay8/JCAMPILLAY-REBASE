@@ -734,6 +734,7 @@ def home():
                                         num_aleatorio=len(lista_respaldo)
                                         print(num_aleatorio)
                                         aleatorio_lista = random.randint(0,int(num_aleatorio))
+                                        print(aleatorio_lista)
                                         sacar=lista_respaldo[aleatorio_lista]
                                         filtro=(sacar in lista_formateada)
                                                 
@@ -754,7 +755,7 @@ def home():
                                                 #print(lista_respaldo)
 
                                         respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
-                                        respuesta_correcta.configure(fg="white")
+                                        respuesta_correcta.configure(fg="black")
                                         
                                         dictionary_word=PyDictionary()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
@@ -770,8 +771,11 @@ def home():
                                         text_file.write(lista_respaldo[int(w_num)])
                                         text_file.close
                                         #lista_palabras_temporal.append(lista_formateada[int(w_num)])
-                                        del lista_formateada[int(w_num)]                                                
-                                        print(lista_formateada)        
+                                        for i in lista_formateada:
+                                                if i == lista_respaldo[int(w_num)]:
+                                                        lista_formateada.remove(i)                                                
+                                        print(lista_formateada)
+                                        print(lista_respaldo)        
                                         
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
