@@ -728,26 +728,25 @@ def home():
                                         contador.delete(0,END)
 
                                         num_aleatorio=len(lista_respaldo)                                        
-                                        aleatorio_lista = random.randint(0,int(num_aleatorio))                                       
-                                        print(aleatorio_lista)
-
+                                        
                                         while respuesta_correcta.get() == "":                                                
                                                 try:
+                                                        aleatorio_lista = random.randint(0,int(num_aleatorio))  
                                                         sacar=lista_respaldo[aleatorio_lista]
                                                         filtro=(sacar in lista_formateada)
-                                                                
+                                                        print(sacar)
+                                                        print(filtro)        
                                                         if filtro == False:
-                                                                control= 0
+                                                                respuesta_correcta.insert(0,"")
+                                                                """control= 0
                                                                 while control == 0:
-                                                                        aleatorio_lista=random.randint(0,num_aleatorio)
+                                                                        aleatorio_lista=random.randint(0,int(num_aleatorio))
                                                                         sacar = lista_respaldo[aleatorio_lista]
                                                                         filtro = (sacar in lista_formateada)
                                                                         if filtro == False:
-                                                                                control += 1
+                                                                                control += 1"""
                                                         else:
-                                                                f_num=int(aleatorio_lista)
-                                                                contador.delete(0,END)
-                                                                contador.insert(0,f_num)
+                                                                contador.insert(0,int(aleatorio_lista))
                                                                 
                                                         print("hola")
                                                         respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
