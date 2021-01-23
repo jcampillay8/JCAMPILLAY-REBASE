@@ -4,8 +4,11 @@ import os
 from tkinter import messagebox
 from PyDictionary import PyDictionary
 from google_trans_new import google_translator
+import speech_recognition as sr
 import random
 import pyttsx3
+import pyaudio
+import time
 
 
 root = Tk()
@@ -32,9 +35,6 @@ size_options=["1366x768","1920x1080"]
 
 save_words_setence_options=["SENTENCE","WORD"]
 
-#group_w=["Group 1","group 2", "group3"]
-#group_s=["Group 1","group 2", "group3"]
-
 lista_textos=os.listdir(r"texto_lectura")
 lista_fondo_pantalla=os.listdir(r"images")
 group_w=os.listdir(r"memory\f_words")
@@ -47,7 +47,7 @@ if size == 1:
         miCanvas.pack()
 else:
         miCanvas=Canvas(root, width=1920, height=1080)
-        miCanvas.pack()        
+        miCanvas.pack()
 
 my_img=None
 #texto_ENG=None
@@ -62,7 +62,7 @@ background_image = PhotoImage(file=str(fondo_pantalla))
 background_label = Label(root, image=background_image).place(relwidth=1, relheight=1)
 
 def home():
-        
+
         if size == 1:
 #1.0------------------------------- Titulo Pagina Inicio -------------------------------------------
                 titulo1=Label(background_label, text="WELCOME TO REBASE", font=("Bookman Old Style",round(20)),bg="#e8dabd")
@@ -70,24 +70,24 @@ def home():
                 titulo2=Label(background_label, text=" READ ENGLISH BOOK AND STUDY ENGLISH", font=("Bookman Old Style",round(20)),bg="#e8dabd")
                 titulo2.place(x=320, y=50)
                 titulo3=Label(background_label, text=" PLEASE, CHOOSE AN OPTION", font=("Bookman Old Style",round(20)),bg="#e8dabd")
-                titulo3.place(x=410, y=90)                
+                titulo3.place(x=410, y=90)
 #1.1.1 ------------------------------- Ventana Modo Lectura -------------------------------------------
                 def window_read():
                         global my_img
                         global save_words_setence_options
                         global screen_size
-                        
+
                         root.withdraw()
                         ventana_lectura=Toplevel()
                         if  size == 1:
                                 screen_size="1366x768"
                         elif size == 0:
-                                screen_size="1680x1050"                        
+                                screen_size="1680x1050"
 
                         ventana_lectura.geometry(screen_size)
                         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
-                        my_label = Label(ventana_lectura, image=my_img).place(relwidth=1, relheight=1)                     
-                        
+                        my_label = Label(ventana_lectura, image=my_img).place(relwidth=1, relheight=1)
+
                         texto_contiene_titulo=open("memory/titulo_texto.txt",encoding="utf8")
                         almacena_titulo=texto_contiene_titulo.read()
                         texto_contiene_titulo.close()
@@ -111,17 +111,17 @@ def home():
                         drop_text.config(width=round(20), font=("Book Old Style", round(10),"bold"))
 
 #1.1.2 ------------------------------- Funciones Modo Lectura -------------------------------------------
-                        
+
                         def texto_inicio():
                                 num_lista=contador.get()
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
                                 abrir_texto_inicio=open(camino_texto_lectura, encoding="utf8")
-                                for line in abrir_texto_inicio:                
+                                for line in abrir_texto_inicio:
                                         line=line.split(".")
                                         line=line[int(num_lista)]
                                         line=line.strip()
                                         texto_ENG.insert(END, line)
-                                abrir_texto_inicio.close                        
+                                abrir_texto_inicio.close
 
                         def ingresar_texto():
                                 texto_nuevo=str(clicked_texto.get())
@@ -133,7 +133,7 @@ def home():
                                 texto_contiene_titulo2=open("memory/titulo_texto.txt","w")
                                 texto_contiene_titulo2.write(clicked_texto.get())
                                 texto_contiene_titulo2.close()
-                                
+
                                 messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_texto.get()+"\n\n")
                                 ventana_lectura.destroy()
                                 window_read()
@@ -144,10 +144,10 @@ def home():
                                         num_lista=contador.get()
                                         camino_texto_lectura="texto_lectura/"+almacena_titulo
                                         abrir_texto=open(camino_texto_lectura, encoding="utf8")
-                                        
+
                                         try:
                                                 for line in abrir_texto:
-                                                        line=line.rstrip("\n")                
+                                                        line=line.rstrip("\n")
                                                         line=line.split(".")
                                                         linea_Esp=line[int(num_lista)]
                                                         translator=google_translator()
@@ -162,7 +162,7 @@ def home():
                                                 texto_ESP.delete(1.0,END)
                                         else:
                                                 cntrl+=1
-                                                
+
 
                         def next_line():
                                 texto_ESP.delete(1.0,END)
@@ -177,14 +177,14 @@ def home():
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
                                 abrir_texto_inicio=open(camino_texto_lectura, encoding="utf8")
 
-                                for line in abrir_texto_inicio:                
+                                for line in abrir_texto_inicio:
                                         line=line.split(".")
                                         line=line[siguiente]
                                         line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
 
-                        
+
                         def previous_line():
                                 texto_ESP.delete(1.0,END)
                                 texto_ENG.delete(1.0,END)
@@ -198,22 +198,22 @@ def home():
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
                                 abrir_texto_inicio=open(camino_texto_lectura, encoding="utf8")
 
-                                for line in abrir_texto_inicio:                
+                                for line in abrir_texto_inicio:
                                         line=line.split(".")
                                         line=line[anterior]
                                         line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
-                        
+
                         def english_dictionary():
 
                                 dictionary_word=PyDictionary()
                                 meaning_word = dictionary_text.get()
-                                result=dictionary_word.meaning(meaning_word)                                                
+                                result=dictionary_word.meaning(meaning_word)
                                 messagebox.showinfo("REABSE"," DICTIONARY  \n\n"+str(result))
-                        
+
                         def page_marker():
-                                
+
                                 marcador_pagina=open("memory/page_marker.txt","w")
                                 marcador_pagina.write(contador.get())
                                 messagebox.showinfo("English Assitant"," El marcador de página \n\n"+contador.get()+"\n\n ha sido guardado ")
@@ -222,7 +222,7 @@ def home():
                         def save_word_sentence():
                                 save_words_setence_options=["SENTENCE","WORD"]
                                 if clicked_read.get() == "SENTENCE":
-                                        
+
                                         sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","w")
                                         sentencia_para_estudiar.write("\n")
                                         sentencia_para_estudiar.write(cuadro_save_words_setence.get())
@@ -237,7 +237,7 @@ def home():
                                         palabra_para_estudiar.close()
 
                 #1.1.3 ------------------------------- Botones Modo Lectura -------------------------------------------
-                        
+
                         button_save_word_setence=Button(ventana_lectura,text="SAVE WORD/SENTENCE ",font=("Bookman Old Style",round(10),"bold"), command=save_word_sentence)
                         button_save_word_setence.place(x=round(550),y=round(520))
                         button_save_word_setence.config(width=20)
@@ -249,14 +249,14 @@ def home():
                         button_texto_inicio=Button(ventana_lectura,text="DAR INICO ",font=("Bookman Old Style",round(10),"bold"),command=texto_inicio)
                         button_texto_inicio.place(x=round(50),y=round(200))
                         button_texto_inicio.config(bg="#FACC2E", width=15)
-                        
+
                         button_page_marker=Button(ventana_lectura, text="PAGE MARKER",font=("Bookman Old Style",round(10),"bold"),width=12 , command=page_marker)
                         button_page_marker.place(x=round(220), y=round(320))
                         button_page_marker.config(bg="#FACC2E")
-                        
+
                         button_english_dictionary=Button(ventana_lectura, text="ENGLISH DICTIONARY",font=("Bookman Old Style",round(10),"bold"),width=20 , command=english_dictionary)
                         button_english_dictionary.place(x=round(670), y=round(320))
-                        
+
                         button_ingresar_texto=Button(ventana_lectura,text="APPLY NEW TEXT",font=("Bookman Old Style",round(10),"bold") , command=ingresar_texto)
                         button_ingresar_texto.place(x=round(400), y=round(125))
 
@@ -296,7 +296,7 @@ def home():
                         contador.place(x=round(485) , y=round(320))
                         contador.config(font=("Bookman Old Style",round(10),"bold"))
                         contador.insert(0,almacena_page_marker)
-                                
+
                 #1.1.5 ------------------------------- Titulo Modo Lectura -------------------------------------------
                         titulo=Label(ventana_lectura, text="READING MODE REBASE", font=("Bookman Old Style",round(20)), bg="#e8dabd")
                         titulo.place(x=round(450), y=round(10))
@@ -317,19 +317,19 @@ def home():
                 def configuracion():
                         global my_img
                         global screen_size
-                        
+
                         root.withdraw()
                         ventana_configuracion=Toplevel()
 
-                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt", encoding="utf8")            
+                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt", encoding="utf8")
                         resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.read()
                         archivotexto_nombre_resolucion_pantalla.close()
-                        
+
                         if resolucion_pantalla == 1:
                                 screen_size="1366x768"
                         elif resolucion_pantalla == 0:
-                                screen_size="1920x1080"                        
-                        
+                                screen_size="1920x1080"
+
                         ventana_configuracion.geometry(screen_size)
                         archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
                         fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
@@ -339,7 +339,7 @@ def home():
                         my_label = Label(ventana_configuracion, image=my_img).place(relwidth=1, relheight=1)
 
                         def cambiar_fondo():
-                                
+
 
                                 archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt","w")
                                 fondo_pantalla=archivotexto_nombre_fondo_panatalla.write(str(clicked_fondo_pantalla.get()))
@@ -355,12 +355,12 @@ def home():
                         def size_selection():
                                 global size
                                 #election_size = Label(ventana_configuracion, text=clicked.get())
-                                if clicked.get() == "1366x768": 
-                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")            
+                                if clicked.get() == "1366x768":
+                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")
                                         archivotexto_nombre_resolucion_pantalla.write(str(1))
                                         archivotexto_nombre_resolucion_pantalla.close()
                                 elif clicked.get() == "1920x1080":
-                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")            
+                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")
                                         archivotexto_nombre_resolucion_pantalla.write(str(0))
                                         archivotexto_nombre_resolucion_pantalla.close()
 
@@ -368,14 +368,14 @@ def home():
                                 ventana_configuracion.destroy()
                                 configuracion()
 
-                        
+
                 #1.3.2 ------------------------------- Titulo Modo Lectura -------------------------------------------
                         titulo=Label(ventana_configuracion, text="SET CONFIGURATION REBASE", font=("Bookman Old Style",round(20)),bg="#e8dabd")
-                        titulo.place(x=round(450), y=(10))      
+                        titulo.place(x=round(450), y=(10))
 
                         clicked = StringVar()
                         clicked.set(size_options[0])
-                        
+
                         drop= OptionMenu(ventana_configuracion, clicked, *size_options)
                         drop.place(x=round(350), y=round(400))
                         drop.config(width=round(50), font=("Bookman Old Style",round(10),"bold"))
@@ -386,28 +386,28 @@ def home():
                         drop_fondo_pantalla=OptionMenu(ventana_configuracion,clicked_fondo_pantalla, *lista_fondo_pantalla)
                         drop_fondo_pantalla.place(x=round(350), y=round(200))
                         drop_fondo_pantalla.config(width=round(60), font=("Book Old Style", round(10),"bold"))
-                
+
                 #1.3.3 ------------------------------- Botones Configuración -------------------------------------------
 
                         boton_aplicar_fondo_pantalla=Button(ventana_configuracion, text=("APPLY WALLPAPER"),font=("Bookman Old Style",round(10),"bold"),width=round(20),height=round(1), command=cambiar_fondo)
                         boton_aplicar_fondo_pantalla.place(x=round(900), y=round(200))
-                        
+
                         boton_read=Button(ventana_configuracion, text=("READ BOOK/TEXT"),font=("Bookman Old Style",round(10),"bold"),width=round(20),height=round(1), command=window_read)
                         boton_read.place(x=round(400), y=round(600))
                         boton_study=Button(ventana_configuracion, text=("STUDY ENGLISH"),font=("Bookman Old Style",round(10),"bold"), width=round(20),height=round(1),command=window_study)
                         boton_study.place(x=round(700), y=round(600))
-                        
+
                         button_quit = Button(ventana_configuracion, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
                         button_quit.place(x=round(600), y=round(650))
 
                         boton_size_selection=Button(ventana_configuracion, text=("APPLY SIZE RESOLUTION"),font=("Bookman Old Style",round(10),"bold"),width=round(20), command=size_selection)
                         boton_size_selection.place(x=round(900), y=round(400))
-                
-                
+
+
 
                 #1.3.4 ------------------------------- Cuadro de texto Configuración -------------------------------------------
 
-                        
+
 
                 #1.3.5------------------------------- Etiquetas Ventana Configuración -------------------------------------------
 
@@ -418,8 +418,8 @@ def home():
                         texto_set_image_label=Label(ventana_configuracion,text="Set Resolution Here: ")
                         texto_set_image_label.place(x=round(100),y=round(400))
                         texto_set_image_label.config(bg="#FACC2E", width=round(20), font=("Bookman Old Style",round(12),"bold"))
-                        
-                
+
+
 #2.0 ----------------------------------VENTANA RESOLUCION 1920 X 1080 ------------------------------------------------------------------
         else:
                 titulo1=Label(background_label, text="WELCOME TO REBASE", font=("Bookman Old Style",30),bg="#e8dabd")
@@ -427,21 +427,21 @@ def home():
                 titulo2=Label(background_label, text=" READ ENGLISH BOOK AND STUDY ENGLISH", font=("Bookman Old Style",30),bg="#e8dabd")
                 titulo2.place(x=500, y=70)
                 titulo3=Label(background_label, text=" PLEASE, CHOOSE AN OPTION", font=("Bookman Old Style",30),bg="#e8dabd")
-                titulo3.place(x=600, y=130)                
+                titulo3.place(x=600, y=130)
 #2.1.1 ------------------------------- Ventana Modo Lectura -------------------------------------------
                 def window_read():
-                        
+
                         global my_img
                         global save_words_setence_options
                         global screen_size
 
-                        
+
                         root.withdraw()
                         ventana_lectura=Toplevel()
                         if  size == 1:
                                 screen_size="1366x768"
                         elif size == 0:
-                                screen_size="1680x1050"                        
+                                screen_size="1680x1050"
 
                         ventana_lectura.geometry(screen_size)
                         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
@@ -474,7 +474,7 @@ def home():
                                 num_lista=contador.get()
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
                                 abrir_texto_inicio=open(camino_texto_lectura, encoding="utf8")
-                                for line in abrir_texto_inicio:                
+                                for line in abrir_texto_inicio:
                                         line=line.split(".")
                                         line=line[int(num_lista)]
                                         line=line.strip()
@@ -490,7 +490,7 @@ def home():
                                 texto_contiene_titulo2=open("memory/titulo_texto.txt","w")
                                 texto_contiene_titulo2.write(clicked_texto.get())
                                 texto_contiene_titulo2.close()
-                                
+
                                 messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_texto.get()+"\n\n")
                                 ventana_lectura.destroy()
                                 window_read()
@@ -501,10 +501,10 @@ def home():
                                         num_lista=contador.get()
                                         camino_texto_lectura="texto_lectura/"+almacena_titulo
                                         abrir_texto=open(camino_texto_lectura, encoding="utf8")
-                                        
+
                                         try:
                                                 for line in abrir_texto:
-                                                        line=line.rstrip("\n")                
+                                                        line=line.rstrip("\n")
                                                         line=line.split(".")
                                                         linea_Esp=line[int(num_lista)]
                                                         translator=google_translator()
@@ -519,7 +519,7 @@ def home():
                                                 texto_ESP.delete(1.0,END)
                                         else:
                                                 cntrl+=1
-                                                
+
 
                         def next_line():
                                 texto_ESP.delete(1.0,END)
@@ -534,14 +534,14 @@ def home():
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
                                 abrir_texto_inicio=open(camino_texto_lectura, encoding="utf8")
 
-                                for line in abrir_texto_inicio:                
+                                for line in abrir_texto_inicio:
                                         line=line.split(".")
                                         line=line[siguiente]
                                         line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
 
-                        
+
                         def previous_line():
                                 texto_ESP.delete(1.0,END)
                                 texto_ENG.delete(1.0,END)
@@ -555,22 +555,22 @@ def home():
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
                                 abrir_texto_inicio=open(camino_texto_lectura, encoding="utf8")
 
-                                for line in abrir_texto_inicio:                
+                                for line in abrir_texto_inicio:
                                         line=line.split(".")
                                         line=line[anterior]
                                         line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
-                        
+
                         def english_dictionary():
 
                                 dictionary_word=PyDictionary()
                                 meaning_word = dictionary_text.get()
-                                result=dictionary_word.meaning(meaning_word)                                                
+                                result=dictionary_word.meaning(meaning_word)
                                 messagebox.showinfo("REABSE"," DICTIONARY  \n\n"+str(result))
-                        
+
                         def page_marker():
-                                
+
                                 marcador_pagina=open("memory/page_marker.txt","w")
                                 marcador_pagina.write(contador.get())
                                 messagebox.showinfo("English Assitant"," El marcador de página \n\n"+contador.get()+"\n\n ha sido guardado ")
@@ -579,7 +579,7 @@ def home():
                         def save_word_sentence():
                                 save_words_setence_options=["SENTENCE","WORD"]
                                 if clicked_read.get() == "SENTENCE":
-                                        
+
                                         sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","w")
                                         sentencia_para_estudiar.write("\n")
                                         sentencia_para_estudiar.write(cuadro_save_words_setence.get())
@@ -594,7 +594,7 @@ def home():
                                         palabra_para_estudiar.close()
 
 #2.1.3 ------------------------------- Botones Modo Lectura -------------------------------------------
-                        
+
                         button_save_word_setence=Button(ventana_lectura,text="SAVE WORD/SENTENCE ",font=("Bookman Old Style",round(12),"bold"), command=save_word_sentence)
                         button_save_word_setence.place(x=round(670),y=round(700))
                         button_save_word_setence.config(width=25)
@@ -606,14 +606,14 @@ def home():
                         button_texto_inicio=Button(ventana_lectura,text="DAR INICO ",font=("Bookman Old Style",round(12),"bold"),command=texto_inicio)
                         button_texto_inicio.place(x=round(50),y=round(280))
                         button_texto_inicio.config(bg="#FACC2E", width=15)
-                        
+
                         button_page_marker=Button(ventana_lectura, text="PAGE MARKER",font=("Bookman Old Style",round(10),"bold"),width=12 , command=page_marker)
                         button_page_marker.place(x=round(240), y=round(420))
                         button_page_marker.config(bg="#FACC2E")
-                        
+
                         button_english_dictionary=Button(ventana_lectura, text="ENGLISH DICTIONARY",font=("Bookman Old Style",round(10),"bold"),width=20 , command=english_dictionary)
                         button_english_dictionary.place(x=round(900), y=round(420))
-                        
+
                         button_ingresar_texto=Button(ventana_lectura,text="APPLY NEW TEXT",font=("Bookman Old Style",round(10),"bold") , command=ingresar_texto)
                         button_ingresar_texto.place(x=round(610), y=round(200))
 
@@ -653,7 +653,7 @@ def home():
                         contador.place(x=round(635) , y=round(420))
                         contador.config(font=("Bookman Old Style",round(10),"bold"))
                         contador.insert(0,almacena_page_marker)
-                                
+
 #2.1.5 ------------------------------- Titulo Modo Lectura -------------------------------------------
                         titulo=Label(ventana_lectura, text="READING MODE REBASE", font=("Bookman Old Style",round(30)), bg="#e8dabd")
                         titulo.place(x=round(520), y=round(30))
@@ -670,14 +670,14 @@ def home():
                 def window_study():
                         global my_img
                         global save_words_setence_options
-                        global screen_size                       
+                        global screen_size
 
                         root.withdraw()
                         ventana_studio=Toplevel()
                         if  size == 1:
                                 screen_size="1366x768"
                         elif size == 0:
-                                screen_size="1680x1050"                        
+                                screen_size="1680x1050"
 
                         ventana_studio.geometry(screen_size)
                         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
@@ -685,11 +685,11 @@ def home():
 #2.2.1------------------------------Ventana Modo Estudio ---------------------------------------------------
 #2.2.1.1----------------------------Ventana Modo Palabras -------------------------------------------------
                         def window_words():
-                                
+
                                 global my_img
                                 global save_words_setence_options
-                                global screen_size 
-                                global group_w    
+                                global screen_size
+                                global group_w
 
                                 ventana_studio.destroy()
                                 root.withdraw()
@@ -697,12 +697,12 @@ def home():
                                 if  size == 1:
                                         screen_size="1366x768"
                                 elif size == 0:
-                                        screen_size="1680x1050"                        
+                                        screen_size="1680x1050"
 
                                 ventana_studiow.geometry(screen_size)
                                 my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
                                 my_label = Label(ventana_studiow, image=my_img).place(relwidth=1, relheight=1)
-                                
+
                                 grupo_actual=open("memory/memoria_ultimo_grupow","r")
                                 grw=grupo_actual.read()
                                 grupo_actual.close()
@@ -713,15 +713,15 @@ def home():
 
                                 camino_palabra= str("memory/f_words/"+grw)
                                 archivo_palabras=open(camino_palabra,"r")
-                                
+
                                 lista_palabras_temporal=[]
-                                
+
                                 lista_palabras=archivo_palabras.readlines()
                                 lista_formateada=[]
                                 for elemento in lista_palabras:
                                         linea =elemento.strip("\n")
                                         lista_formateada.append(linea)
-                                
+
                                 lista_respaldo=lista_formateada[:]
 
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
@@ -733,35 +733,35 @@ def home():
                                         respuesta_espanol.delete(0,END)
                                         contador.delete(0,END)
 
-                                        num_aleatorio=len(lista_respaldo)                                        
-                                        
-                                        while respuesta_correcta.get() == "":                                                
+                                        num_aleatorio=len(lista_respaldo)
+
+                                        while respuesta_correcta.get() == "":
                                                 try:
-                                                        aleatorio_lista = random.randint(0,int(num_aleatorio))  
+                                                        aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                         sacar=lista_respaldo[aleatorio_lista]
                                                         filtro=(sacar in lista_formateada)
                                                         print(sacar)
-                                                        print(filtro)        
+                                                        print(filtro)
                                                         if filtro == False:
                                                                 respuesta_correcta.insert(0,"")
-                                                                
+
                                                         else:
                                                                 contador.insert(0,int(aleatorio_lista))
-                                                                
+
                                                         print("hola")
                                                         respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
                                                         respuesta_correcta.configure(fg="black")
-                                                        
+
                                                         dictionary_word=PyDictionary()
                                                         recoger_respuesta_correcta=respuesta_correcta.get()
                                                         result=dictionary_word.meaning(recoger_respuesta_correcta)
                                                         meaning_ENG.insert(END,str(result))
                                                 except:
                                                         respuesta_correcta.insert(0,"")
-                                                
+
                                         print("FIN")
                                                 #if contador.get() != "" or contador.get()==str(num_aleatorio):
-                                                
+
 
 
                                 def recoger_enviar_otrogrupo():
@@ -775,10 +775,10 @@ def home():
                                         #lista_palabras_temporal.append(lista_formateada[int(w_num)])
                                         for i in lista_formateada:
                                                 if i == lista_respaldo[int(w_num)]:
-                                                        lista_formateada.remove(i)                                                
+                                                        lista_formateada.remove(i)
                                         print(lista_formateada)
-                                        print(lista_respaldo)        
-                                        
+                                        print(lista_respaldo)
+
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
@@ -794,7 +794,7 @@ def home():
                                 def ver_traduccion():
                                         control=0
                                         while control == 0:
-                                                num_lista=contador.get()                                                
+                                                num_lista=contador.get()
                                                 try:
                                                         line2= lista_formateada[int(num_lista)]
                                                         linea_Esp=line2
@@ -822,7 +822,7 @@ def home():
                                         messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_groupw.get()+"\n\n")
                                         ventana_studio.destroy()
                                         window_words()
-                                
+
                                 def hablarNormal():
                                         engine = pyttsx3.init()
                                         voices = engine.getProperty("voices")
@@ -838,9 +838,9 @@ def home():
                                         engine.setProperty("rate", 80)
                                         engine.say(respuesta_correcta.get())
                                         engine.runAndWait()
-                                
+
                                 def guardar_cambios():
-                                        
+
                                         grupo_viejo=str(cuadro_grupo.get())
                                         camino_grupo_estudio="memory/f_words/"+grupo_viejo
                                         text_file2=open(camino_grupo_estudio,"w")
@@ -848,9 +848,9 @@ def home():
                                                 text_file2.write("\n")
                                                 text_file2.write(j)
                                         text_file2.close
-                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")                                                                                      
+                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")
 
-#--------------------------------- ------------CLICKED VENTANA PALABRAS --------------------------------------------- 
+#--------------------------------- ------------CLICKED VENTANA PALABRAS ---------------------------------------------
 
                                 clicked_groupw=StringVar()
                                 clicked_groupw.set(group_w[0])
@@ -866,7 +866,7 @@ def home():
                                 drop_enviar_palabra.place(x=round(710),y=round(740))
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
-                                
+
                                 button_guardar_cambios=Button(ventana_studiow, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
                                 button_guardar_cambios.place(x=1000, y=740)
                                 button_guardar_cambios.config(bg="#FACC2E")
@@ -874,7 +874,7 @@ def home():
                                 button_cambiar_grupo=Button(ventana_studiow, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
                                 button_cambiar_grupo.place(x=500, y=740)
                                 button_cambiar_grupo.config(bg="#FACC2E")
-                                
+
                                 button_hablar_normal=Button(ventana_studiow, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarNormal)
                                 button_hablar_normal.place(x=round(1270), y=round(460))
 
@@ -893,7 +893,7 @@ def home():
                                 boton_ver_respuesta_espanol=Button(ventana_studiow, text="VER TRADDUCIÓN",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
                                 boton_ver_respuesta_espanol.place(x=500, y=620)
                                 boton_ver_respuesta_espanol.config(bg="#FACC2E")
-                                
+
                                 button_quit = Button(ventana_studiow, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
                                 button_quit.place(x=round(740), y=round(850))
 #------------------------------------------- ETIQUETAS VENTANA PALABRAS ------------------------------------------
@@ -935,10 +935,10 @@ def home():
                                 contador.config(font=("Bookman Old Style",round(10),"bold"))
                                 contador.insert(0,cont_w)
 #------------------------------------- funciones/Botones Consulta Ventana Palabras -------------------------------------
-                                
+
                                 def consulta_elegir_grupo():
                                         messagebox.showinfo("REABSE", "Hola Mundo!")
-                                
+
                                 button_consulta1 = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
                                 button_consulta1.place(x=round(1010), y=round(200))
                                 button_consulta1.config(bg="#0A43B4", fg="white")
@@ -948,8 +948,8 @@ def home():
                         def window_sentences():
                                 global my_img
                                 global save_words_setence_options
-                                global screen_size  
-                                global group_s                     
+                                global screen_size
+                                global group_s
 
                                 ventana_studio.destroy()
                                 root.withdraw()
@@ -957,12 +957,12 @@ def home():
                                 if  size == 1:
                                         screen_size="1366x768"
                                 elif size == 0:
-                                        screen_size="1680x1050"                        
+                                        screen_size="1680x1050"
 
                                 ventana_studios.geometry(screen_size)
                                 my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
                                 my_label = Label(ventana_studios, image=my_img).place(relwidth=1, relheight=1)
-                                
+
                                 grupo_actual=open("memory/memoria_ultimo_grupos.txt","r")
                                 grs=grupo_actual.read()
                                 grupo_actual.close()
@@ -973,13 +973,13 @@ def home():
 
                                 camino_palabra= str("memory/f_sentences/"+grs)
                                 archivo_palabras=open(camino_palabra,"r")
-                                
+
                                 lista_palabras=archivo_palabras.readlines()
                                 lista_formateada=[]
                                 for elemento in lista_palabras:
                                         linea =elemento.strip("\n")
                                         lista_formateada.append(linea)
-                                
+
                                 lista_respaldo=lista_formateada[:]
 
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
@@ -990,31 +990,43 @@ def home():
                                         respuesta_espanol.delete(0,END)
                                         contador.delete(0,END)
 
-                                        num_aleatorio=len(lista_respaldo)                                        
-                                        
-                                        while respuesta_espanol.get() == "":                                                
+                                        num_aleatorio=len(lista_respaldo)
+
+                                        while respuesta_espanol.get() == "":
                                                 try:
-                                                        aleatorio_lista = random.randint(0,int(num_aleatorio))  
+                                                        aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                         sacar=lista_respaldo[aleatorio_lista]
                                                         filtro=(sacar in lista_formateada)
                                                         print(sacar)
-                                                        print(filtro)        
+                                                        print(filtro)
                                                         if filtro == False:
-                                                                respuesta_correcta.insert(0,"")
-                                                                
+                                                                respuesta_espanol.insert(0,"")
+
                                                         else:
                                                                 contador.insert(0,int(aleatorio_lista))
-                                                                
-                                                        print("hola")
-                                                        respuesta_espanol.insert(0,lista_respaldo[int(contador.get())])
-                                                        respuesta_espanol.configure(fg="black")
-                                                                                                                
+                                                                control=0
+                                                                while control == 0:
+                                                                        num_lista=contador.get()
+                                                                        try:
+                                                                                line2= lista_respaldo[int(num_lista)]
+                                                                                linea_Esp=line2
+                                                                                translator=google_translator()
+                                                                                translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+                                                                                respuesta_espanol.insert(0,translation)
+                                                                        except:
+                                                                                translation = None
+                                                                        recoger_pregunta=respuesta_espanol.get()
+                                                                        num_lista2=contador.get()
+                                                                        if recoger_pregunta!="" or num_lista2==str(len(lista_respaldo)):
+                                                                                control+=1
+
+                                                        respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
+                                                        respuesta_correcta.config(fg="white")
                                                 except:
-                                                        respuesta_correcta.insert(0,"")
-                                                
+                                                        respuesta_espanol.insert(0,"")
                                         print("FIN")
                                                 #if contador.get() != "" or contador.get()==str(num_aleatorio):
-                                                
+
 
 
                                 def recoger_enviar_otrogrupo():
@@ -1028,10 +1040,10 @@ def home():
                                         #lista_palabras_temporal.append(lista_formateada[int(w_num)])
                                         for i in lista_formateada:
                                                 if i == lista_respaldo[int(w_num)]:
-                                                        lista_formateada.remove(i)                                                
+                                                        lista_formateada.remove(i)
                                         print(lista_formateada)
-                                        print(lista_respaldo)        
-                                        
+                                        print(lista_respaldo)
+
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
@@ -1039,15 +1051,17 @@ def home():
                                                 respuesta_corta.insert(0,"CORRECT")
                                                 respuesta_corta.configure(bg="#33FF51")
                                                 respuesta_correcta.configure(fg="black")
+                                                respuesta_correcta.config(fg="black")
                                         else:
                                                 respuesta_corta.insert(0,"WRONG")
                                                 respuesta_corta.configure(bg="#FF3333")
                                                 respuesta_correcta.configure(fg="black")
+                                                respuesta_correcta.config(fg="black")
 
                                 def ver_traduccion():
                                         control=0
                                         while control == 0:
-                                                num_lista=contador.get()                                                
+                                                num_lista=contador.get()
                                                 try:
                                                         line2= lista_formateada[int(num_lista)]
                                                         linea_Esp=line2
@@ -1075,12 +1089,12 @@ def home():
                                         messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_groups.get()+"\n\n")
                                         ventana_studios.destroy()
                                         window_sentences()
-                                
+
                                 def hablarNormal():
                                         engine = pyttsx3.init()
                                         voices = engine.getProperty("voices")
                                         engine.setProperty("voice", voices[1].id)
-                                        engine.setProperty("rate", 140)
+                                        engine.setProperty("rate", 120)
                                         engine.say(respuesta_correcta.get())
                                         engine.runAndWait()
 
@@ -1088,12 +1102,12 @@ def home():
                                         engine = pyttsx3.init()
                                         voices = engine.getProperty("voices")
                                         engine.setProperty("voice", voices[1].id)
-                                        engine.setProperty("rate", 80)
+                                        engine.setProperty("rate", 90)
                                         engine.say(respuesta_correcta.get())
                                         engine.runAndWait()
-                                
+
                                 def guardar_cambios():
-                                        
+
                                         grupo_viejo=str(cuadro_grupo.get())
                                         camino_grupo_estudio="memory/f_sentences/"+grupo_viejo
                                         text_file2=open(camino_grupo_estudio,"w")
@@ -1101,9 +1115,28 @@ def home():
                                                 text_file2.write("\n")
                                                 text_file2.write(j)
                                         text_file2.close
-                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")                                                                                      
+                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")
 
-#--------------------------------- ------------CLICKED VENTANA PALABRAS --------------------------------------------- 
+                                def hablar_respuesta():
+
+                                        cuadro_speak.insert(0,"SPEAK!")
+                                        cuadro_speak.configure(bg="#33FF51")
+
+                                        try:
+                                                r = sr.Recognizer()
+                                                with sr.Microphone() as source:
+                                                        r.adjust_for_ambient_noise(source)
+                                                        print("Say something!")
+                                                        audio = r.listen(source)
+                                                try:
+                                                        text = r.recognize_google(audio)
+                                                        respuesta_propia.insert(0,text)
+                                                except :
+                                                        respuesta_propia.insert(0,"Sorry could not recognize your voice")
+                                        except:
+                                                print("None")
+
+#--------------------------------- ------------CLICKED VENTANA PALABRAS ---------------------------------------------
 
                                 clicked_groups=StringVar()
                                 clicked_groups.set(group_s[0])
@@ -1119,7 +1152,7 @@ def home():
                                 drop_enviar_palabra.place(x=round(710),y=round(750))
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA SENTENCES-------------------------------------------------
-                                
+
                                 button_guardar_cambios=Button(ventana_studios, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
                                 button_guardar_cambios.place(x=1000, y=750)
                                 button_guardar_cambios.config(bg="#FACC2E")
@@ -1127,12 +1160,12 @@ def home():
                                 button_cambiar_grupo=Button(ventana_studios, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
                                 button_cambiar_grupo.place(x=500, y=750)
                                 button_cambiar_grupo.config(bg="#FACC2E")
-                                
+
                                 button_hablar_normal=Button(ventana_studios, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=20 , command=hablarNormal)
-                                button_hablar_normal.place(x=round(750), y=round(400))
+                                button_hablar_normal.place(x=round(850), y=round(400))
 
                                 button_hablar_lento=Button(ventana_studios, text="Speak Slow",font=("Bookman Old Style",round(10),"bold"), width=20 , command=hablarlento)
-                                button_hablar_lento.place(x=round(1000), y=round(400))
+                                button_hablar_lento.place(x=round(1100), y=round(400))
 
                                 button_dar_aleatorio=Button(ventana_studios, text="GIVE RANDOM",font=("Bookman Old Style",round(12),"bold") , command=dar_aleatorio)
                                 button_dar_aleatorio.place(x=round(460), y=round(580))
@@ -1143,10 +1176,10 @@ def home():
                                 button_ver_respuesta=Button(ventana_studios, text="SEE ANSWER",font=("Bookman Old Style",round(12),"bold") , command=ver_respuesta)
                                 button_ver_respuesta.place(x=round(750), y=round(580))
 
-                                boton_ver_respuesta_espanol=Button(ventana_studios, text="TRY SPEECH TO TEXT",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
+                                boton_ver_respuesta_espanol=Button(ventana_studios, text="TRY SPEECH TO TEXT",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=hablar_respuesta)
                                 boton_ver_respuesta_espanol.place(x=500, y=400)
                                 boton_ver_respuesta_espanol.config(bg="#FACC2E")
-                                
+
                                 button_quit = Button(ventana_studios, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
                                 button_quit.place(x=round(740), y=round(850))
 #------------------------------------------- ETIQUETAS VENTANA SENTENCIA ------------------------------------------
@@ -1162,37 +1195,41 @@ def home():
                                 etiqueta_respuesta_correcta=Label(ventana_studios, text="ENGLISH SETENCE", font=("Bookman Old Style",round(12),"bold"), width=25, bg="#FACC2E")
                                 etiqueta_respuesta_correcta.place(x=round(120), y=(660))
 #--------------------------------------------CUADRO DE TEXTO VENTANA SENTENCIA---------------------------------------------------
-                                
+
                                 cuadro_grupo=Entry(ventana_studios, width=round(35), borderwidth=round(5), justify="center")
                                 cuadro_grupo.place(x=round(600), y=round(200))
                                 cuadro_grupo.config(font=("Bookman Old Style",round(12),"bold"))
                                 cuadro_grupo.insert(0,grs)
 
-                                respuesta_propia=Entry(ventana_studios, width=round(90), borderwidth=round(5), justify="center")
+                                respuesta_propia=Entry(ventana_studios, width=round(80), borderwidth=round(5), justify="center")
                                 respuesta_propia.place(x=round(420), y=round(480))
-                                respuesta_propia.config(font=("Bookman Old Style",round(12),"bold"))
+                                respuesta_propia.config(font=("Bookman Old Style",round(16),"bold"))
 
                                 respuesta_corta=Entry(ventana_studios, width=round(15), borderwidth=round(5), justify="center")
                                 respuesta_corta.place(x=round(900), y=round(580))
                                 respuesta_corta.config(font=("Bookman Old Style",round(12),"bold"))
 
-                                respuesta_correcta=Entry(ventana_studios, width=round(90), borderwidth=round(5), justify="center")
+                                respuesta_correcta=Entry(ventana_studios, width=round(80), borderwidth=round(5), justify="center")
                                 respuesta_correcta.place(x=round(420), y=round(660))
-                                respuesta_correcta.config(font=("Bookman Old Style",round(12),"bold"))
+                                respuesta_correcta.config(font=("Bookman Old Style",round(16),"bold"))
 
-                                respuesta_espanol=Entry(ventana_studios, width=round(90), borderwidth=round(5), justify="center")
+                                respuesta_espanol=Entry(ventana_studios, width=round(80), borderwidth=round(5), justify="center")
                                 respuesta_espanol.place(x=round(420), y=round(280))
-                                respuesta_espanol.config(font=("Bookman Old Style",round(12),"bold"))
+                                respuesta_espanol.config(font=("Bookman Old Style",round(16),"bold"))
 
                                 contador = Entry(ventana_studios, width=5, borderwidth=5, justify="center")
                                 contador.place(x=round(620) , y=round(580))
                                 contador.config(font=("Bookman Old Style",round(10),"bold"))
                                 contador.insert(0,cont_w)
+
+                                cuadro_speak = Entry(ventana_studios, width=8, borderwidth=5, justify="center")
+                                cuadro_speak.place(x=round(700) , y=round(400))
+                                cuadro_speak.config(font=("Bookman Old Style",round(10),"bold"))
 #------------------------------------- funciones/Botones Consulta Ventana Sentencias -------------------------------------
-                                
+
                                 def consulta_elegir_grupo():
                                         messagebox.showinfo("REABSE", "Hola Mundo!")
-                                
+
                                 button_consulta1 = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
                                 button_consulta1.place(x=round(1010), y=round(200))
                                 button_consulta1.config(bg="#0A43B4", fg="white")
@@ -1209,19 +1246,19 @@ def home():
 #2.3.1 ------------------------------- Funciones Configuracióm -------------------------------------------
                 def configuracion():
                         global my_img
-                        global screen_size                        
+                        global screen_size
                         root.withdraw()
                         ventana_configuracion=Toplevel()
-                        
-                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt",encoding="utf8")            
+
+                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt",encoding="utf8")
                         resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.read()
                         archivotexto_nombre_resolucion_pantalla.close()
-                        
+
                         if resolucion_pantalla == 1:
                                 screen_size="1366x768"
                         elif resolucion_pantalla == 0:
-                                screen_size="1920x1080"                        
-                        
+                                screen_size="1920x1080"
+
                         ventana_configuracion.geometry(screen_size)
                         archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
                         fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
@@ -1230,7 +1267,7 @@ def home():
                         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
                         my_label = Label(ventana_configuracion, image=my_img).place(relwidth=1, relheight=1)
 
-                        def cambiar_fondo():                                
+                        def cambiar_fondo():
 
                                 archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt","w")
                                 fondo_pantalla=archivotexto_nombre_fondo_panatalla.write(str(clicked_fondo_pantalla.get()))
@@ -1246,27 +1283,27 @@ def home():
                         def size_selection():
                                 global size
                                 #election_size = Label(ventana_configuracion, text=clicked.get())
-                                if clicked.get() == "1366x768": 
-                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")            
+                                if clicked.get() == "1366x768":
+                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")
                                         archivotexto_nombre_resolucion_pantalla.write(str(1))
                                         archivotexto_nombre_resolucion_pantalla.close()
                                 elif clicked.get() == "1920x1080":
-                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")            
+                                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt","w")
                                         archivotexto_nombre_resolucion_pantalla.write(str(0))
                                         archivotexto_nombre_resolucion_pantalla.close()
-                                
+
                                 messagebox.showinfo("REABSE"," La resolucion de pantalla ha sido cambiado a \n\n"+clicked.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
                                 ventana_configuracion.destroy()
                                 configuracion()
 
-                        
+
 #2.3.2 ------------------------------- Titulo Modo Lectura -------------------------------------------
                         titulo=Label(ventana_configuracion, text="SET CONFIGURATION REBASE", font=("Bookman Old Style",round(30)),bg="#e8dabd")
-                        titulo.place(x=round(530), y=(30))      
+                        titulo.place(x=round(530), y=(30))
 
                         clicked = StringVar()
                         clicked.set(size_options[0])
-                        
+
                         drop= OptionMenu(ventana_configuracion, clicked, *size_options)
                         drop.place(x=round(400), y=round(500))
                         drop.config(width=round(60), font=("Bookman Old Style",round(14),"bold"))
@@ -1277,17 +1314,17 @@ def home():
                         drop_fondo_pantalla=OptionMenu(ventana_configuracion,clicked_fondo_pantalla, *lista_fondo_pantalla)
                         drop_fondo_pantalla.place(x=round(400), y=round(300))
                         drop_fondo_pantalla.config(width=round(70), font=("Book Old Style", round(14),"bold"))
-                
+
 #2.3.3 ------------------------------- Botones Configuración -------------------------------------------
 
                         boton_aplicar_fondo_pantalla=Button(ventana_configuracion, text=("APPLY WALLPAPER"),font=("Bookman Old Style",round(14),"bold"),width=round(20),height=round(1), command=cambiar_fondo)
                         boton_aplicar_fondo_pantalla.place(x=round(1300), y=round(300))
-                        
+
                         boton_read=Button(ventana_configuracion, text=("READ BOOK/TEXT"),font=("Bookman Old Style",round(14),"bold"),width=round(20),height=round(1), command=window_read)
                         boton_read.place(x=round(520), y=round(750))
                         boton_study=Button(ventana_configuracion, text=("STUDY ENGLISH"),font=("Bookman Old Style",round(14),"bold"), width=round(20),height=round(1),command=window_study)
                         boton_study.place(x=round(920), y=round(750))
-                        
+
                         button_quit = Button(ventana_configuracion, text="Exit Program",font=("Bookman Old Style",round(12),"bold") , command=root.quit)
                         button_quit.place(x=round(795), y=round(850))
 
@@ -1296,7 +1333,7 @@ def home():
 
 #2.3.4 ------------------------------- Cuadro de texto Configuración -------------------------------------------
 
-                        
+
 
 #2.3.5------------------------------- Etiquetas Ventana Configuración -------------------------------------------
 
@@ -1307,7 +1344,7 @@ def home():
                         texto_set_image_label=Label(ventana_configuracion,text="Set Resolution Here: ")
                         texto_set_image_label.place(x=round(100),y=round(500))
                         texto_set_image_label.config(bg="#FACC2E", width=round(20), font=("Bookman Old Style",round(14),"bold"))
-                        
+
 #------------------------------- Botones Funciones Ventana inicio -------------------------------------------
         if size == 1:
                 boton_written=Button(background_label, text=("READ BOOK/TEXT"),font=("Bookman Old Style",round(12),"bold"),width=round(22),height=round(2), command=window_read)
@@ -1320,7 +1357,7 @@ def home():
                 boton_configuracio=Button(background_label, text="SET CONFIGURATION",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=configuracion)
                 boton_configuracio.place(x=530, y=580)
                 boton_configuracio.config(bg="#FACC2E")
-        else:        
+        else:
                 boton_written=Button(background_label, text=("READ BOOK/TEXT"),font=("Bookman Old Style",round(14),"bold"),width=round(22),height=round(2), command=window_read)
                 boton_written.place(x=350, y=450)
                 boton_listen=Button(background_label, text=("STUDY ENGLISH"),font=("Bookman Old Style",round(14),"bold"), width=round(22),height=round(2),command=window_study)
