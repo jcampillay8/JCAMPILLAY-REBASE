@@ -963,18 +963,16 @@ def home():
                                 my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
                                 my_label = Label(ventana_studios, image=my_img).place(relwidth=1, relheight=1)
                                 
-                                grupo_actual=open("memory/memoria_ultimo_grupow","r")
-                                grw=grupo_actual.read()
+                                grupo_actual=open("memory/memoria_ultimo_grupos.txt","r")
+                                grs=grupo_actual.read()
                                 grupo_actual.close()
 
                                 archivo_contador_s=open("memory/contador_s.txt","r")
                                 cont_w=archivo_contador_s.read()
                                 archivo_contador_s.close()
 
-                                camino_palabra= str("memory/f_sentences/"+grw)
+                                camino_palabra= str("memory/f_sentences/"+grs)
                                 archivo_palabras=open(camino_palabra,"r")
-                                
-                                lista_palabras_temporal=[]
                                 
                                 lista_palabras=archivo_palabras.readlines()
                                 lista_formateada=[]
@@ -994,7 +992,7 @@ def home():
 
                                         num_aleatorio=len(lista_respaldo)                                        
                                         
-                                        while respuesta_correcta.get() == "":                                                
+                                        while respuesta_espanol.get() == "":                                                
                                                 try:
                                                         aleatorio_lista = random.randint(0,int(num_aleatorio))  
                                                         sacar=lista_respaldo[aleatorio_lista]
@@ -1008,8 +1006,8 @@ def home():
                                                                 contador.insert(0,int(aleatorio_lista))
                                                                 
                                                         print("hola")
-                                                        respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
-                                                        respuesta_correcta.configure(fg="black")
+                                                        respuesta_espanol.insert(0,lista_respaldo[int(contador.get())])
+                                                        respuesta_espanol.configure(fg="black")
                                                                                                                 
                                                 except:
                                                         respuesta_correcta.insert(0,"")
@@ -1070,13 +1068,13 @@ def home():
                                         estudio_grupo=abrir_grupo.read()
                                         abrir_grupo.close
 
-                                        grupo_contiene=open("memory/memoria_ultimo_grupow","w")
+                                        grupo_contiene=open("memory/memoria_ultimo_grupos.txt","w")
                                         grupo_contiene.write(clicked_groups.get())
                                         grupo_contiene.close()
 
                                         messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_groups.get()+"\n\n")
-                                        ventana_studio.destroy()
-                                        window_words()
+                                        ventana_studios.destroy()
+                                        window_sentences()
                                 
                                 def hablarNormal():
                                         engine = pyttsx3.init()
@@ -1097,7 +1095,7 @@ def home():
                                 def guardar_cambios():
                                         
                                         grupo_viejo=str(cuadro_grupo.get())
-                                        camino_grupo_estudio="memory/f_words/"+grupo_viejo
+                                        camino_grupo_estudio="memory/f_sentences/"+grupo_viejo
                                         text_file2=open(camino_grupo_estudio,"w")
                                         for j in lista_formateada:
                                                 text_file2.write("\n")
@@ -1168,7 +1166,7 @@ def home():
                                 cuadro_grupo=Entry(ventana_studios, width=round(35), borderwidth=round(5), justify="center")
                                 cuadro_grupo.place(x=round(600), y=round(200))
                                 cuadro_grupo.config(font=("Bookman Old Style",round(12),"bold"))
-                                cuadro_grupo.insert(0,grw)
+                                cuadro_grupo.insert(0,grs)
 
                                 respuesta_propia=Entry(ventana_studios, width=round(90), borderwidth=round(5), justify="center")
                                 respuesta_propia.place(x=round(420), y=round(480))
