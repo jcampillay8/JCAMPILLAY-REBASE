@@ -9,6 +9,7 @@ import pyttsx3
 
 
 root = Tk()
+
 root.title("READ ENGLISH BOOK AND STUDY ENGLISH (REBASE)")
 root.resizable(width=True,height=True)
 root.iconbitmap("North2.ico")
@@ -38,6 +39,7 @@ lista_textos=os.listdir(r"texto_lectura")
 lista_fondo_pantalla=os.listdir(r"images")
 group_w=os.listdir(r"memory\f_words")
 grupo_w2=os.listdir(r"memory\f_words")
+group_s=os.listdir(r"memory\f_sentences")
 
 
 if size == 1:
@@ -73,8 +75,8 @@ def home():
                 def window_read():
                         global my_img
                         global save_words_setence_options
-                        global screen_size                       
-
+                        global screen_size
+                        
                         root.withdraw()
                         ventana_lectura=Toplevel()
                         if  size == 1:
@@ -84,8 +86,8 @@ def home():
 
                         ventana_lectura.geometry(screen_size)
                         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
-                        my_label = Label(ventana_lectura, image=my_img).place(relwidth=1, relheight=1)
-
+                        my_label = Label(ventana_lectura, image=my_img).place(relwidth=1, relheight=1)                     
+                        
                         texto_contiene_titulo=open("memory/titulo_texto.txt",encoding="utf8")
                         almacena_titulo=texto_contiene_titulo.read()
                         texto_contiene_titulo.close()
@@ -109,6 +111,7 @@ def home():
                         drop_text.config(width=round(20), font=("Book Old Style", round(10),"bold"))
 
 #1.1.2 ------------------------------- Funciones Modo Lectura -------------------------------------------
+                        
                         def texto_inicio():
                                 num_lista=contador.get()
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
@@ -116,9 +119,10 @@ def home():
                                 for line in abrir_texto_inicio:                
                                         line=line.split(".")
                                         line=line[int(num_lista)]
-                                        line=line[1:]
+                                        line=line.strip()
                                         texto_ENG.insert(END, line)
-                                abrir_texto_inicio.close
+                                abrir_texto_inicio.close                        
+
                         def ingresar_texto():
                                 texto_nuevo=str(clicked_texto.get())
                                 camino_texto_lectura="texto_lectura/"+texto_nuevo
@@ -176,7 +180,7 @@ def home():
                                 for line in abrir_texto_inicio:                
                                         line=line.split(".")
                                         line=line[siguiente]
-                                        line=line[1:]
+                                        line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
 
@@ -197,7 +201,7 @@ def home():
                                 for line in abrir_texto_inicio:                
                                         line=line.split(".")
                                         line=line[anterior]
-                                        line=line[1:]
+                                        line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
                         
@@ -219,7 +223,7 @@ def home():
                                 save_words_setence_options=["SENTENCE","WORD"]
                                 if clicked_read.get() == "SENTENCE":
                                         
-                                        sentencia_para_estudiar=open("memory/sentencias_para_estudiar.txt","w")
+                                        sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","w")
                                         sentencia_para_estudiar.write("\n")
                                         sentencia_para_estudiar.write(cuadro_save_words_setence.get())
                                         messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida ")
@@ -426,10 +430,12 @@ def home():
                 titulo3.place(x=600, y=130)                
 #2.1.1 ------------------------------- Ventana Modo Lectura -------------------------------------------
                 def window_read():
+                        
                         global my_img
                         global save_words_setence_options
-                        global screen_size                       
+                        global screen_size
 
+                        
                         root.withdraw()
                         ventana_lectura=Toplevel()
                         if  size == 1:
@@ -471,7 +477,7 @@ def home():
                                 for line in abrir_texto_inicio:                
                                         line=line.split(".")
                                         line=line[int(num_lista)]
-                                        line=line[1:]
+                                        line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
                         def ingresar_texto():
@@ -531,7 +537,7 @@ def home():
                                 for line in abrir_texto_inicio:                
                                         line=line.split(".")
                                         line=line[siguiente]
-                                        line=line[1:]
+                                        line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
 
@@ -552,7 +558,7 @@ def home():
                                 for line in abrir_texto_inicio:                
                                         line=line.split(".")
                                         line=line[anterior]
-                                        line=line[1:]
+                                        line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
                         
@@ -574,7 +580,7 @@ def home():
                                 save_words_setence_options=["SENTENCE","WORD"]
                                 if clicked_read.get() == "SENTENCE":
                                         
-                                        sentencia_para_estudiar=open("memory/sentencias_para_estudiar.txt","w")
+                                        sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","w")
                                         sentencia_para_estudiar.write("\n")
                                         sentencia_para_estudiar.write(cuadro_save_words_setence.get())
                                         messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida ")
@@ -738,13 +744,7 @@ def home():
                                                         print(filtro)        
                                                         if filtro == False:
                                                                 respuesta_correcta.insert(0,"")
-                                                                """control= 0
-                                                                while control == 0:
-                                                                        aleatorio_lista=random.randint(0,int(num_aleatorio))
-                                                                        sacar = lista_respaldo[aleatorio_lista]
-                                                                        filtro = (sacar in lista_formateada)
-                                                                        if filtro == False:
-                                                                                control += 1"""
+                                                                
                                                         else:
                                                                 contador.insert(0,int(aleatorio_lista))
                                                                 
@@ -839,22 +839,6 @@ def home():
                                         engine.say(respuesta_correcta.get())
                                         engine.runAndWait()
                                 
-                                """def recoger_enviar_otrogrupo():
-                                        w_num=contador.get()
-                                        grupo_nuevo=str(clicked_enviar_otro_grupo.get())
-                                        camino_grupo_estudio="memory/f_words/"+grupo_nuevo
-                                        text_file=open(camino_grupo_estudio,"a")
-                                        text_file.write("\n")
-                                        text_file.write(lista_respaldo[int(w_num)])
-                                        text_file.close
-                                        #lista_palabras_temporal.append(lista_formateada[int(w_num)])
-                                        for i in lista_formateada:
-                                                if i == lista_respaldo[int(w_num)]:
-                                                        del lista_formateada[i]
-                                                
-                                        print(lista_formateada)"""
-
-
                                 def guardar_cambios():
                                         
                                         grupo_viejo=str(cuadro_grupo.get())
@@ -864,8 +848,7 @@ def home():
                                                 text_file2.write("\n")
                                                 text_file2.write(j)
                                         text_file2.close
-                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")
-                                                                                      
+                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")                                                                                      
 
 #--------------------------------- ------------CLICKED VENTANA PALABRAS --------------------------------------------- 
 
@@ -873,23 +856,23 @@ def home():
                                 clicked_groupw.set(group_w[0])
 
                                 drop_read_save=OptionMenu(ventana_studiow,clicked_groupw, *group_w)
-                                drop_read_save.place(x=round(700),y=round(200))
+                                drop_read_save.place(x=round(740),y=round(145))
                                 drop_read_save.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 
                                 clicked_enviar_otro_grupo=StringVar()
                                 clicked_enviar_otro_grupo.set(group_w[0])
 
                                 drop_enviar_palabra=OptionMenu(ventana_studiow,clicked_groupw, *group_w)
-                                drop_enviar_palabra.place(x=round(730),y=round(740))
+                                drop_enviar_palabra.place(x=round(710),y=round(740))
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
                                 
                                 button_guardar_cambios=Button(ventana_studiow, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
-                                button_guardar_cambios.place(x=1030, y=740)
+                                button_guardar_cambios.place(x=1000, y=740)
                                 button_guardar_cambios.config(bg="#FACC2E")
 
                                 button_cambiar_grupo=Button(ventana_studiow, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
-                                button_cambiar_grupo.place(x=530, y=740)
+                                button_cambiar_grupo.place(x=500, y=740)
                                 button_cambiar_grupo.config(bg="#FACC2E")
                                 
                                 button_hablar_normal=Button(ventana_studiow, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarNormal)
@@ -898,14 +881,14 @@ def home():
                                 button_hablar_lento=Button(ventana_studiow, text="Speak Slow",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarlento)
                                 button_hablar_lento.place(x=round(1270), y=round(540))
 
-                                button_dar_aleatorio=Button(ventana_studiow, text="Give Random",font=("Bookman Old Style",round(10),"bold") , command=dar_aleatorio)
-                                button_dar_aleatorio.place(x=round(755), y=round(425))
+                                button_dar_aleatorio=Button(ventana_studiow, text="GIVE RANDOM",font=("Bookman Old Style",round(12),"bold") , command=dar_aleatorio)
+                                button_dar_aleatorio.place(x=round(735), y=round(425))
 
                                 button_elegir_grupo=Button(ventana_studiow, text="Choose Group",font=("Bookman Old Style",round(10),"bold") , command=cambiar_grupo)
-                                button_elegir_grupo.place(x=round(550), y=round(200))
+                                button_elegir_grupo.place(x=round(620), y=round(145))
 
-                                button_ver_respuesta=Button(ventana_studiow, text="SEE ANSWER",font=("Bookman Old Style",round(10),"bold") , command=ver_respuesta)
-                                button_ver_respuesta.place(x=round(750), y=round(550))
+                                button_ver_respuesta=Button(ventana_studiow, text="SEE ANSWER",font=("Bookman Old Style",round(12),"bold") , command=ver_respuesta)
+                                button_ver_respuesta.place(x=round(735), y=round(550))
 
                                 boton_ver_respuesta_espanol=Button(ventana_studiow, text="VER TRADDUCIÓN",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
                                 boton_ver_respuesta_espanol.place(x=500, y=620)
@@ -915,7 +898,7 @@ def home():
                                 button_quit.place(x=round(740), y=round(850))
 #------------------------------------------- ETIQUETAS VENTANA PALABRAS ------------------------------------------
                                 titulo=Label(ventana_studiow, text="WORKING VOCABULARY", font=("Bookman Old Style",round(30)),bg="#e8dabd")
-                                titulo.place(x=round(500), y=(70))
+                                titulo.place(x=round(570), y=(70))
 
                                 etiqueta_respuesta_propia=Label(ventana_studiow, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
                                 etiqueta_respuesta_propia.place(x=round(370), y=(470))
@@ -926,8 +909,8 @@ def home():
                                 meaning_ENG=Text(ventana_studiow, width=round(125), height=round(5), font=("Helvetica",round(13),"bold"),borderwidth=round(5))
                                 meaning_ENG.place(x=round(240),y=round(280))
 
-                                cuadro_grupo=Entry(ventana_studiow, width=round(25), borderwidth=round(5), justify="center")
-                                cuadro_grupo.place(x=round(690), y=round(145))
+                                cuadro_grupo=Entry(ventana_studiow, width=round(35), borderwidth=round(5), justify="center")
+                                cuadro_grupo.place(x=round(600), y=round(200))
                                 cuadro_grupo.config(font=("Bookman Old Style",round(12),"bold"))
                                 cuadro_grupo.insert(0,grw)
 
@@ -965,18 +948,260 @@ def home():
                         def window_sentences():
                                 global my_img
                                 global save_words_setence_options
-                                global screen_size                       
+                                global screen_size  
+                                global group_s                     
 
+                                ventana_studio.destroy()
                                 root.withdraw()
-                                ventana_studio=Toplevel()
+                                ventana_studios=Toplevel()
                                 if  size == 1:
                                         screen_size="1366x768"
                                 elif size == 0:
                                         screen_size="1680x1050"                        
 
-                                ventana_studio.geometry(screen_size)
+                                ventana_studios.geometry(screen_size)
                                 my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
-                                my_label = Label(ventana_studio, image=my_img).place(relwidth=1, relheight=1)
+                                my_label = Label(ventana_studios, image=my_img).place(relwidth=1, relheight=1)
+                                
+                                grupo_actual=open("memory/memoria_ultimo_grupow","r")
+                                grw=grupo_actual.read()
+                                grupo_actual.close()
+
+                                archivo_contador_s=open("memory/contador_s.txt","r")
+                                cont_w=archivo_contador_s.read()
+                                archivo_contador_s.close()
+
+                                camino_palabra= str("memory/f_words/"+grw)
+                                archivo_palabras=open(camino_palabra,"r")
+                                
+                                lista_palabras_temporal=[]
+                                
+                                lista_palabras=archivo_palabras.readlines()
+                                lista_formateada=[]
+                                for elemento in lista_palabras:
+                                        linea =elemento.strip("\n")
+                                        lista_formateada.append(linea)
+                                
+                                lista_respaldo=lista_formateada[:]
+
+#2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
+                                def dar_aleatorio():
+                                        meaning_ENG.delete(1.0,END)
+                                        respuesta_propia.delete(0,END)
+                                        respuesta_corta.delete(0,END)
+                                        respuesta_correcta.delete(0,END)
+                                        respuesta_espanol.delete(0,END)
+                                        contador.delete(0,END)
+
+                                        num_aleatorio=len(lista_respaldo)                                        
+                                        
+                                        while respuesta_correcta.get() == "":                                                
+                                                try:
+                                                        aleatorio_lista = random.randint(0,int(num_aleatorio))  
+                                                        sacar=lista_respaldo[aleatorio_lista]
+                                                        filtro=(sacar in lista_formateada)
+                                                        print(sacar)
+                                                        print(filtro)        
+                                                        if filtro == False:
+                                                                respuesta_correcta.insert(0,"")
+                                                                
+                                                        else:
+                                                                contador.insert(0,int(aleatorio_lista))
+                                                                
+                                                        print("hola")
+                                                        respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
+                                                        respuesta_correcta.configure(fg="black")
+                                                        
+                                                        dictionary_word=PyDictionary()
+                                                        recoger_respuesta_correcta=respuesta_correcta.get()
+                                                        result=dictionary_word.meaning(recoger_respuesta_correcta)
+                                                        meaning_ENG.insert(END,str(result))
+                                                except:
+                                                        respuesta_correcta.insert(0,"")
+                                                
+                                        print("FIN")
+                                                #if contador.get() != "" or contador.get()==str(num_aleatorio):
+                                                
+
+
+                                def recoger_enviar_otrogrupo():
+                                        w_num=contador.get()
+                                        grupo_nuevo=str(clicked_enviar_otro_grupo.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_nuevo
+                                        text_file=open(camino_grupo_estudio,"a")
+                                        text_file.write("\n")
+                                        text_file.write(lista_respaldo[int(w_num)])
+                                        text_file.close
+                                        #lista_palabras_temporal.append(lista_formateada[int(w_num)])
+                                        for i in lista_formateada:
+                                                if i == lista_respaldo[int(w_num)]:
+                                                        lista_formateada.remove(i)                                                
+                                        print(lista_formateada)
+                                        print(lista_respaldo)        
+                                        
+                                def ver_respuesta():
+                                        recoger_respuesta_propia=respuesta_propia.get()
+                                        recoger_respuesta_correcta=respuesta_correcta.get()
+                                        if recoger_respuesta_correcta == recoger_respuesta_propia:
+                                                respuesta_corta.insert(0,"CORRECT")
+                                                respuesta_corta.configure(bg="#33FF51")
+                                                respuesta_correcta.configure(fg="black")
+                                        else:
+                                                respuesta_corta.insert(0,"WRONG")
+                                                respuesta_corta.configure(bg="#FF3333")
+                                                respuesta_correcta.configure(fg="black")
+
+                                def ver_traduccion():
+                                        control=0
+                                        while control == 0:
+                                                num_lista=contador.get()                                                
+                                                try:
+                                                        line2= lista_formateada[int(num_lista)]
+                                                        linea_Esp=line2
+                                                        translator=google_translator()
+                                                        translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+                                                        respuesta_espanol.insert(0,translation)
+                                                except:
+                                                        translation = None
+                                                recoger_pregunta=respuesta_espanol.get()
+                                                num_lista2=contador.get()
+                                                if recoger_pregunta!="" or num_lista2==str(len(lista_formateada)):
+                                                        control+=1
+
+                                def cambiar_grupo():
+                                        grupo_nuevo=str(clicked_groupw.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_nuevo
+                                        abrir_grupo=open(camino_grupo_estudio, encoding="utf8")
+                                        estudio_grupo=abrir_grupo.read()
+                                        abrir_grupo.close
+
+                                        grupo_contiene=open("memory/memoria_ultimo_grupow","w")
+                                        grupo_contiene.write(clicked_groupw.get())
+                                        grupo_contiene.close()
+
+                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_groupw.get()+"\n\n")
+                                        ventana_studio.destroy()
+                                        window_words()
+                                
+                                def hablarNormal():
+                                        engine = pyttsx3.init()
+                                        voices = engine.getProperty("voices")
+                                        engine.setProperty("voice", voices[1].id)
+                                        engine.setProperty("rate", 140)
+                                        engine.say(respuesta_correcta.get())
+                                        engine.runAndWait()
+
+                                def hablarlento():
+                                        engine = pyttsx3.init()
+                                        voices = engine.getProperty("voices")
+                                        engine.setProperty("voice", voices[1].id)
+                                        engine.setProperty("rate", 80)
+                                        engine.say(respuesta_correcta.get())
+                                        engine.runAndWait()
+                                
+                                def guardar_cambios():
+                                        
+                                        grupo_viejo=str(cuadro_grupo.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_viejo
+                                        text_file2=open(camino_grupo_estudio,"w")
+                                        for j in lista_formateada:
+                                                text_file2.write("\n")
+                                                text_file2.write(j)
+                                        text_file2.close
+                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")                                                                                      
+
+#--------------------------------- ------------CLICKED VENTANA PALABRAS --------------------------------------------- 
+
+                                clicked_groups=StringVar()
+                                clicked_groups.set(group_s[0])
+
+                                drop_read_save=OptionMenu(ventana_studios,clicked_groups, *group_s)
+                                drop_read_save.place(x=round(740),y=round(145))
+                                drop_read_save.config(width=round(25), font=("Book Old Style", round(12),"bold"))
+
+                                clicked_enviar_otro_grupo=StringVar()
+                                clicked_enviar_otro_grupo.set(group_s[0])
+
+                                drop_enviar_palabra=OptionMenu(ventana_studios,clicked_groups, *group_s)
+                                drop_enviar_palabra.place(x=round(710),y=round(740))
+                                drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
+# --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
+                                
+                                button_guardar_cambios=Button(ventana_studios, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
+                                button_guardar_cambios.place(x=1000, y=740)
+                                button_guardar_cambios.config(bg="#FACC2E")
+
+                                button_cambiar_grupo=Button(ventana_studios, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
+                                button_cambiar_grupo.place(x=500, y=740)
+                                button_cambiar_grupo.config(bg="#FACC2E")
+                                
+                                button_hablar_normal=Button(ventana_studios, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarNormal)
+                                button_hablar_normal.place(x=round(1270), y=round(460))
+
+                                button_hablar_lento=Button(ventana_studios, text="Speak Slow",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarlento)
+                                button_hablar_lento.place(x=round(1270), y=round(540))
+
+                                button_dar_aleatorio=Button(ventana_studios, text="GIVE RANDOM",font=("Bookman Old Style",round(12),"bold") , command=dar_aleatorio)
+                                button_dar_aleatorio.place(x=round(735), y=round(425))
+
+                                button_elegir_grupo=Button(ventana_studios, text="Choose Group",font=("Bookman Old Style",round(10),"bold") , command=cambiar_grupo)
+                                button_elegir_grupo.place(x=round(620), y=round(145))
+
+                                button_ver_respuesta=Button(ventana_studios, text="SEE ANSWER",font=("Bookman Old Style",round(12),"bold") , command=ver_respuesta)
+                                button_ver_respuesta.place(x=round(735), y=round(550))
+
+                                boton_ver_respuesta_espanol=Button(ventana_studios, text="VER TRADDUCIÓN",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
+                                boton_ver_respuesta_espanol.place(x=500, y=620)
+                                boton_ver_respuesta_espanol.config(bg="#FACC2E")
+                                
+                                button_quit = Button(ventana_studios, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                                button_quit.place(x=round(740), y=round(850))
+#------------------------------------------- ETIQUETAS VENTANA PALABRAS ------------------------------------------
+                                titulo=Label(ventana_studios, text="WORKING VOCABULARY", font=("Bookman Old Style",round(30)),bg="#e8dabd")
+                                titulo.place(x=round(570), y=(70))
+
+                                etiqueta_respuesta_propia=Label(ventana_studios, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
+                                etiqueta_respuesta_propia.place(x=round(370), y=(470))
+
+                                etiqueta_respuesta_correcta=Label(ventana_studios, text="CURRENT WORD", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
+                                etiqueta_respuesta_correcta.place(x=round(1000), y=(470))
+#--------------------------------------------CUADRO DE TEXTO VENTANA PALABRAS---------------------------------------------------
+                                meaning_ENG=Text(ventana_studios, width=round(125), height=round(5), font=("Helvetica",round(13),"bold"),borderwidth=round(5))
+                                meaning_ENG.place(x=round(240),y=round(280))
+
+                                cuadro_grupo=Entry(ventana_studios, width=round(35), borderwidth=round(5), justify="center")
+                                cuadro_grupo.place(x=round(600), y=round(200))
+                                cuadro_grupo.config(font=("Bookman Old Style",round(12),"bold"))
+                                cuadro_grupo.insert(0,grw)
+
+                                respuesta_propia=Entry(ventana_studios, width=round(25), borderwidth=round(5), justify="center")
+                                respuesta_propia.place(x=round(350), y=round(500))
+                                respuesta_propia.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_corta=Entry(ventana_studios, width=round(15), borderwidth=round(5), justify="center")
+                                respuesta_corta.place(x=round(720), y=round(500))
+                                respuesta_corta.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_correcta=Entry(ventana_studios, width=round(25), borderwidth=round(5), justify="center")
+                                respuesta_correcta.place(x=round(950), y=round(500))
+                                respuesta_correcta.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_espanol=Entry(ventana_studios, width=round(35), borderwidth=round(5), justify="center")
+                                respuesta_espanol.place(x=round(700), y=round(620))
+                                respuesta_espanol.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                contador = Entry(ventana_studios, width=5, borderwidth=5, justify="center")
+                                contador.place(x=round(775) , y=round(465))
+                                contador.config(font=("Bookman Old Style",round(10),"bold"))
+                                contador.insert(0,cont_w)
+#------------------------------------- funciones/Botones Consulta Ventana Sentencias -------------------------------------
+                                
+                                def consulta_elegir_grupo():
+                                        messagebox.showinfo("REABSE", "Hola Mundo!")
+                                
+                                button_consulta1 = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
+                                button_consulta1.place(x=round(1010), y=round(200))
+                                button_consulta1.config(bg="#0A43B4", fg="white")
 
 
 #2.2.1--------------------------------------- Ventana Seleccion Modo Estudio ------------------------------------------------------------------
