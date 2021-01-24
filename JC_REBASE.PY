@@ -9,6 +9,7 @@ import random
 import pyttsx3
 import pyaudio
 import time
+import webbrowser
 
 
 root = Tk()
@@ -672,6 +673,7 @@ def home():
                         global save_words_setence_options
                         global screen_size
 
+                        #ventana_configuracion.destroy()
                         root.withdraw()
                         ventana_studio=Toplevel()
                         if  size == 1:
@@ -1116,25 +1118,21 @@ def home():
                                                 text_file2.write(j)
                                         text_file2.close
                                         messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")
-
+                                
                                 def hablar_respuesta():
-
-                                        cuadro_speak.insert(0,"SPEAK!")
-                                        cuadro_speak.configure(bg="#33FF51")
-
+                                        #cuadro_speak.insert(0,"SPEAK!")
+                                        #cuadro_speak.configure(bg="#33FF51")                                  
+                                        #if cuadro_speak.get=="SPEAK!":
+                                        r = sr.Recognizer()
+                                        with sr.Microphone() as source:
+                                                r.adjust_for_ambient_noise(source)
+                                                print("Say something!")
+                                                audio = r.listen(source)
                                         try:
-                                                r = sr.Recognizer()
-                                                with sr.Microphone() as source:
-                                                        r.adjust_for_ambient_noise(source)
-                                                        print("Say something!")
-                                                        audio = r.listen(source)
-                                                try:
-                                                        text = r.recognize_google(audio)
-                                                        respuesta_propia.insert(0,text)
-                                                except :
-                                                        respuesta_propia.insert(0,"Sorry could not recognize your voice")
-                                        except:
-                                                print("None")
+                                                text = r.recognize_google(audio)
+                                                respuesta_propia.insert(0,text)
+                                        except :
+                                                respuesta_propia.insert(0,"Sorry could not recognize your voice")
 
 #--------------------------------- ------------CLICKED VENTANA PALABRAS ---------------------------------------------
 
@@ -1222,9 +1220,9 @@ def home():
                                 contador.config(font=("Bookman Old Style",round(10),"bold"))
                                 contador.insert(0,cont_w)
 
-                                cuadro_speak = Entry(ventana_studios, width=8, borderwidth=5, justify="center")
-                                cuadro_speak.place(x=round(700) , y=round(400))
-                                cuadro_speak.config(font=("Bookman Old Style",round(10),"bold"))
+                                #cuadro_speak = Entry(ventana_studios, width=8, borderwidth=5, justify="center")
+                                #cuadro_speak.place(x=round(700) , y=round(400))
+                                #cuadro_speak.config(font=("Bookman Old Style",round(10),"bold"))
 #------------------------------------- funciones/Botones Consulta Ventana Sentencias -------------------------------------
 
                                 def consulta_elegir_grupo():
@@ -1344,7 +1342,58 @@ def home():
                         texto_set_image_label=Label(ventana_configuracion,text="Set Resolution Here: ")
                         texto_set_image_label.place(x=round(100),y=round(500))
                         texto_set_image_label.config(bg="#FACC2E", width=round(20), font=("Bookman Old Style",round(14),"bold"))
+# 2.4.6---------------------------------------Ventena presentacion ---------------------------------------------------------------------------------------------------------
+                def presentacion():
+                        global my_img
 
+                        root.withdraw()
+                        ventana_presentacion=Toplevel()
+                        
+                        
+                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt",encoding="utf8")
+                        resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.read()
+                        archivotexto_nombre_resolucion_pantalla.close()
+
+                        if resolucion_pantalla == 1:
+                                screen_size="1366x768"
+                        elif resolucion_pantalla == 0:
+                                screen_size="1920x1080"
+
+                        ventana_presentacion.geometry("1920x1080")
+                        archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
+                        fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
+                        archivotexto_nombre_fondo_panatalla.close()
+
+                        
+
+                        my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                        my_label = Label(ventana_presentacion, image=my_img).place(relwidth=1, relheight=1)
+
+                        mi_foto =ImageTk.PhotoImage(Image.open("img\Foto_Perfil.png"))
+                        foto_label= Label(ventana_presentacion, image=mi_foto)
+                        foto_label.photo= mi_foto
+                        foto_label.place(x=220, y=220)
+
+                        def my_cv():
+                                webbrowser.open("https://jaimecampillayresume.herokuapp.com/")
+
+                        my_cv=Button(ventana_presentacion,text="VER MI RESUME",font=("Bookman Old Style",round(12),"bold"), width=round(20), borderwidth=0 , command=my_cv)
+                        my_cv.place(x=220, y=460)
+                        my_cv.config(bg="#FACC2E") 
+
+                        button_quit = Button(ventana_presentacion, text="SALIR PROGRAMA",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                        button_quit.place(x=750, y=950) 
+
+                        titulo=Label(ventana_presentacion, text="PRESENTACIÓN", font=("Bookman Old Style",round(30)),bg="#e8dabd")
+                        titulo.place(x=round(650), y=(30))
+                        titulo=Label(ventana_presentacion, text='Hola!\nMi nombre es Jaime Gabriel Campillay Rojas\nDe profesión Ingeniero Civil Industrial con Magister en Ingenieria Industrial \ny de Sistemas\n\nEl programa actual es el resultado de un proceso de reflexión, aprendizaje y \nmuchas horas de estudio de Python que comenzó en el mes de octubre\ndel año 2020 cuando quedé desempleado por necesidades de la empresa. \n\nHasta antes de la fecha mencionada no me había dado cuenta lo fascinante\ndel mundo de la programación, y ahora no tengo dudas que quiero algún \ndía ganarme la vida como Programador. \n\nPor tanto te presento este proyecto que estás viendo llamado REBASE que \nbusca ayudarte a leer y estudiar en ingles con el fin de aprender este idioma,\na la vez que en lo personal me permitió aventurarme en el desafío que implicó\naprender este lenguaje de programación, del cual no sabia nada en ese\nmomento.\n\nCorreo: jcampillayworks@gmail.com\n\nFecha Término REBASE: 24/01/2021', font=("Bookman Old Style",round(16)),bg="#e8dabd", width=80, height=30, justify="left")
+                        titulo.place(x=round(450), y=200)
+                        
+
+#---------------------------------------------- Boton Presentacion ----------------------------------------------------------------------                        
+                boton_configuracio=Button(background_label, text="PRESENTATION",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=presentacion)
+                boton_configuracio.place(x=770, y=775)
+                boton_configuracio.config(bg="#FACC2E")        
 #------------------------------- Botones Funciones Ventana inicio -------------------------------------------
         if size == 1:
                 boton_written=Button(background_label, text=("READ BOOK/TEXT"),font=("Bookman Old Style",round(12),"bold"),width=round(22),height=round(2), command=window_read)
