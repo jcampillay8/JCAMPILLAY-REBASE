@@ -1,0 +1,16 @@
+
+apple
+car
+bird
+banana
+watermelon
+dog
+airplane
+ship
+cat
+train
+orange
+horse
+bike
+pineapple
+fish

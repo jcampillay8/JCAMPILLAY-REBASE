@@ -761,30 +761,35 @@ def home():
                                         respuesta_correcta.delete(0,END)
                                         respuesta_espanol.delete(0,END)
                                         contador.delete(0,END)
+                                        respuesta_corta.config(bg="white")
 
                                         num_aleatorio=len(lista_respaldo)
+                                        if len(lista_formateada)>=1:
 
-                                        while respuesta_correcta.get() == "":
-                                                try:
-                                                        aleatorio_lista = random.randint(0,int(num_aleatorio))
-                                                        sacar=lista_respaldo[aleatorio_lista]
-                                                        filtro=(sacar in lista_formateada)
-                                                        
-                                                        if filtro == False:
+                                                while respuesta_correcta.get() == "":
+                                                        try:
+                                                                aleatorio_lista = random.randint(0,int(num_aleatorio))
+                                                                sacar=lista_respaldo[aleatorio_lista]
+                                                                filtro=(sacar in lista_formateada)
+                                                                
+                                                                if filtro == False:
+                                                                        respuesta_correcta.insert(0,"")
+
+                                                                else:
+                                                                        contador.insert(0,int(aleatorio_lista))
+
+                                                                respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
+                                                                respuesta_correcta.configure(fg="white")
+
+                                                                dictionary_word=PyDictionary()
+                                                                recoger_respuesta_correcta=respuesta_correcta.get()
+                                                                result=dictionary_word.meaning(recoger_respuesta_correcta)
+                                                                meaning_ENG.insert(END,str(result))
+                                                        except:
                                                                 respuesta_correcta.insert(0,"")
-
-                                                        else:
-                                                                contador.insert(0,int(aleatorio_lista))
-
-                                                        respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
-                                                        respuesta_correcta.configure(fg="black")
-
-                                                        dictionary_word=PyDictionary()
-                                                        recoger_respuesta_correcta=respuesta_correcta.get()
-                                                        result=dictionary_word.meaning(recoger_respuesta_correcta)
-                                                        meaning_ENG.insert(END,str(result))
-                                                except:
-                                                        respuesta_correcta.insert(0,"")
+                                        else:
+                                              respuesta_corta.insert(0,"NO HAY PALABRA")
+                                              respuesta_corta.configure(bg="#109FEC",fg="black")  
 
                                         
                                 def recoger_enviar_otrogrupo():
@@ -799,7 +804,7 @@ def home():
                                         for i in lista_formateada:
                                                 if i == lista_respaldo[int(w_num)]:
                                                         lista_formateada.remove(i)
-                                        
+                                        messagebox.showinfo("REBASE"," La palabra\n\n"+lista_respaldo[int(w_num)]+"\n\n ha sido enviada a "+clicked_enviar_otro_grupo.get())
 
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
@@ -816,9 +821,9 @@ def home():
                                 def ver_traduccion():
                                         control=0
                                         while control == 0:
-                                                num_lista=contador.get()
+                                                palabra_ingles=respuesta_correcta.get()
                                                 try:
-                                                        line2= lista_formateada[int(num_lista)]
+                                                        line2= palabra_ingles
                                                         linea_Esp=line2
                                                         translator=google_translator()
                                                         translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
@@ -884,7 +889,7 @@ def home():
                                 clicked_enviar_otro_grupo=StringVar()
                                 clicked_enviar_otro_grupo.set(group_w[0])
 
-                                drop_enviar_palabra=OptionMenu(ventana_studiow,clicked_groupw, *group_w)
+                                drop_enviar_palabra=OptionMenu(ventana_studiow,clicked_enviar_otro_grupo, *group_w)
                                 drop_enviar_palabra.place(x=round(710),y=round(740))
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------

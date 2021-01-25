@@ -1,8 +1,0 @@
-
-
-world
-metal
-city
-three
-cat
-bag
