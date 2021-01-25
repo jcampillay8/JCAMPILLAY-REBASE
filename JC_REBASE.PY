@@ -135,7 +135,7 @@ def home():
                                 texto_contiene_titulo2.write(clicked_texto.get())
                                 texto_contiene_titulo2.close()
 
-                                messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_texto.get()+"\n\n")
+                                messagebox.showinfo("REBASE"," El texto ha sido cambiado por \n\n"+clicked_texto.get()+"\n\n")
                                 ventana_lectura.destroy()
                                 window_read()
 
@@ -211,7 +211,7 @@ def home():
                                 dictionary_word=PyDictionary()
                                 meaning_word = dictionary_text.get()
                                 result=dictionary_word.meaning(meaning_word)
-                                messagebox.showinfo("REABSE"," DICTIONARY  \n\n"+str(result))
+                                messagebox.showinfo("REBASE"," DICTIONARY  \n\n"+str(result))
 
                         def page_marker():
 
@@ -227,14 +227,14 @@ def home():
                                         sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","w")
                                         sentencia_para_estudiar.write("\n")
                                         sentencia_para_estudiar.write(cuadro_save_words_setence.get())
-                                        messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida ")
+                                        messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_sentences.txt")
                                         sentencia_para_estudiar.close()
 
                                 elif clicked_read.get() == "WORD":
                                         palabra_para_estudiar=open("memory/f_words/new_words.txt","w")
                                         palabra_para_estudiar.write("\n")
                                         palabra_para_estudiar.write(cuadro_save_words_setence.get())
-                                        messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida ")
+                                        messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_words.txt ")
                                         palabra_para_estudiar.close()
 
                 #1.1.3 ------------------------------- Botones Modo Lectura -------------------------------------------
@@ -349,7 +349,7 @@ def home():
                                 #archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
                                 #fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
                                 #archivotexto_nombre_fondo_panatalla.close()
-                                messagebox.showinfo("REABSE"," El fondo de pantalla ha sido cambiado por \n\n"+clicked_fondo_pantalla.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
+                                messagebox.showinfo("REBASE"," El fondo de pantalla ha sido cambiado por \n\n"+clicked_fondo_pantalla.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
                                 ventana_configuracion.destroy()
                                 configuracion()
 
@@ -365,7 +365,7 @@ def home():
                                         archivotexto_nombre_resolucion_pantalla.write(str(0))
                                         archivotexto_nombre_resolucion_pantalla.close()
 
-                                messagebox.showinfo("REABSE"," La resolucion de pantalla ha sido cambiado a \n\n"+clicked.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
+                                messagebox.showinfo("REBASE"," La resolucion de pantalla ha sido cambiado a \n\n"+clicked.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
                                 ventana_configuracion.destroy()
                                 configuracion()
 
@@ -493,7 +493,7 @@ def home():
                                 texto_contiene_titulo2.write(clicked_texto.get())
                                 texto_contiene_titulo2.close()
 
-                                messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_texto.get()+"\n\n")
+                                messagebox.showinfo("REBASE"," El texto ha sido cambiado por \n\n"+clicked_texto.get()+"\n\n")
                                 ventana_lectura.destroy()
                                 window_read()
 
@@ -569,7 +569,7 @@ def home():
                                 dictionary_word=PyDictionary()
                                 meaning_word = dictionary_text.get()
                                 result=dictionary_word.meaning(meaning_word)
-                                messagebox.showinfo("REABSE"," DICTIONARY  \n\n"+str(result))
+                                messagebox.showinfo("REBASE"," DICTIONARY  \n\n"+str(result))
 
                         def page_marker():
 
@@ -582,17 +582,17 @@ def home():
                                 save_words_setence_options=["SENTENCE","WORD"]
                                 if clicked_read.get() == "SENTENCE":
 
-                                        sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","w")
+                                        sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","a")
                                         sentencia_para_estudiar.write("\n")
                                         sentencia_para_estudiar.write(cuadro_save_words_setence.get())
-                                        messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida ")
+                                        messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_sentences.txt")
                                         sentencia_para_estudiar.close()
 
                                 elif clicked_read.get() == "WORD":
-                                        palabra_para_estudiar=open("memory/f_words/new_words.txt","w")
+                                        palabra_para_estudiar=open("memory/f_words/new_words.txt","a")
                                         palabra_para_estudiar.write("\n")
                                         palabra_para_estudiar.write(cuadro_save_words_setence.get())
-                                        messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida ")
+                                        messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_words.txt")
                                         palabra_para_estudiar.close()
 
 #2.1.3 ------------------------------- Botones Modo Lectura -------------------------------------------
@@ -670,13 +670,13 @@ def home():
 #------------------------------------- funciones/Botones Consulta Ventana Palabras -------------------------------------
 
                         def consulta_elegir_grupo():
-                                messagebox.showinfo("REABSE", "Elige un texto de la lista desplegable\nluego le das click en aplicar y la eleccion se habrá cargado")
+                                messagebox.showinfo("REBASE", "Elige un texto de la lista desplegable\nluego le das click en aplicar y la eleccion se habrá cargado")
                         def consulta_page_marker():
-                                messagebox.showinfo("REABSE", "Guarda el numero de sentencia,\nasí puedes cerrar el programa y retormarlo más tarde")
+                                messagebox.showinfo("REBASE", "Guarda el numero de sentencia,\nasí puedes cerrar el programa y retormarlo más tarde")
                         def consulta_dictionary():
-                                messagebox.showinfo("REABSE", "Diccionario soporta solo palabras simples")
+                                messagebox.showinfo("REBASE", "Diccionario soporta solo palabras simples")
                         def consulta_save():
-                                messagebox.showinfo("REABSE", "Elige de la lista desplegable\n si guardarlo como una horación o como plabrta\n\nRecuerda que las plabras debe ser singular")
+                                messagebox.showinfo("REBASE", "Elige de la lista desplegable\n si guardarlo como una horación o como plabrta\n\nRecuerda que las plabras debe ser singular")
 
                         button_consulta1 = Button(ventana_lectura, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
                         button_consulta1.place(x=round(1010), y=round(200))
@@ -769,15 +769,13 @@ def home():
                                                         aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                         sacar=lista_respaldo[aleatorio_lista]
                                                         filtro=(sacar in lista_formateada)
-                                                        print(sacar)
-                                                        print(filtro)
+                                                        
                                                         if filtro == False:
                                                                 respuesta_correcta.insert(0,"")
 
                                                         else:
                                                                 contador.insert(0,int(aleatorio_lista))
 
-                                                        print("hola")
                                                         respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
                                                         respuesta_correcta.configure(fg="black")
 
@@ -788,11 +786,7 @@ def home():
                                                 except:
                                                         respuesta_correcta.insert(0,"")
 
-                                        print("FIN")
-                                                #if contador.get() != "" or contador.get()==str(num_aleatorio):
-
-
-
+                                        
                                 def recoger_enviar_otrogrupo():
                                         w_num=contador.get()
                                         grupo_nuevo=str(clicked_enviar_otro_grupo.get())
@@ -805,8 +799,7 @@ def home():
                                         for i in lista_formateada:
                                                 if i == lista_respaldo[int(w_num)]:
                                                         lista_formateada.remove(i)
-                                        print(lista_formateada)
-                                        print(lista_respaldo)
+                                        
 
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
@@ -848,8 +841,8 @@ def home():
                                         grupo_contiene.write(clicked_groupw.get())
                                         grupo_contiene.close()
 
-                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_groupw.get()+"\n\n")
-                                        ventana_studio.destroy()
+                                        messagebox.showinfo("REBASE"," El texto ha sido cambiado por \n\n"+clicked_groupw.get()+"\n\n")
+                                        ventana_studiow.destroy()
                                         window_words()
 
                                 def hablarNormal():
@@ -877,7 +870,7 @@ def home():
                                                 text_file2.write("\n")
                                                 text_file2.write(j)
                                         text_file2.close
-                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")
+                                        messagebox.showinfo("REBASE"," Los cambios han sido guardado\n\n")
 
 #--------------------------------- ------------CLICKED VENTANA PALABRAS ---------------------------------------------
 
@@ -970,14 +963,28 @@ def home():
                                 
                                 def consulta_sobre_concepto_grupo():
                                         messagebox.showinfo("REBASE", "Existe 4 archivos que te ayudaran a ordenar tu progreso y funciona de la siguiente manera:\n\nnew_words.txt: Aqui se almacenan las palabras que guardaste desde la ventana lectura, su objetivo agrupar palabras nuevas \npara el estudiante.\n\ngroup_1w.txt: Las palabras que ya dejan de ser novedosas para el estudiante pueden pasar al grupo 1 que son palabras \nque no se dominan pero se tiene un leve manejo.\n\ngroup_2w.txt: Aqui se asignan las plabras que pasan del grupo 1 al grupo 2, cuando estas ya se asimilan y hay un\nnotorio progreso en su manejo\n\ngroup_3w.txt: Este es el grupo de palabras que ya dominas y por tanto se pueden guardar en este grupo que es como\nun baúl")
+                                
+                                def consulta_enviar_grupo():
+                                        messagebox.showinfo("REBASE", "Recoge la palabra en ingles y la envia al grupo que selecciones")
+
+                                def consulta_guardar_cambios():
+                                        messagebox.showinfo("REBASE", "Para conservar los cambios hechos y no exista dupliacion de datos\nse recomienda dar a guardar los cambios")
 
                                 button_consulta1 = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
                                 button_consulta1.place(x=round(1010), y=round(200))
                                 button_consulta1.config(bg="#0A43B4", fg="white")
 
-                                button_consulta1 = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_sobre_concepto_grupo, borderwidth=0)
-                                button_consulta1.place(x=round(1025), y=round(145))
-                                button_consulta1.config(bg="#0A43B4", fg="white")
+                                button_consulta_significado_grupo = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_sobre_concepto_grupo, borderwidth=0)
+                                button_consulta_significado_grupo.place(x=round(1025), y=round(145))
+                                button_consulta_significado_grupo.config(bg="#0A43B4", fg="white")
+
+                                button_consulta_enviar_grupo = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_enviar_grupo, borderwidth=0)
+                                button_consulta_enviar_grupo.place(x=round(465), y=round(740))
+                                button_consulta_enviar_grupo.config(bg="#0A43B4", fg="white")
+
+                                button_consulta_guardar_cambios = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_guardar_cambios, borderwidth=0)
+                                button_consulta_guardar_cambios.place(x=round(1200), y=round(740))
+                                button_consulta_guardar_cambios.config(bg="#0A43B4", fg="white")
 
 
 #2.2.1.2----------------------------Ventana Modo Sentencias -------------------------------------------------
@@ -1033,8 +1040,7 @@ def home():
                                                         aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                         sacar=lista_respaldo[aleatorio_lista]
                                                         filtro=(sacar in lista_formateada)
-                                                        print(sacar)
-                                                        print(filtro)
+                                                        
                                                         if filtro == False:
                                                                 respuesta_espanol.insert(0,"")
 
@@ -1060,10 +1066,7 @@ def home():
                                                         respuesta_correcta.config(fg="white")
                                                 except:
                                                         respuesta_espanol.insert(0,"")
-                                        print("FIN")
-                                                #if contador.get() != "" or contador.get()==str(num_aleatorio):
-
-
+                                        
 
                                 def recoger_enviar_otrogrupo():
                                         w_num=contador.get()
@@ -1077,9 +1080,7 @@ def home():
                                         for i in lista_formateada:
                                                 if i == lista_respaldo[int(w_num)]:
                                                         lista_formateada.remove(i)
-                                        print(lista_formateada)
-                                        print(lista_respaldo)
-
+                                        
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
@@ -1122,7 +1123,7 @@ def home():
                                         grupo_contiene.write(clicked_groups.get())
                                         grupo_contiene.close()
 
-                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n"+clicked_groups.get()+"\n\n")
+                                        messagebox.showinfo("REBASE"," El texto ha sido cambiado por \n\n"+clicked_groups.get()+"\n\n")
                                         ventana_studios.destroy()
                                         window_sentences()
 
@@ -1151,7 +1152,7 @@ def home():
                                                 text_file2.write("\n")
                                                 text_file2.write(j)
                                         text_file2.close
-                                        messagebox.showinfo("REABSE"," El texto ha sido cambiado por \n\n")
+                                        messagebox.showinfo("REBASE"," Los cambios han sido guardados \n\n")
                                 
                                 def hablar_respuesta():
                                         #cuadro_speak.insert(0,"SPEAK!")
@@ -1213,10 +1214,10 @@ def home():
                                 boton_ver_respuesta_espanol.config(bg="#FACC2E")
 
                                 button_quit = Button(ventana_studios, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
-                                button_quit.place(x=round(740), y=round(850))
+                                button_quit.place(x=round(790), y=round(850))
 #------------------------------------------- ETIQUETAS VENTANA SENTENCIA ------------------------------------------
                                 titulo=Label(ventana_studios, text="WORKING SENTENCES", font=("Bookman Old Style",round(30)),bg="#e8dabd")
-                                titulo.place(x=round(570), y=(70))
+                                titulo.place(x=round(590), y=(70))
 
                                 etiqueta_respuesta_propia=Label(ventana_studios, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(12),"bold"), width=25, bg="#FACC2E")
                                 etiqueta_respuesta_propia.place(x=round(120), y=(480))
@@ -1256,12 +1257,40 @@ def home():
 
 #------------------------------------- funciones/Botones Consulta Ventana Sentencias -------------------------------------
 
-                                def consulta_elegir_grupo():
-                                        messagebox.showinfo("REABSE", "Hola Mundo!")
+                                def consulta_significado_grupo():
+                                        messagebox.showinfo("REBASE", "Existe 4 archivos que te ayudaran a ordenar tu progreso y funciona de la siguiente manera:\n\nnew_sentences.txt: Aqui se almacenan las horaciones que guardaste desde la ventana lectura, su objetivo agrupar horaciones nuevas \npara el estudiante.\n\ngroup_1s.txt: Las horaciones que ya dejan de ser novedosas para el estudiante pueden pasar al grupo 1 que son horaciones \nque no se dominan pero se tiene un leve manejo.\n\ngroup_2s.txt: Aqui se asignan las horaciones que pasan del grupo 1 al grupo 2, cuando estas ya se asimilan y hay un\nnotorio progreso en su manejo\n\ngroup_3s.txt: Este es el grupo de horaciones que ya dominas y por tanto se pueden guardar en este grupo que es como\nun baúl")
 
-                                button_consulta1 = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
+                                def consulta_enviar_grupow():
+                                        messagebox.showinfo("REBASE", "Recoge la horación en ingles y la envia al grupo que selecciones")
+
+                                def consulta_guardar_cambiosw():
+                                        messagebox.showinfo("REBASE", "Para conservar los cambios hechos y no exista dupliacion de datos se recomienda dar a guardar los cambios")
+                                
+                                def consulta_elegir_grupos():
+                                        messagebox.showinfo("REBASE", "El titulo del cuandro texto indica con que archivo estás trabajando")
+
+                                def consulta_speech_text():
+                                        messagebox.showinfo("REBASE", "Este boton permite que trabajes la pronunciación.\n\nCuando le des click el boton cambia de color para escucharte hablar ingles")
+                                                                
+                                button_consulta1 = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_speech_text, borderwidth=0)
+                                button_consulta1.place(x=round(465), y=round(400))
+                                button_consulta1.config(bg="#0A43B4", fg="white")
+                                                                
+                                button_consulta1 = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_significado_grupo, borderwidth=0)
+                                button_consulta1.place(x=round(1025), y=round(145))
+                                button_consulta1.config(bg="#0A43B4", fg="white")
+
+                                button_consulta1 = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupos, borderwidth=0)
                                 button_consulta1.place(x=round(1010), y=round(200))
                                 button_consulta1.config(bg="#0A43B4", fg="white")
+
+                                button_consulta_enviar_grupo = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_enviar_grupow, borderwidth=0)
+                                button_consulta_enviar_grupo.place(x=round(465), y=round(750))
+                                button_consulta_enviar_grupo.config(bg="#0A43B4", fg="white")
+
+                                button_consulta_guardar_cambios = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_guardar_cambiosw, borderwidth=0)
+                                button_consulta_guardar_cambios.place(x=round(1200), y=round(750))
+                                button_consulta_guardar_cambios.config(bg="#0A43B4", fg="white")
 
 
 #2.2.1--------------------------------------- Ventana Seleccion Modo Estudio ------------------------------------------------------------------
@@ -1305,7 +1334,7 @@ def home():
                                 #archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
                                 #fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
                                 #archivotexto_nombre_fondo_panatalla.close()
-                                messagebox.showinfo("REABSE"," El fondo de pantalla ha sido cambiado por \n\n"+clicked_fondo_pantalla.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
+                                messagebox.showinfo("REBASE"," El fondo de pantalla ha sido cambiado por \n\n"+clicked_fondo_pantalla.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
                                 ventana_configuracion.destroy()
                                 configuracion()
 
@@ -1321,7 +1350,7 @@ def home():
                                         archivotexto_nombre_resolucion_pantalla.write(str(0))
                                         archivotexto_nombre_resolucion_pantalla.close()
 
-                                messagebox.showinfo("REABSE"," La resolucion de pantalla ha sido cambiado a \n\n"+clicked.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
+                                messagebox.showinfo("REBASE"," La resolucion de pantalla ha sido cambiado a \n\n"+clicked.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
                                 ventana_configuracion.destroy()
                                 configuracion()
                         
@@ -1467,8 +1496,14 @@ def home():
                         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
                         my_label = Label(ventana_manual, image=my_img).place(relwidth=1, relheight=1)
 
-                        def my_cv():
-                                webbrowser.open("https://jaimecampillayresume.herokuapp.com/")
+                        def video_inicio():
+                                webbrowser.open("https://www.youtube.com/watch?v=ISk7xVzRvSA")
+                        
+                        def video_2():
+                                webbrowser.open("https://www.youtube.com/watch?v=NuJ8hM1LeSE")
+                        
+                        def video_3():
+                                webbrowser.open("https://www.youtube.com/watch?v=uCxVddKsA4s")
                         
                         def go_read():
                                 ventana_manual.destroy()
@@ -1478,9 +1513,17 @@ def home():
                                 ventana_manual.destroy()
                                 window_study()
 
-                        my_cv=Button(ventana_manual,text="VER MI RESUME",font=("Bookman Old Style",round(12),"bold"), width=round(20), borderwidth=0 , command=my_cv)
-                        my_cv.place(x=220, y=460)
-                        my_cv.config(bg="#FACC2E") 
+                        video_inicio=Button(ventana_manual,text="VIDEO 01: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(30), borderwidth=3 , command=video_inicio)
+                        video_inicio.place(x=650, y=300)
+                        video_inicio.config(bg="#FACC2E")
+
+                        video_2=Button(ventana_manual,text="VIDEO 02: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(30), borderwidth=3 , command=video_2)
+                        video_2.place(x=650, y=375)
+                        video_2.config(bg="#FACC2E") 
+
+                        video_3=Button(ventana_manual,text="VIDEO 03: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(30), borderwidth=3 , command=video_3)
+                        video_3.place(x=650, y=450)
+                        video_3.config(bg="#FACC2E")  
 
                         button_quit = Button(ventana_manual, text="SALIR PROGRAMA",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
                         button_quit.place(x=750, y=950) 
