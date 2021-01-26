@@ -1456,8 +1456,16 @@ def home():
                         foto_label.photo= mi_foto
                         foto_label.place(x=220, y=220)
 
+                        my_linked_In = ImageTk.PhotoImage(Image.open("img_in.png"))
+                        linked_label= Label(ventana_presentacion, image=my_linked_In)
+                        linked_label.photo= my_linked_In
+                        #linked_label.place(x=220, y=560)
+
                         def my_cv():
                                 webbrowser.open("https://jaimecampillayresume.herokuapp.com/")
+                        
+                        def my_linkedIn():
+                                webbrowser.open("https://www.linkedin.com/in/jgcampillayr/")
                         
                         def ir_leer():
                                 ventana_presentacion.destroy()
@@ -1467,7 +1475,10 @@ def home():
                                 ventana_presentacion.destroy()
                                 window_study()
 
-                        my_cv=Button(ventana_presentacion,text="VER MI RESUME",font=("Bookman Old Style",round(12),"bold"), width=round(20), borderwidth=0 , command=my_cv)
+                        button_likendIn = Button(ventana_presentacion,image=my_linked_In, width=180, height=38, borderwidth=0 , command=my_linkedIn)
+                        button_likendIn.place(x=235, y=510)
+
+                        my_cv=Button(ventana_presentacion,text="IR A MI SITIO",font=("Bookman Old Style",round(12),"bold"), width=round(20), borderwidth=5 , command=my_cv)
                         my_cv.place(x=220, y=460)
                         my_cv.config(bg="#FACC2E") 
 
@@ -1530,29 +1541,29 @@ def home():
                                 ventana_manual.destroy()
                                 window_study()
 
-                        video_inicio=Button(ventana_manual,text="VIDEO 01: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(30), borderwidth=3 , command=video_inicio)
-                        video_inicio.place(x=650, y=300)
+                        video_inicio=Button(ventana_manual,text="VIDEO 01: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(30), height=2, borderwidth=3 , command=video_inicio)
+                        video_inicio.place(x=700, y=300)
                         video_inicio.config(bg="#FACC2E")
 
-                        video_2=Button(ventana_manual,text="VIDEO 02: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(30), borderwidth=3 , command=video_2)
-                        video_2.place(x=650, y=375)
+                        video_2=Button(ventana_manual,text="VIDEO 02: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(30), height=2, borderwidth=3 , command=video_2)
+                        video_2.place(x=700, y=375)
                         video_2.config(bg="#FACC2E") 
 
-                        video_3=Button(ventana_manual,text="VIDEO 03: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(30), borderwidth=3 , command=video_3)
-                        video_3.place(x=650, y=450)
+                        video_3=Button(ventana_manual,text="VIDEO 03: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(30), height=2, borderwidth=3 , command=video_3)
+                        video_3.place(x=700, y=450)
                         video_3.config(bg="#FACC2E")  
 
                         button_quit = Button(ventana_manual, text="SALIR PROGRAMA",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
-                        button_quit.place(x=750, y=950) 
+                        button_quit.place(x=810, y=910) 
 
-                        button_quit = Button(ventana_manual, text="READ",font=("Bookman Old Style",round(10),"bold"), width=20 , command=go_read)
-                        button_quit.place(x=1000, y=950)
+                        button_quit = Button(ventana_manual, text="READ ENGLISH",font=("Bookman Old Style",round(12),"bold"), width=25 , command=go_read)
+                        button_quit.place(x=500, y=830)
 
-                        button_quit = Button(ventana_manual, text="READ",font=("Bookman Old Style",round(10),"bold"), width=20 , command=go_study)
-                        button_quit.place(x=1000, y=900)
+                        button_quit = Button(ventana_manual, text="STUDY ENGLISH",font=("Bookman Old Style",round(12),"bold"), width=25 , command=go_study)
+                        button_quit.place(x=1000, y=830)
 
-                        titulo=Label(ventana_manual, text="PRESENTACIÓN", font=("Bookman Old Style",round(30)),bg="#e8dabd")
-                        titulo.place(x=round(650), y=(30))
+                        titulo=Label(ventana_manual, text="TUTORIAL REBASE", font=("Bookman Old Style",round(30)),bg="#e8dabd")
+                        titulo.place(x=round(650), y=(60))
                         
         
 #------------------------------- Botones Funciones Ventana inicio -------------------------------------------
