@@ -344,7 +344,619 @@ def home():
                         button_consulta_save.config(bg="#0A43B4", fg="white")
                 #1.2 ------------------------------- Ventana Modo Estudio -------------------------------------------
                 def window_study():
-                        return
+                        global my_img
+                        global save_words_setence_options
+                        global screen_size
+
+                        #ventana_configuracion.destroy()
+                        root.withdraw()
+                        ventana_studio=Toplevel()
+                        if  size == 1:
+                                screen_size="1366x768"
+                        elif size == 0:
+                                screen_size="1680x1050"
+
+                        ventana_studio.geometry(screen_size)
+                        my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                        my_label = Label(ventana_studio, image=my_img).place(relwidth=1, relheight=1)
+#2.2.1------------------------------Ventana Modo Estudio ---------------------------------------------------
+#2.2.1.1----------------------------Ventana Modo Palabras -------------------------------------------------
+                        def window_words():
+
+                                global my_img
+                                global save_words_setence_options
+                                global screen_size
+                                global group_w
+
+                                ventana_studio.destroy()
+                                root.withdraw()
+                                ventana_studiow=Toplevel()
+                                if  size == 1:
+                                        screen_size="1366x768"
+                                elif size == 0:
+                                        screen_size="1680x1050"
+
+                                ventana_studiow.geometry(screen_size)
+                                my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                                my_label = Label(ventana_studiow, image=my_img).place(relwidth=1, relheight=1)
+
+                                grupo_actual=open("memory/memoria_ultimo_grupow","r")
+                                grw=grupo_actual.read()
+                                grupo_actual.close()
+
+                                archivo_contador_w=open("memory/contador_w.txt","r")
+                                cont_w=archivo_contador_w.read()
+                                archivo_contador_w.close()
+
+                                camino_palabra= str("memory/f_words/"+grw)
+                                archivo_palabras=open(camino_palabra,"r")
+
+                                lista_palabras_temporal=[]
+
+                                lista_palabras=archivo_palabras.readlines()
+                                lista_formateada=[]
+                                for elemento in lista_palabras:
+                                        linea =elemento.strip("\n")
+                                        lista_formateada.append(linea)
+
+                                lista_respaldo=lista_formateada[:]
+
+#2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
+                                def dar_aleatorio():
+                                        meaning_ENG.delete(1.0,END)
+                                        respuesta_propia.delete(0,END)
+                                        respuesta_corta.delete(0,END)
+                                        respuesta_correcta.delete(0,END)
+                                        respuesta_espanol.delete(0,END)
+                                        contador.delete(0,END)
+                                        respuesta_corta.config(bg="white")
+
+                                        num_aleatorio=len(lista_respaldo)
+                                        if len(lista_formateada)>=1:
+
+                                                while respuesta_correcta.get() == "":
+                                                        try:
+                                                                aleatorio_lista = random.randint(0,int(num_aleatorio))
+                                                                sacar=lista_respaldo[aleatorio_lista]
+                                                                filtro=(sacar in lista_formateada)
+                                                                
+                                                                if filtro == False:
+                                                                        respuesta_correcta.insert(0,"")
+
+                                                                else:
+                                                                        contador.insert(0,int(aleatorio_lista))
+
+                                                                respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
+                                                                respuesta_correcta.configure(fg="white")
+
+                                                                dictionary_word=PyDictionary()
+                                                                recoger_respuesta_correcta=respuesta_correcta.get()
+                                                                result=dictionary_word.meaning(recoger_respuesta_correcta)
+                                                                meaning_ENG.insert(END,str(result))
+                                                        except:
+                                                                respuesta_correcta.insert(0,"")
+                                        else:
+                                              respuesta_corta.insert(0,"NO HAY PALABRA")
+                                              respuesta_corta.configure(bg="#109FEC",fg="black")  
+
+                                        
+                                def recoger_enviar_otrogrupo():
+                                        w_num=contador.get()
+                                        grupo_nuevo=str(clicked_enviar_otro_grupo.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_nuevo
+                                        text_file=open(camino_grupo_estudio,"a")
+                                        text_file.write("\n")
+                                        text_file.write(lista_respaldo[int(w_num)])
+                                        text_file.close
+                                        #lista_palabras_temporal.append(lista_formateada[int(w_num)])
+                                        for i in lista_formateada:
+                                                if i == lista_respaldo[int(w_num)]:
+                                                        lista_formateada.remove(i)
+                                        messagebox.showinfo("REBASE"," La palabra\n\n"+lista_respaldo[int(w_num)]+"\n\n ha sido enviada a "+clicked_enviar_otro_grupo.get())
+
+                                def ver_respuesta():
+                                        recoger_respuesta_propia=respuesta_propia.get()
+                                        recoger_respuesta_correcta=respuesta_correcta.get()
+                                        if recoger_respuesta_correcta == recoger_respuesta_propia:
+                                                respuesta_corta.insert(0,"CORRECT")
+                                                respuesta_corta.configure(bg="#33FF51")
+                                                respuesta_correcta.configure(fg="black")
+                                        else:
+                                                respuesta_corta.insert(0,"WRONG")
+                                                respuesta_corta.configure(bg="#FF3333")
+                                                respuesta_correcta.configure(fg="black")
+
+                                def ver_traduccion():
+                                        control=0
+                                        while control == 0:
+                                                palabra_ingles=respuesta_correcta.get()
+                                                try:
+                                                        line2= palabra_ingles
+                                                        linea_Esp=line2
+                                                        translator=google_translator()
+                                                        translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+                                                        respuesta_espanol.insert(0,translation)
+                                                except:
+                                                        translation = None
+                                                recoger_pregunta=respuesta_espanol.get()
+                                                num_lista2=contador.get()
+                                                if recoger_pregunta!="" or num_lista2==str(len(lista_formateada)):
+                                                        control+=1
+
+                                def cambiar_grupo():
+                                        grupo_nuevo=str(clicked_groupw.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_nuevo
+                                        abrir_grupo=open(camino_grupo_estudio, encoding="utf8")
+                                        estudio_grupo=abrir_grupo.read()
+                                        abrir_grupo.close
+
+                                        grupo_contiene=open("memory/memoria_ultimo_grupow","w")
+                                        grupo_contiene.write(clicked_groupw.get())
+                                        grupo_contiene.close()
+
+                                        messagebox.showinfo("REBASE"," El texto ha sido cambiado por \n\n"+clicked_groupw.get()+"\n\n")
+                                        ventana_studiow.destroy()
+                                        window_words()
+
+                                def hablarNormal():
+                                        engine = pyttsx3.init()
+                                        voices = engine.getProperty("voices")
+                                        engine.setProperty("voice", voices[1].id)
+                                        engine.setProperty("rate", 140)
+                                        engine.say(respuesta_correcta.get())
+                                        engine.runAndWait()
+
+                                def hablarlento():
+                                        engine = pyttsx3.init()
+                                        voices = engine.getProperty("voices")
+                                        engine.setProperty("voice", voices[1].id)
+                                        engine.setProperty("rate", 80)
+                                        engine.say(respuesta_correcta.get())
+                                        engine.runAndWait()
+
+                                def guardar_cambios():
+
+                                        grupo_viejo=str(cuadro_grupo.get())
+                                        camino_grupo_estudio="memory/f_words/"+grupo_viejo
+                                        text_file2=open(camino_grupo_estudio,"w")
+                                        for j in lista_formateada:
+                                                text_file2.write("\n")
+                                                text_file2.write(j)
+                                        text_file2.close
+                                        messagebox.showinfo("REBASE"," Los cambios han sido guardado\n\n")
+
+#--------------------------------- ------------CLICKED VENTANA PALABRAS ---------------------------------------------
+
+                                clicked_groupw=StringVar()
+                                clicked_groupw.set(group_w[0])
+
+                                drop_read_save=OptionMenu(ventana_studiow,clicked_groupw, *group_w)
+                                drop_read_save.place(x=round(740),y=round(145))
+                                drop_read_save.config(width=round(25), font=("Book Old Style", round(12),"bold"))
+
+                                clicked_enviar_otro_grupo=StringVar()
+                                clicked_enviar_otro_grupo.set(group_w[0])
+
+                                drop_enviar_palabra=OptionMenu(ventana_studiow,clicked_enviar_otro_grupo, *group_w)
+                                drop_enviar_palabra.place(x=round(710),y=round(740))
+                                drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
+# --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
+
+                                button_guardar_cambios=Button(ventana_studiow, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
+                                button_guardar_cambios.place(x=1000, y=740)
+                                button_guardar_cambios.config(bg="#FACC2E")
+
+                                button_cambiar_grupo=Button(ventana_studiow, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
+                                button_cambiar_grupo.place(x=500, y=740)
+                                button_cambiar_grupo.config(bg="#FACC2E")
+
+                                button_hablar_normal=Button(ventana_studiow, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarNormal)
+                                button_hablar_normal.place(x=round(1270), y=round(460))
+
+                                button_hablar_lento=Button(ventana_studiow, text="Speak Slow",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarlento)
+                                button_hablar_lento.place(x=round(1270), y=round(540))
+
+                                button_dar_aleatorio=Button(ventana_studiow, text="GIVE RANDOM",font=("Bookman Old Style",round(12),"bold") , command=dar_aleatorio)
+                                button_dar_aleatorio.place(x=round(735), y=round(425))
+
+                                button_elegir_grupo=Button(ventana_studiow, text="Choose Group",font=("Bookman Old Style",round(10),"bold") , command=cambiar_grupo)
+                                button_elegir_grupo.place(x=round(620), y=round(145))
+
+                                button_ver_respuesta=Button(ventana_studiow, text="SEE ANSWER",font=("Bookman Old Style",round(12),"bold") , command=ver_respuesta)
+                                button_ver_respuesta.place(x=round(735), y=round(550))
+
+                                boton_ver_respuesta_espanol=Button(ventana_studiow, text="VER TRADDUCIÓN",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
+                                boton_ver_respuesta_espanol.place(x=500, y=620)
+                                boton_ver_respuesta_espanol.config(bg="#FACC2E")
+
+                                button_quit = Button(ventana_studiow, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                                button_quit.place(x=round(740), y=round(850))
+#------------------------------------------- ETIQUETAS VENTANA PALABRAS ------------------------------------------
+                                titulo=Label(ventana_studiow, text="WORKING VOCABULARY", font=("Bookman Old Style",round(30)),bg="#e8dabd")
+                                titulo.place(x=round(570), y=(70))
+
+                                etiqueta_respuesta_propia=Label(ventana_studiow, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
+                                etiqueta_respuesta_propia.place(x=round(370), y=(470))
+
+                                etiqueta_respuesta_correcta=Label(ventana_studiow, text="CURRENT WORD", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
+                                etiqueta_respuesta_correcta.place(x=round(1000), y=(470))
+#--------------------------------------------CUADRO DE TEXTO VENTANA PALABRAS---------------------------------------------------
+                                meaning_ENG=Text(ventana_studiow, width=round(125), height=round(5), font=("Helvetica",round(13),"bold"),borderwidth=round(5))
+                                meaning_ENG.place(x=round(240),y=round(280))
+
+                                cuadro_grupo=Entry(ventana_studiow, width=round(35), borderwidth=round(5), justify="center")
+                                cuadro_grupo.place(x=round(600), y=round(200))
+                                cuadro_grupo.config(font=("Bookman Old Style",round(12),"bold"))
+                                cuadro_grupo.insert(0,grw)
+
+                                respuesta_propia=Entry(ventana_studiow, width=round(25), borderwidth=round(5), justify="center")
+                                respuesta_propia.place(x=round(350), y=round(500))
+                                respuesta_propia.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_corta=Entry(ventana_studiow, width=round(15), borderwidth=round(5), justify="center")
+                                respuesta_corta.place(x=round(720), y=round(500))
+                                respuesta_corta.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_correcta=Entry(ventana_studiow, width=round(25), borderwidth=round(5), justify="center")
+                                respuesta_correcta.place(x=round(950), y=round(500))
+                                respuesta_correcta.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_espanol=Entry(ventana_studiow, width=round(35), borderwidth=round(5), justify="center")
+                                respuesta_espanol.place(x=round(700), y=round(620))
+                                respuesta_espanol.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                contador = Entry(ventana_studiow, width=5, borderwidth=5, justify="center")
+                                contador.place(x=round(775) , y=round(465))
+                                contador.config(font=("Bookman Old Style",round(10),"bold"))
+                                contador.insert(0,cont_w)
+#------------------------------------- funciones/Botones Consulta Ventana Palabras -------------------------------------
+
+                                def consulta_elegir_grupo():
+                                        messagebox.showinfo("REBASE", "El titulo del cuandro texto indica con que archivo estás trabajando")
+                                
+                                def consulta_sobre_concepto_grupo():
+                                        messagebox.showinfo("REBASE", "Existe 4 archivos que te ayudaran a ordenar tu progreso y funciona de la siguiente manera:\n\nnew_words.txt: Aqui se almacenan las palabras que guardaste desde la ventana lectura, su objetivo agrupar palabras nuevas \npara el estudiante.\n\ngroup_1w.txt: Las palabras que ya dejan de ser novedosas para el estudiante pueden pasar al grupo 1 que son palabras \nque no se dominan pero se tiene un leve manejo.\n\ngroup_2w.txt: Aqui se asignan las plabras que pasan del grupo 1 al grupo 2, cuando estas ya se asimilan y hay un\nnotorio progreso en su manejo\n\ngroup_3w.txt: Este es el grupo de palabras que ya dominas y por tanto se pueden guardar en este grupo que es como\nun baúl")
+                                
+                                def consulta_enviar_grupo():
+                                        messagebox.showinfo("REBASE", "Recoge la palabra en ingles y la envia al grupo que selecciones")
+
+                                def consulta_guardar_cambios():
+                                        messagebox.showinfo("REBASE", "Para conservar los cambios hechos y no exista dupliacion de datos\nse recomienda dar a guardar los cambios")
+
+                                button_consulta1 = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
+                                button_consulta1.place(x=round(1010), y=round(200))
+                                button_consulta1.config(bg="#0A43B4", fg="white")
+
+                                button_consulta_significado_grupo = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_sobre_concepto_grupo, borderwidth=0)
+                                button_consulta_significado_grupo.place(x=round(1025), y=round(145))
+                                button_consulta_significado_grupo.config(bg="#0A43B4", fg="white")
+
+                                button_consulta_enviar_grupo = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_enviar_grupo, borderwidth=0)
+                                button_consulta_enviar_grupo.place(x=round(465), y=round(740))
+                                button_consulta_enviar_grupo.config(bg="#0A43B4", fg="white")
+
+                                button_consulta_guardar_cambios = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_guardar_cambios, borderwidth=0)
+                                button_consulta_guardar_cambios.place(x=round(1200), y=round(740))
+                                button_consulta_guardar_cambios.config(bg="#0A43B4", fg="white")
+
+
+#2.2.1.2----------------------------Ventana Modo Sentencias -------------------------------------------------
+                        def window_sentences():
+                                global my_img
+                                global save_words_setence_options
+                                global screen_size
+                                global group_s
+
+                                ventana_studio.destroy()
+                                root.withdraw()
+                                ventana_studios=Toplevel()
+                                if  size == 1:
+                                        screen_size="1366x768"
+                                elif size == 0:
+                                        screen_size="1680x1050"
+
+                                ventana_studios.geometry(screen_size)
+                                my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                                my_label = Label(ventana_studios, image=my_img).place(relwidth=1, relheight=1)
+
+                                grupo_actual=open("memory/memoria_ultimo_grupos.txt","r")
+                                grs=grupo_actual.read()
+                                grupo_actual.close()
+
+                                archivo_contador_s=open("memory/contador_s.txt","r")
+                                cont_w=archivo_contador_s.read()
+                                archivo_contador_s.close()
+
+                                camino_palabra= str("memory/f_sentences/"+grs)
+                                archivo_palabras=open(camino_palabra,"r")
+
+                                lista_palabras=archivo_palabras.readlines()
+                                lista_formateada=[]
+                                for elemento in lista_palabras:
+                                        linea =elemento.strip("\n")
+                                        lista_formateada.append(linea)
+
+                                lista_respaldo=lista_formateada[:]
+
+#2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
+                                def dar_aleatorio():
+                                        respuesta_propia.delete(0,END)
+                                        respuesta_corta.delete(0,END)
+                                        respuesta_correcta.delete(0,END)
+                                        respuesta_espanol.delete(0,END)
+                                        contador.delete(0,END)
+                                        respuesta_corta.config(bg="white")
+
+                                        num_aleatorio=len(lista_respaldo)
+
+                                        if len(lista_formateada)>=1:
+                                                while respuesta_espanol.get() == "":
+                                                        try:
+                                                                aleatorio_lista = random.randint(0,int(num_aleatorio))
+                                                                sacar=lista_respaldo[aleatorio_lista]
+                                                                filtro=(sacar in lista_formateada)
+                                                                
+                                                                if filtro == False:
+                                                                        respuesta_espanol.insert(0,"")
+
+                                                                else:
+                                                                        contador.insert(0,int(aleatorio_lista))
+                                                                        control=0
+                                                                        while control == 0:
+                                                                                num_lista=contador.get()
+                                                                                try:
+                                                                                        line2= lista_respaldo[int(num_lista)]
+                                                                                        linea_Esp=line2
+                                                                                        translator=google_translator()
+                                                                                        translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+                                                                                        respuesta_espanol.insert(0,translation)
+                                                                                except:
+                                                                                        translation = None
+                                                                                recoger_pregunta=respuesta_espanol.get()
+                                                                                num_lista2=contador.get()
+                                                                                if recoger_pregunta!="" or num_lista2==str(len(lista_respaldo)):
+                                                                                        control+=1
+
+                                                                respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
+                                                                respuesta_correcta.config(fg="white")
+                                                        except:
+                                                                respuesta_espanol.insert(0,"")
+                                        else:
+                                              respuesta_corta.insert(0,"NO HAY PALABRA")
+                                              respuesta_corta.configure(bg="#109FEC",fg="black")
+
+                                def recoger_enviar_otrogrupo():
+                                        w_num=contador.get()
+                                        grupo_nuevo=str(clicked_enviar_otro_grupo.get())
+                                        camino_grupo_estudio="memory/f_sentences/"+grupo_nuevo
+                                        text_file=open(camino_grupo_estudio,"a")
+                                        text_file.write("\n")
+                                        text_file.write(lista_respaldo[int(w_num)])
+                                        text_file.close
+                                        #lista_palabras_temporal.append(lista_formateada[int(w_num)])
+                                        for i in lista_formateada:
+                                                if i == lista_respaldo[int(w_num)]:
+                                                        lista_formateada.remove(i)
+                                        
+                                def ver_respuesta():
+                                        recoger_respuesta_propia=respuesta_propia.get()
+                                        recoger_respuesta_correcta=respuesta_correcta.get()
+                                        if recoger_respuesta_correcta == recoger_respuesta_propia:
+                                                respuesta_corta.insert(0,"CORRECT")
+                                                respuesta_corta.configure(bg="#33FF51")
+                                                respuesta_correcta.configure(fg="black")
+                                                respuesta_correcta.config(fg="black")
+                                        else:
+                                                respuesta_corta.insert(0,"WRONG")
+                                                respuesta_corta.configure(bg="#FF3333")
+                                                respuesta_correcta.configure(fg="black")
+                                                respuesta_correcta.config(fg="black")
+
+                                def ver_traduccion():
+                                        control=0
+                                        while control == 0:
+                                                num_lista=contador.get()
+                                                try:
+                                                        line2= lista_formateada[int(num_lista)]
+                                                        linea_Esp=line2
+                                                        translator=google_translator()
+                                                        translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+                                                        respuesta_espanol.insert(0,translation)
+                                                except:
+                                                        translation = None
+                                                recoger_pregunta=respuesta_espanol.get()
+                                                num_lista2=contador.get()
+                                                if recoger_pregunta!="" or num_lista2==str(len(lista_formateada)):
+                                                        control+=1
+
+                                def cambiar_grupo():
+                                        grupo_nuevo=str(clicked_groups.get())
+                                        camino_grupo_estudio="memory/f_sentences/"+grupo_nuevo
+                                        abrir_grupo=open(camino_grupo_estudio, encoding="utf8")
+                                        estudio_grupo=abrir_grupo.read()
+                                        abrir_grupo.close
+
+                                        grupo_contiene=open("memory/memoria_ultimo_grupos.txt","w")
+                                        grupo_contiene.write(clicked_groups.get())
+                                        grupo_contiene.close()
+
+                                        messagebox.showinfo("REBASE"," El texto ha sido cambiado por \n\n"+clicked_groups.get()+"\n\n")
+                                        ventana_studios.destroy()
+                                        window_sentences()
+
+                                def hablarNormal():
+                                        engine = pyttsx3.init()
+                                        voices = engine.getProperty("voices")
+                                        engine.setProperty("voice", voices[1].id)
+                                        engine.setProperty("rate", 120)
+                                        engine.say(respuesta_correcta.get())
+                                        engine.runAndWait()
+
+                                def hablarlento():
+                                        engine = pyttsx3.init()
+                                        voices = engine.getProperty("voices")
+                                        engine.setProperty("voice", voices[1].id)
+                                        engine.setProperty("rate", 90)
+                                        engine.say(respuesta_correcta.get())
+                                        engine.runAndWait()
+
+                                def guardar_cambios():
+
+                                        grupo_viejo=str(cuadro_grupo.get())
+                                        camino_grupo_estudio="memory/f_sentences/"+grupo_viejo
+                                        text_file2=open(camino_grupo_estudio,"w")
+                                        for j in lista_formateada:
+                                                text_file2.write("\n")
+                                                text_file2.write(j)
+                                        text_file2.close
+                                        messagebox.showinfo("REBASE"," Los cambios han sido guardados \n\n")
+                                
+                                def hablar_respuesta():
+                                        #cuadro_speak.insert(0,"SPEAK!")
+                                        #cuadro_speak.configure(bg="#33FF51")                                  
+                                        #if cuadro_speak.get=="SPEAK!":
+                                        r = sr.Recognizer()
+                                        with sr.Microphone() as source:
+                                                r.adjust_for_ambient_noise(source)
+                                                print("Say something!")
+                                                audio = r.listen(source)
+                                        try:
+                                                text = r.recognize_google(audio)
+                                                respuesta_propia.insert(0,text)
+                                        except :
+                                                respuesta_propia.insert(0,"Sorry could not recognize your voice")
+
+#--------------------------------- ------------CLICKED VENTANA PALABRAS ---------------------------------------------
+
+                                clicked_groups=StringVar()
+                                clicked_groups.set(group_s[0])
+
+                                drop_read_save=OptionMenu(ventana_studios,clicked_groups, *group_s)
+                                drop_read_save.place(x=round(640),y=round(80))
+                                drop_read_save.config(width=round(25), font=("Book Old Style", round(10),"bold"))
+
+                                clicked_enviar_otro_grupo=StringVar()
+                                clicked_enviar_otro_grupo.set(group_s[0])
+
+                                drop_enviar_palabra=OptionMenu(ventana_studios,clicked_enviar_otro_grupo, *group_s)
+                                drop_enviar_palabra.place(x=round(615),y=round(575))
+                                drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
+# --------------------------------------------- BOTONES VENTANA SENTENCES-------------------------------------------------
+
+                                button_guardar_cambios=Button(ventana_studios, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
+                                button_guardar_cambios.place(x=905, y=575)
+                                button_guardar_cambios.config(bg="#FACC2E")
+
+                                button_cambiar_grupo=Button(ventana_studios, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
+                                button_cambiar_grupo.place(x=405, y=575)
+                                button_cambiar_grupo.config(bg="#FACC2E")
+
+                                button_hablar_normal=Button(ventana_studios, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=20 , command=hablarNormal)
+                                button_hablar_normal.place(x=round(650), y=round(275))
+
+                                button_hablar_lento=Button(ventana_studios, text="Speak Slow",font=("Bookman Old Style",round(10),"bold"), width=20 , command=hablarlento)
+                                button_hablar_lento.place(x=round(900), y=round(275))
+
+                                button_dar_aleatorio=Button(ventana_studios, text="GIVE RANDOM",font=("Bookman Old Style",round(12),"bold") , command=dar_aleatorio)
+                                button_dar_aleatorio.place(x=round(460), y=round(425))
+
+                                button_elegir_grupo=Button(ventana_studios, text="Choose Group",font=("Bookman Old Style",round(10),"bold") , command=cambiar_grupo)
+                                button_elegir_grupo.place(x=round(520), y=round(80))
+
+                                button_ver_respuesta=Button(ventana_studios, text="SEE ANSWER",font=("Bookman Old Style",round(12),"bold") , command=ver_respuesta)
+                                button_ver_respuesta.place(x=round(750), y=round(425))
+
+                                boton_ver_respuesta_speech=Button(ventana_studios, text="TRY SPEECH TO TEXT",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=hablar_respuesta)
+                                boton_ver_respuesta_speech.place(x=400, y=275)
+                                boton_ver_respuesta_speech.config(bg="#FACC2E")
+
+                                button_quit = Button(ventana_studios, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                                button_quit.place(x=round(660), y=round(650))
+#------------------------------------------- ETIQUETAS VENTANA SENTENCIA ------------------------------------------
+                                titulo=Label(ventana_studios, text="WORKING SENTENCES", font=("Bookman Old Style",round(24)),bg="#e8dabd")
+                                titulo.place(x=round(500), y=(30))
+
+                                etiqueta_respuesta_propia=Label(ventana_studios, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(11),"bold"), width=25, bg="#FACC2E")
+                                etiqueta_respuesta_propia.place(x=round(50), y=(350))
+
+                                etiqueta_respuesta_correcta=Label(ventana_studios, text="SPANISH SETENCE", font=("Bookman Old Style",round(11),"bold"), width=25, bg="#FACC2E")
+                                etiqueta_respuesta_correcta.place(x=round(50), y=(200))
+
+                                etiqueta_respuesta_correcta=Label(ventana_studios, text="ENGLISH SETENCE", font=("Bookman Old Style",round(11),"bold"), width=25, bg="#FACC2E")
+                                etiqueta_respuesta_correcta.place(x=round(50), y=(500))
+#--------------------------------------------CUADRO DE TEXTO VENTANA SENTENCIA---------------------------------------------------
+
+                                cuadro_grupo=Entry(ventana_studios, width=round(35), borderwidth=round(5), justify="center")
+                                cuadro_grupo.place(x=round(490), y=round(135))
+                                cuadro_grupo.config(font=("Bookman Old Style",round(12),"bold"))
+                                cuadro_grupo.insert(0,grs)
+
+                                respuesta_propia=Entry(ventana_studios, width=round(75), borderwidth=round(5), justify="center")
+                                respuesta_propia.place(x=round(320), y=round(350))
+                                respuesta_propia.config(font=("Bookman Old Style",round(14),"bold"))
+
+                                respuesta_corta=Entry(ventana_studios, width=round(15), borderwidth=round(5), justify="center")
+                                respuesta_corta.place(x=round(900), y=round(425))
+                                respuesta_corta.config(font=("Bookman Old Style",round(12),"bold"))
+
+                                respuesta_correcta=Entry(ventana_studios, width=round(75), borderwidth=round(5), justify="center")
+                                respuesta_correcta.place(x=round(320), y=round(500))
+                                respuesta_correcta.config(font=("Bookman Old Style",round(14),"bold"))
+
+                                respuesta_espanol=Entry(ventana_studios, width=round(75), borderwidth=round(5), justify="center")
+                                respuesta_espanol.place(x=round(320), y=round(200))
+                                respuesta_espanol.config(font=("Bookman Old Style",round(14),"bold"))
+
+                                contador = Entry(ventana_studios, width=5, borderwidth=5, justify="center")
+                                contador.place(x=round(620) , y=round(425))
+                                contador.config(font=("Bookman Old Style",round(10),"bold"))
+                                contador.insert(0,cont_w)
+
+#------------------------------------- funciones/Botones Consulta Ventana Sentencias -------------------------------------
+
+                                def consulta_significado_grupo():
+                                        messagebox.showinfo("REBASE", "Existe 4 archivos que te ayudaran a ordenar tu progreso y funciona de la siguiente manera:\n\nnew_sentences.txt: Aqui se almacenan las horaciones que guardaste desde la ventana lectura, su objetivo agrupar horaciones nuevas \npara el estudiante.\n\ngroup_1s.txt: Las horaciones que ya dejan de ser novedosas para el estudiante pueden pasar al grupo 1 que son horaciones \nque no se dominan pero se tiene un leve manejo.\n\ngroup_2s.txt: Aqui se asignan las horaciones que pasan del grupo 1 al grupo 2, cuando estas ya se asimilan y hay un\nnotorio progreso en su manejo\n\ngroup_3s.txt: Este es el grupo de horaciones que ya dominas y por tanto se pueden guardar en este grupo que es como\nun baúl")
+
+                                def consulta_enviar_grupow():
+                                        messagebox.showinfo("REBASE", "Recoge la horación en ingles y la envia al grupo que selecciones")
+
+                                def consulta_guardar_cambiosw():
+                                        messagebox.showinfo("REBASE", "Para conservar los cambios hechos y no exista dupliacion de datos se recomienda dar a guardar los cambios")
+                                
+                                def consulta_elegir_grupos():
+                                        messagebox.showinfo("REBASE", "El titulo del cuandro texto indica con que archivo estás trabajando")
+
+                                def consulta_speech_text():
+                                        messagebox.showinfo("REBASE", "Este boton permite que trabajes la pronunciación.\n\nCuando le des click el boton cambia de color para escucharte hablar ingles")
+                                                                
+                                button_consulta1 = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_speech_text, borderwidth=0)
+                                button_consulta1.place(x=round(370), y=round(275))
+                                button_consulta1.config(bg="#0A43B4", fg="white")
+                                                                
+                                button_consulta1 = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_significado_grupo, borderwidth=0)
+                                button_consulta1.place(x=round(870), y=round(80))
+                                button_consulta1.config(bg="#0A43B4", fg="white")
+
+                                button_consulta1 = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupos, borderwidth=0)
+                                button_consulta1.place(x=round(910), y=round(135))
+                                button_consulta1.config(bg="#0A43B4", fg="white")
+
+                                button_consulta_enviar_grupo = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_enviar_grupow, borderwidth=0)
+                                button_consulta_enviar_grupo.place(x=round(370), y=round(575))
+                                button_consulta_enviar_grupo.config(bg="#0A43B4", fg="white")
+
+                                button_consulta_guardar_cambios = Button(ventana_studios, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_guardar_cambiosw, borderwidth=0)
+                                button_consulta_guardar_cambios.place(x=round(1105), y=round(575))
+                                button_consulta_guardar_cambios.config(bg="#0A43B4", fg="white")
+
+
+#2.2.1--------------------------------------- Ventana Seleccion Modo Estudio ------------------------------------------------------------------
+                        titulo=Label(ventana_studio, text="PLEASE, CHOOSE STUDY MODE", font=("Bookman Old Style",round(24)),bg="#e8dabd")
+                        titulo.place(x=round(410), y=(70))
+                        boton_WORDS=Button(ventana_studio, text=("WORDS"),font=("Bookman Old Style",round(14),"bold"),width=round(25),height=round(1), command=window_words)
+                        boton_WORDS.place(x=500, y=300)
+                        boton_SETENCE=Button(ventana_studio, text=("SETENCES"),font=("Bookman Old Style",round(14),"bold"), width=round(25),height=round(1),command=window_sentences)
+                        boton_SETENCE.place(x=500, y=420)
                 #1.3 ------------------------------- Ventana Configuración -------------------------------------------
                 #1.3.1 ------------------------------- Funciones Configuracióm -------------------------------------------
                 def configuracion():
