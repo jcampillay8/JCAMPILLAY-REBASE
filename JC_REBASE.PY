@@ -959,7 +959,7 @@ def home():
                         boton_SETENCE.place(x=500, y=420)
                 #1.3 ------------------------------- Ventana Configuración -------------------------------------------
                 #1.3.1 ------------------------------- Funciones Configuracióm -------------------------------------------
-                def configuracion():
+                def configuracion2():
                         global my_img
                         global screen_size
 
@@ -1143,7 +1143,70 @@ def home():
 
                         titulo=Label(ventana_presentacion, text="El programa es gratuito y por tanto\nlibre para su distribución", font=("Bookman Old Style",round(12)),bg="#e8dabd",fg="red", width=38, height=2, justify="left")
                         titulo.place(x=round(700), y=(615))
+#-----------------------------------------------------------------------------Manual 1-----------------------------------------------------------------------
+                def manual2():
+                        global my_img
 
+                        root.withdraw()
+                        ventana_manual=Toplevel()                      
+                        
+                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt",encoding="utf8")
+                        resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.read()
+                        archivotexto_nombre_resolucion_pantalla.close()
+
+                        if resolucion_pantalla == 1:
+                                screen_size="1366x768"
+                        elif resolucion_pantalla == 0:
+                                screen_size="1920x1080"
+
+                        ventana_manual.geometry("1366x768")
+                        archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
+                        fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
+                        archivotexto_nombre_fondo_panatalla.close()                        
+
+                        my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                        my_label = Label(ventana_manual, image=my_img).place(relwidth=1, relheight=1)
+
+                        def video_inicio():
+                                webbrowser.open("https://www.youtube.com/watch?v=ISk7xVzRvSA")
+                        
+                        def video_2():
+                                webbrowser.open("https://www.youtube.com/watch?v=NuJ8hM1LeSE")
+                        
+                        def video_3():
+                                webbrowser.open("https://www.youtube.com/watch?v=uCxVddKsA4s")
+                        
+                        def go_read():
+                                ventana_manual.destroy()
+                                window_read()
+                        
+                        def go_study():
+                                ventana_manual.destroy()
+                                window_study()
+
+                        video_inicio=Button(ventana_manual,text="VIDEO 01: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(25), height=1, borderwidth=3 , command=video_inicio)
+                        video_inicio.place(x=500, y=200)
+                        video_inicio.config(bg="#FACC2E")
+
+                        video_2=Button(ventana_manual,text="VIDEO 02: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(25), height=1, borderwidth=3 , command=video_2)
+                        video_2.place(x=500, y=280)
+                        video_2.config(bg="#FACC2E") 
+
+                        video_3=Button(ventana_manual,text="VIDEO 03: INICIO",font=("Bookman Old Style",round(12),"bold"), width=round(25), height=1, borderwidth=3 , command=video_3)
+                        video_3.place(x=500, y=360)
+                        video_3.config(bg="#FACC2E")  
+
+                        button_quit = Button(ventana_manual, text="SALIR PROGRAMA",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                        button_quit.place(x=580, y=650) 
+
+                        button_quit = Button(ventana_manual, text="READ ENGLISH",font=("Bookman Old Style",round(10),"bold"), width=20 , command=go_read)
+                        button_quit.place(x=370, y=600)
+
+                        button_quit = Button(ventana_manual, text="STUDY ENGLISH",font=("Bookman Old Style",round(10),"bold"), width=20 , command=go_study)
+                        button_quit.place(x=730, y=600)
+
+                        titulo=Label(ventana_manual, text="TUTORIAL REBASE", font=("Bookman Old Style",round(24)),bg="#e8dabd")
+                        titulo.place(x=round(480), y=(30))
 #2.0 ----------------------------------VENTANA RESOLUCION 1920 X 1080 ------------------------------------------------------------------
         else:
                 titulo1=Label(background_label, text="WELCOME TO REBASE", font=("Bookman Old Style",30),bg="#e8dabd")
@@ -2298,12 +2361,16 @@ def home():
                 button_quit = Button(background_label, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
                 button_quit.place(x=570, y=650)
 
-                boton_configuracio=Button(background_label, text="SET CONFIGURATION",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=configuracion)
+                boton_configuracio=Button(background_label, text="SET CONFIGURATION",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=configuracion2)
                 boton_configuracio.place(x=530, y=600)
                 boton_configuracio.config(bg="#FACC2E")
 
                 boton_configuracio=Button(background_label, text="PRESENTATION",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=presentacion2)
-                boton_configuracio.place(x=500, y=550)
+                boton_configuracio.place(x=530, y=560)
+                boton_configuracio.config(bg="#FACC2E")
+
+                boton_configuracio=Button(background_label, text="GUIDE",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=manual2)
+                boton_configuracio.place(x=530, y=520)
                 boton_configuracio.config(bg="#FACC2E")  
         else:
                 boton_written=Button(background_label, text=("READ BOOK/TEXT"),font=("Bookman Old Style",round(14),"bold"),width=round(22),height=round(2), command=window_read)
