@@ -538,9 +538,17 @@ def home():
 
                                 for line in abrir_texto_inicio:
                                         line=line.split(".")
-                                        line=line[siguiente]
-                                        line=line.strip()
-                                        texto_ENG.insert(END, line)
+                                        texto = len(line)
+                                        if (texto-siguiente) >= 1:
+                                                line=line[siguiente]
+                                                line=line.strip()
+                                                texto_ENG.insert(END, line)
+                                                texto-=1
+                                                print(texto)
+                                        else:
+                                                texto_ENG.insert(END,"END OF TEXT, CONGRATULATION")
+                                                texto_ENG.config(bg="#109FEC")
+
                                 abrir_texto_inicio.close
 
 
@@ -1037,41 +1045,45 @@ def home():
                                         respuesta_correcta.delete(0,END)
                                         respuesta_espanol.delete(0,END)
                                         contador.delete(0,END)
+                                        respuesta_corta.config(bg="white")
 
                                         num_aleatorio=len(lista_respaldo)
 
-                                        while respuesta_espanol.get() == "":
-                                                try:
-                                                        aleatorio_lista = random.randint(0,int(num_aleatorio))
-                                                        sacar=lista_respaldo[aleatorio_lista]
-                                                        filtro=(sacar in lista_formateada)
-                                                        
-                                                        if filtro == False:
+                                        if len(lista_formateada)>=1:
+                                                while respuesta_espanol.get() == "":
+                                                        try:
+                                                                aleatorio_lista = random.randint(0,int(num_aleatorio))
+                                                                sacar=lista_respaldo[aleatorio_lista]
+                                                                filtro=(sacar in lista_formateada)
+                                                                
+                                                                if filtro == False:
+                                                                        respuesta_espanol.insert(0,"")
+
+                                                                else:
+                                                                        contador.insert(0,int(aleatorio_lista))
+                                                                        control=0
+                                                                        while control == 0:
+                                                                                num_lista=contador.get()
+                                                                                try:
+                                                                                        line2= lista_respaldo[int(num_lista)]
+                                                                                        linea_Esp=line2
+                                                                                        translator=google_translator()
+                                                                                        translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+                                                                                        respuesta_espanol.insert(0,translation)
+                                                                                except:
+                                                                                        translation = None
+                                                                                recoger_pregunta=respuesta_espanol.get()
+                                                                                num_lista2=contador.get()
+                                                                                if recoger_pregunta!="" or num_lista2==str(len(lista_respaldo)):
+                                                                                        control+=1
+
+                                                                respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
+                                                                respuesta_correcta.config(fg="white")
+                                                        except:
                                                                 respuesta_espanol.insert(0,"")
-
-                                                        else:
-                                                                contador.insert(0,int(aleatorio_lista))
-                                                                control=0
-                                                                while control == 0:
-                                                                        num_lista=contador.get()
-                                                                        try:
-                                                                                line2= lista_respaldo[int(num_lista)]
-                                                                                linea_Esp=line2
-                                                                                translator=google_translator()
-                                                                                translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
-                                                                                respuesta_espanol.insert(0,translation)
-                                                                        except:
-                                                                                translation = None
-                                                                        recoger_pregunta=respuesta_espanol.get()
-                                                                        num_lista2=contador.get()
-                                                                        if recoger_pregunta!="" or num_lista2==str(len(lista_respaldo)):
-                                                                                control+=1
-
-                                                        respuesta_correcta.insert(0,lista_respaldo[int(contador.get())])
-                                                        respuesta_correcta.config(fg="white")
-                                                except:
-                                                        respuesta_espanol.insert(0,"")
-                                        
+                                        else:
+                                              respuesta_corta.insert(0,"NO HAY PALABRA")
+                                              respuesta_corta.configure(bg="#109FEC",fg="black")
 
                                 def recoger_enviar_otrogrupo():
                                         w_num=contador.get()
@@ -1186,7 +1198,7 @@ def home():
                                 clicked_enviar_otro_grupo=StringVar()
                                 clicked_enviar_otro_grupo.set(group_s[0])
 
-                                drop_enviar_palabra=OptionMenu(ventana_studios,clicked_groups, *group_s)
+                                drop_enviar_palabra=OptionMenu(ventana_studios,clicked_enviar_otro_grupo, *group_s)
                                 drop_enviar_palabra.place(x=round(710),y=round(750))
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA SENTENCES-------------------------------------------------
