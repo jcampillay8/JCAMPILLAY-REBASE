@@ -531,82 +531,82 @@ def home():
                                 clicked_groupw.set(group_w[0])
 
                                 drop_read_save=OptionMenu(ventana_studiow,clicked_groupw, *group_w)
-                                drop_read_save.place(x=round(740),y=round(145))
-                                drop_read_save.config(width=round(25), font=("Book Old Style", round(12),"bold"))
+                                drop_read_save.place(x=round(590),y=round(80))
+                                drop_read_save.config(width=round(25), font=("Book Old Style", round(10),"bold"))
 
                                 clicked_enviar_otro_grupo=StringVar()
                                 clicked_enviar_otro_grupo.set(group_w[0])
 
                                 drop_enviar_palabra=OptionMenu(ventana_studiow,clicked_enviar_otro_grupo, *group_w)
-                                drop_enviar_palabra.place(x=round(710),y=round(740))
-                                drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
+                                drop_enviar_palabra.place(x=round(580),y=round(600))
+                                drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(10),"bold"))
 # --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
 
                                 button_guardar_cambios=Button(ventana_studiow, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
-                                button_guardar_cambios.place(x=1000, y=740)
+                                button_guardar_cambios.place(x=820, y=600)
                                 button_guardar_cambios.config(bg="#FACC2E")
 
                                 button_cambiar_grupo=Button(ventana_studiow, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
-                                button_cambiar_grupo.place(x=500, y=740)
+                                button_cambiar_grupo.place(x=370, y=600)
                                 button_cambiar_grupo.config(bg="#FACC2E")
 
                                 button_hablar_normal=Button(ventana_studiow, text="Speak Normal",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarNormal)
-                                button_hablar_normal.place(x=round(1270), y=round(460))
+                                button_hablar_normal.place(x=round(1120), y=round(380))
 
                                 button_hablar_lento=Button(ventana_studiow, text="Speak Slow",font=("Bookman Old Style",round(10),"bold"), width=15 , command=hablarlento)
-                                button_hablar_lento.place(x=round(1270), y=round(540))
+                                button_hablar_lento.place(x=round(1120), y=round(460))
 
                                 button_dar_aleatorio=Button(ventana_studiow, text="GIVE RANDOM",font=("Bookman Old Style",round(12),"bold") , command=dar_aleatorio)
-                                button_dar_aleatorio.place(x=round(735), y=round(425))
+                                button_dar_aleatorio.place(x=round(590), y=round(325))
 
                                 button_elegir_grupo=Button(ventana_studiow, text="Choose Group",font=("Bookman Old Style",round(10),"bold") , command=cambiar_grupo)
-                                button_elegir_grupo.place(x=round(620), y=round(145))
+                                button_elegir_grupo.place(x=round(470), y=round(80))
 
                                 button_ver_respuesta=Button(ventana_studiow, text="SEE ANSWER",font=("Bookman Old Style",round(12),"bold") , command=ver_respuesta)
-                                button_ver_respuesta.place(x=round(735), y=round(550))
+                                button_ver_respuesta.place(x=round(600), y=round(460))
 
                                 boton_ver_respuesta_espanol=Button(ventana_studiow, text="VER TRADDUCIÓN",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=ver_traduccion)
-                                boton_ver_respuesta_espanol.place(x=500, y=620)
+                                boton_ver_respuesta_espanol.place(x=370, y=520)
                                 boton_ver_respuesta_espanol.config(bg="#FACC2E")
 
                                 button_quit = Button(ventana_studiow, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
-                                button_quit.place(x=round(740), y=round(850))
+                                button_quit.place(x=round(600), y=round(680))
 #------------------------------------------- ETIQUETAS VENTANA PALABRAS ------------------------------------------
-                                titulo=Label(ventana_studiow, text="WORKING VOCABULARY", font=("Bookman Old Style",round(30)),bg="#e8dabd")
-                                titulo.place(x=round(570), y=(70))
+                                titulo=Label(ventana_studiow, text="WORKING VOCABULARY", font=("Bookman Old Style",round(24)),bg="#e8dabd")
+                                titulo.place(x=round(440), y=(30))
 
                                 etiqueta_respuesta_propia=Label(ventana_studiow, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
-                                etiqueta_respuesta_propia.place(x=round(370), y=(470))
+                                etiqueta_respuesta_propia.place(x=round(300), y=(370))
 
                                 etiqueta_respuesta_correcta=Label(ventana_studiow, text="CURRENT WORD", font=("Bookman Old Style",round(12),"bold"),bg="#FACC2E")
-                                etiqueta_respuesta_correcta.place(x=round(1000), y=(470))
+                                etiqueta_respuesta_correcta.place(x=round(850), y=(370))
 #--------------------------------------------CUADRO DE TEXTO VENTANA PALABRAS---------------------------------------------------
-                                meaning_ENG=Text(ventana_studiow, width=round(125), height=round(5), font=("Helvetica",round(13),"bold"),borderwidth=round(5))
-                                meaning_ENG.place(x=round(240),y=round(280))
+                                meaning_ENG=Text(ventana_studiow, width=round(120), height=round(5), font=("Helvetica",round(12),"bold"),borderwidth=round(5))
+                                meaning_ENG.place(x=round(150),y=round(200))
 
                                 cuadro_grupo=Entry(ventana_studiow, width=round(35), borderwidth=round(5), justify="center")
-                                cuadro_grupo.place(x=round(600), y=round(200))
+                                cuadro_grupo.place(x=round(430), y=round(135))
                                 cuadro_grupo.config(font=("Bookman Old Style",round(12),"bold"))
                                 cuadro_grupo.insert(0,grw)
 
                                 respuesta_propia=Entry(ventana_studiow, width=round(25), borderwidth=round(5), justify="center")
-                                respuesta_propia.place(x=round(350), y=round(500))
+                                respuesta_propia.place(x=round(270), y=round(415))
                                 respuesta_propia.config(font=("Bookman Old Style",round(12),"bold"))
 
                                 respuesta_corta=Entry(ventana_studiow, width=round(15), borderwidth=round(5), justify="center")
-                                respuesta_corta.place(x=round(720), y=round(500))
+                                respuesta_corta.place(x=round(585), y=round(415))
                                 respuesta_corta.config(font=("Bookman Old Style",round(12),"bold"))
 
                                 respuesta_correcta=Entry(ventana_studiow, width=round(25), borderwidth=round(5), justify="center")
-                                respuesta_correcta.place(x=round(950), y=round(500))
+                                respuesta_correcta.place(x=round(800), y=round(415))
                                 respuesta_correcta.config(font=("Bookman Old Style",round(12),"bold"))
 
                                 respuesta_espanol=Entry(ventana_studiow, width=round(35), borderwidth=round(5), justify="center")
-                                respuesta_espanol.place(x=round(700), y=round(620))
+                                respuesta_espanol.place(x=round(570), y=round(520))
                                 respuesta_espanol.config(font=("Bookman Old Style",round(12),"bold"))
 
                                 contador = Entry(ventana_studiow, width=5, borderwidth=5, justify="center")
-                                contador.place(x=round(775) , y=round(465))
+                                contador.place(x=round(630) , y=round(370))
                                 contador.config(font=("Bookman Old Style",round(10),"bold"))
                                 contador.insert(0,cont_w)
 #------------------------------------- funciones/Botones Consulta Ventana Palabras -------------------------------------
@@ -624,19 +624,19 @@ def home():
                                         messagebox.showinfo("REBASE", "Para conservar los cambios hechos y no exista dupliacion de datos\nse recomienda dar a guardar los cambios")
 
                                 button_consulta1 = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
-                                button_consulta1.place(x=round(1010), y=round(200))
+                                button_consulta1.place(x=round(840), y=round(135))
                                 button_consulta1.config(bg="#0A43B4", fg="white")
 
                                 button_consulta_significado_grupo = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_sobre_concepto_grupo, borderwidth=0)
-                                button_consulta_significado_grupo.place(x=round(1025), y=round(145))
+                                button_consulta_significado_grupo.place(x=round(830), y=round(80))
                                 button_consulta_significado_grupo.config(bg="#0A43B4", fg="white")
 
                                 button_consulta_enviar_grupo = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_enviar_grupo, borderwidth=0)
-                                button_consulta_enviar_grupo.place(x=round(465), y=round(740))
+                                button_consulta_enviar_grupo.place(x=round(330), y=round(600))
                                 button_consulta_enviar_grupo.config(bg="#0A43B4", fg="white")
 
                                 button_consulta_guardar_cambios = Button(ventana_studiow, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_guardar_cambios, borderwidth=0)
-                                button_consulta_guardar_cambios.place(x=round(1200), y=round(740))
+                                button_consulta_guardar_cambios.place(x=round(1020), y=round(600))
                                 button_consulta_guardar_cambios.config(bg="#0A43B4", fg="white")
 
 
@@ -879,11 +879,11 @@ def home():
                                 etiqueta_respuesta_propia=Label(ventana_studios, text="INPUT YOUR ANSWER HERE", font=("Bookman Old Style",round(11),"bold"), width=25, bg="#FACC2E")
                                 etiqueta_respuesta_propia.place(x=round(50), y=(350))
 
-                                etiqueta_respuesta_correcta=Label(ventana_studios, text="SPANISH SETENCE", font=("Bookman Old Style",round(11),"bold"), width=25, bg="#FACC2E")
-                                etiqueta_respuesta_correcta.place(x=round(50), y=(200))
+                                etiqueta_respuesta_espanol=Label(ventana_studios, text="SPANISH SETENCE", font=("Bookman Old Style",round(11),"bold"), width=25, bg="#FACC2E")
+                                etiqueta_respuesta_espanol.place(x=round(50), y=(200))
 
-                                etiqueta_respuesta_correcta=Label(ventana_studios, text="ENGLISH SETENCE", font=("Bookman Old Style",round(11),"bold"), width=25, bg="#FACC2E")
-                                etiqueta_respuesta_correcta.place(x=round(50), y=(500))
+                                etiqueta_respuesta_ingles=Label(ventana_studios, text="ENGLISH SETENCE", font=("Bookman Old Style",round(11),"bold"), width=25, bg="#FACC2E")
+                                etiqueta_respuesta_ingles.place(x=round(50), y=(500))
 #--------------------------------------------CUADRO DE TEXTO VENTANA SENTENCIA---------------------------------------------------
 
                                 cuadro_grupo=Entry(ventana_studios, width=round(35), borderwidth=round(5), justify="center")
@@ -1012,7 +1012,14 @@ def home():
                                 messagebox.showinfo("REBASE"," La resolucion de pantalla ha sido cambiado a \n\n"+clicked.get()+"\n\n Cierre el programa y vuela a abrirlo para ver cambios ")
                                 ventana_configuracion.destroy()
                                 configuracion()
-
+                        
+                        def ventana_configuracion_leer():
+                                ventana_configuracion.destroy()
+                                window_read()
+                        
+                        def ventana_configuracion_estudio():
+                                ventana_configuracion.destroy()
+                                window_study()
 
                 #1.3.2 ------------------------------- Titulo Modo Lectura -------------------------------------------
                         titulo=Label(ventana_configuracion, text="SET CONFIGURATION REBASE", font=("Bookman Old Style",round(20)),bg="#e8dabd")
@@ -1037,9 +1044,9 @@ def home():
                         boton_aplicar_fondo_pantalla=Button(ventana_configuracion, text=("APPLY WALLPAPER"),font=("Bookman Old Style",round(10),"bold"),width=round(20),height=round(1), command=cambiar_fondo)
                         boton_aplicar_fondo_pantalla.place(x=round(900), y=round(200))
 
-                        boton_read=Button(ventana_configuracion, text=("READ BOOK/TEXT"),font=("Bookman Old Style",round(10),"bold"),width=round(20),height=round(1), command=window_read)
+                        boton_read=Button(ventana_configuracion, text=("READ BOOK/TEXT"),font=("Bookman Old Style",round(10),"bold"),width=round(20),height=round(1), command=ventana_configuracion_leer)
                         boton_read.place(x=round(400), y=round(600))
-                        boton_study=Button(ventana_configuracion, text=("STUDY ENGLISH"),font=("Bookman Old Style",round(10),"bold"), width=round(20),height=round(1),command=window_study)
+                        boton_study=Button(ventana_configuracion, text=("STUDY ENGLISH"),font=("Bookman Old Style",round(10),"bold"), width=round(20),height=round(1),command=ventana_configuracion_estudio)
                         boton_study.place(x=round(700), y=round(600))
 
                         button_quit = Button(ventana_configuracion, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
@@ -1065,7 +1072,7 @@ def home():
                         texto_set_image_label.config(bg="#FACC2E", width=round(20), font=("Bookman Old Style",round(12),"bold"))
 
 # 1.5.1---------------------------------------Ventena presentacion ---------------------------------------------------------------------------------------------------------
-                def presentacion():
+                def presentacion2():
                         global my_img
 
                         root.withdraw()
@@ -1080,7 +1087,7 @@ def home():
                         elif resolucion_pantalla == 0:
                                 screen_size="1920x1080"
 
-                        ventana_presentacion.geometry("1920x1080")
+                        ventana_presentacion.geometry("1366x768")
                         archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
                         fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
                         archivotexto_nombre_fondo_panatalla.close()                        
@@ -1088,12 +1095,12 @@ def home():
                         my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
                         my_label = Label(ventana_presentacion, image=my_img).place(relwidth=1, relheight=1)
 
-                        mi_foto =ImageTk.PhotoImage(Image.open("img\Foto_Perfil.png"))
+                        mi_foto =ImageTk.PhotoImage(Image.open("img\Foto_Perfil2.png"))
                         foto_label= Label(ventana_presentacion, image=mi_foto)
                         foto_label.photo= mi_foto
-                        foto_label.place(x=220, y=220)
+                        foto_label.place(x=180, y=140)
 
-                        my_linked_In = ImageTk.PhotoImage(Image.open("img_in.png"))
+                        my_linked_In = ImageTk.PhotoImage(Image.open("img\img_in2.png"))
                         linked_label= Label(ventana_presentacion, image=my_linked_In)
                         linked_label.photo= my_linked_In
                         #linked_label.place(x=220, y=560)
@@ -1112,30 +1119,30 @@ def home():
                                 ventana_presentacion.destroy()
                                 window_study()
 
-                        button_likendIn = Button(ventana_presentacion,image=my_linked_In, width=180, height=38, borderwidth=0 , command=my_linkedIn)
-                        button_likendIn.place(x=235, y=510)
+                        button_likendIn = Button(ventana_presentacion,image=my_linked_In, width=127, height=30, borderwidth=0 , command=my_linkedIn)
+                        button_likendIn.place(x=190, y=375)
 
-                        my_cv=Button(ventana_presentacion,text="IR A MI SITIO",font=("Bookman Old Style",round(12),"bold"), width=round(20), borderwidth=5 , command=my_cv)
-                        my_cv.place(x=220, y=460)
+                        my_cv=Button(ventana_presentacion,text="IR A MI SITIO",font=("Bookman Old Style",round(10),"bold"), width=round(15), borderwidth=5 , command=my_cv)
+                        my_cv.place(x=180, y=305)
                         my_cv.config(bg="#FACC2E") 
 
                         button_quit = Button(ventana_presentacion, text="SALIR PROGRAMA",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
-                        button_quit.place(x=1100, y=950) 
+                        button_quit.place(x=850, y=700) 
 
                         button_quit = Button(ventana_presentacion, text="LEER",font=("Bookman Old Style",round(10),"bold"), width=20 , command=ir_leer)
-                        button_quit.place(x=650, y=950)
+                        button_quit.place(x=650, y=700)
 
                         button_quit = Button(ventana_presentacion, text="ESTUDIAR",font=("Bookman Old Style",round(10),"bold"), width=20 , command=ir_estudiar)
-                        button_quit.place(x=875, y=950)
+                        button_quit.place(x=450, y=700)
 
-                        titulo=Label(ventana_presentacion, text="PRESENTACIÓN", font=("Bookman Old Style",round(30)),bg="#e8dabd")
-                        titulo.place(x=round(650), y=(30))
+                        titulo=Label(ventana_presentacion, text="PRESENTACIÓN", font=("Bookman Old Style",round(24)),bg="#e8dabd")
+                        titulo.place(x=round(530), y=(30))
 
-                        titulo=Label(ventana_presentacion, text='¡Hola!\n\nMi nombre es Jaime Gabriel Campillay Rojas\nDe profesión Ingeniero Civil Industrial con Magister en Ingenieria Industrial \ny de Sistemas\n\nEl programa actual es el resultado de un proceso de reflexión, aprendizaje y \nmuchas horas de estudio de Python que comenzó en el mes de octubre\ndel año 2020 cuando quedé desempleado por necesidades de la empresa. \n\nHasta antes de la fecha mencionada no me había dado cuenta lo fascinante\ndel mundo de la programación, y ahora no tengo dudas que quiero algún \ndía ganarme la vida como Programador. \n\nPor tanto te presento este proyecto que estás viendo llamado REBASE que \nbusca ayudarte a leer y estudiar ingles con el fin de aprender este idioma,\na la vez que en lo personal me permitió aventurarme en el desafío que implicó\naprender este lenguaje de programación, del cual no sabia nada en ese\nmomento.\n\nCorreo: jcampillayworks@gmail.com\n\nFecha Término REBASE: 24/01/2021', font=("Bookman Old Style",round(16)),bg="#e8dabd", width=80, height=30, justify="left")
-                        titulo.place(x=round(470), y=200)
+                        titulo=Label(ventana_presentacion, text='¡Hola!\n\nMi nombre es Jaime Gabriel Campillay Rojas\nDe profesión Ingeniero Civil Industrial con Magister en Ingenieria Industrial \ny de Sistemas\n\nEl programa actual es el resultado de un proceso de reflexión, aprendizaje y \nmuchas horas de estudio de Python que comenzó en el mes de octubre\ndel año 2020 cuando quedé desempleado por necesidades de la empresa. \n\nHasta antes de la fecha mencionada no me había dado cuenta lo fascinante\ndel mundo de la programación, y ahora no tengo dudas que quiero algún \ndía ganarme la vida como Programador. \n\nPor tanto te presento este proyecto que estás viendo llamado REBASE que \nbusca ayudarte a leer y estudiar ingles con el fin de aprender este idioma,\na la vez que en lo personal me permitió aventurarme en el desafío que implicó\naprender este lenguaje de programación, del cual no sabia nada en ese\nmomento.\n\nCorreo: jcampillayworks@gmail.com\n\nFecha Término REBASE: 24/01/2021', font=("Bookman Old Style",round(12)),bg="#e8dabd", width=70, height=28, justify="left")
+                        titulo.place(x=round(380), y=105)
 
-                        titulo=Label(ventana_presentacion, text="El programa es gratuito y por tanto\nlibre para su distribución", font=("Bookman Old Style",round(16)),bg="#e8dabd",fg="red", width=45, height=2, justify="left")
-                        titulo.place(x=round(900), y=(850))
+                        titulo=Label(ventana_presentacion, text="El programa es gratuito y por tanto\nlibre para su distribución", font=("Bookman Old Style",round(12)),bg="#e8dabd",fg="red", width=38, height=2, justify="left")
+                        titulo.place(x=round(700), y=(615))
 
 #2.0 ----------------------------------VENTANA RESOLUCION 1920 X 1080 ------------------------------------------------------------------
         else:
@@ -2289,14 +2296,14 @@ def home():
                 boton_listen=Button(background_label, text=("STUDY ENGLISH"),font=("Bookman Old Style",round(12),"bold"), width=round(22),height=round(2),command=window_study)
                 boton_listen.place(x=720, y=300)
                 button_quit = Button(background_label, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
-                button_quit.place(x=570, y=630)
+                button_quit.place(x=570, y=650)
 
                 boton_configuracio=Button(background_label, text="SET CONFIGURATION",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=configuracion)
-                boton_configuracio.place(x=530, y=580)
+                boton_configuracio.place(x=530, y=600)
                 boton_configuracio.config(bg="#FACC2E")
 
-                boton_configuracio=Button(background_label, text="PRESENTATION",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=presentacion)
-                boton_configuracio.place(x=770, y=775)
+                boton_configuracio=Button(background_label, text="PRESENTATION",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=presentacion2)
+                boton_configuracio.place(x=500, y=550)
                 boton_configuracio.config(bg="#FACC2E")  
         else:
                 boton_written=Button(background_label, text=("READ BOOK/TEXT"),font=("Bookman Old Style",round(14),"bold"),width=round(22),height=round(2), command=window_read)
