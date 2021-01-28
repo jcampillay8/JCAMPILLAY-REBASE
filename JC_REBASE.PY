@@ -2405,29 +2405,38 @@ def home():
                                 crear_nuevo_texto=open(creation_text_name,"w")
                                 lectura_libro_texto=crear_nuevo_texto.write(str2)
                                 crear_nuevo_texto.close
+
+                                messagebox.showinfo("REBASE"," El archivo con nombre: \n\n"+nombre_texto.get()+"\n\n Ha sido creado exitosamente!!")
+                                cuadro.delete(1.0,END)
+                                nombre_texto.delete(0,END)
                                 
                         def go_read():
                                 ventana_add_text.destroy()
                                 window_read()
 
                         nombre_texto=Entry(ventana_add_text, width=round(25), borderwidth=round(3), justify="center",font=("Bookman Old Style",round(14),"bold"))
-                        nombre_texto.place(x=round(500), y=round(180))
+                        nombre_texto.place(x=round(747), y=round(180))
 
                         cuadro = Text(ventana_add_text, width=round(100), height=18, font=("Bookman Old Style",round(14),"bold"),borderwidth=round(3))
                         cuadro.place(x=round(250), y=round(300))
 
                         button_add_text=Button(ventana_add_text, text="ADD TEXT",font=("Bookman Old Style",round(14),"bold"),width=12 , command=add_text)
-                        button_add_text.place(x=round(1000), y=round(180))
+                        button_add_text.place(x=round(1150), y=round(180))
                         button_add_text.config(bg="#FACC2E")
 
                         button_quit = Button(ventana_add_text, text="READ ENGLISH",font=("Bookman Old Style",round(14),"bold"), width=20 , command=go_read)
                         button_quit.place(x=500, y=850)
 
-                        titulo=Label(ventana_add_text, text="ADD NEW TEXT", font=("Bookman Old Style",round(25)),bg="#e8dabd")
-                        titulo.place(x=round(680), y=(60))
-
                         button_quit = Button(ventana_add_text, text="EXIT PROGRAM",font=("Bookman Old Style",round(14),"bold"), width=20 , command=root.quit)
-                        button_quit.place(x=930, y=850) 
+                        button_quit.place(x=930, y=850)
+
+                        titulo=Label(ventana_add_text, text="WINDOW ADD NEW TEXT", font=("Bookman Old Style",round(25)),bg="#e8dabd")
+                        titulo.place(x=round(680), y=(60)) 
+
+                        titulo=Label(ventana_add_text, text="ENTER TEXT FILE NAME", font=("Bookman Old Style",round(14),"bold"),bg="#FACC2E")
+                        titulo.place(x=round(440), y=(180))
+                        titulo=Label(ventana_add_text, text="PASTE HERE YOUR TEXT PLAESE", font=("Bookman Old Style",round(14),"bold"),bg="#FACC2E")
+                        titulo.place(x=round(250), y=(270))
 
         
 #------------------------------- Botones Funciones Ventana inicio -------------------------------------------
