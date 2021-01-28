@@ -2342,15 +2342,93 @@ def home():
                         button_quit = Button(ventana_manual, text="SALIR PROGRAMA",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
                         button_quit.place(x=810, y=910) 
 
-                        button_quit = Button(ventana_manual, text="READ ENGLISH",font=("Bookman Old Style",round(12),"bold"), width=25 , command=go_read)
-                        button_quit.place(x=500, y=830)
+                        button_read = Button(ventana_manual, text="READ ENGLISH",font=("Bookman Old Style",round(12),"bold"), width=25 , command=go_read)
+                        button_read.place(x=500, y=830)
 
-                        button_quit = Button(ventana_manual, text="STUDY ENGLISH",font=("Bookman Old Style",round(12),"bold"), width=25 , command=go_study)
-                        button_quit.place(x=1000, y=830)
+                        button_study = Button(ventana_manual, text="STUDY ENGLISH",font=("Bookman Old Style",round(12),"bold"), width=25 , command=go_study)
+                        button_study.place(x=1000, y=830)
 
                         titulo=Label(ventana_manual, text="TUTORIAL REBASE", font=("Bookman Old Style",round(30)),bg="#e8dabd")
                         titulo.place(x=round(650), y=(60))
+                
+                def add_text():
+                        global my_img
+
+                        root.withdraw()
+                        ventana_add_text=Toplevel()                      
                         
+                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt",encoding="utf8")
+                        resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.read()
+                        archivotexto_nombre_resolucion_pantalla.close()
+
+                        if resolucion_pantalla == 1:
+                                screen_size="1366x768"
+                        elif resolucion_pantalla == 0:
+                                screen_size="1920x1080"
+
+                        ventana_add_text.geometry("1920x1080")
+                        archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
+                        fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
+                        archivotexto_nombre_fondo_panatalla.close()                        
+
+                        my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                        my_label = Label(ventana_add_text, image=my_img).place(relwidth=1, relheight=1)
+
+                        def add_text():
+
+                                recoger_texto=cuadro.get(1.0,END)
+                                recoger_texto1=recoger_texto.replace('“','"')
+                                recoger_texto2=recoger_texto1.replace('”','"')
+                                recoger_texto3=recoger_texto2.replace("’","'")
+                                recoger_texto4=recoger_texto3.replace("•","*")
+                                recoger_texto5=recoger_texto4.replace("—","--")
+                                
+                                lst=list(recoger_texto5)
+                                str=''
+                                for i in lst:
+                                        str+=i
+                                        
+                                #print(str)
+                                lst1=str.split("\n")
+                                #print(lst1)
+                                str1=""
+                                #print(str1)
+
+                                for i in lst1:
+                                        str1+=i+" "
+                                str2=str1[:-2]
+                                #print(str2)
+
+                                text_name=nombre_texto.get()
+                                creation_text_name="texto_lectura/"+text_name+".txt"
+                                
+                                crear_nuevo_texto=open(creation_text_name,"w")
+                                lectura_libro_texto=crear_nuevo_texto.write(str2)
+                                crear_nuevo_texto.close
+                                
+                        def go_read():
+                                ventana_add_text.destroy()
+                                window_read()
+
+                        nombre_texto=Entry(ventana_add_text, width=round(25), borderwidth=round(3), justify="center",font=("Bookman Old Style",round(14),"bold"))
+                        nombre_texto.place(x=round(500), y=round(180))
+
+                        cuadro = Text(ventana_add_text, width=round(100), height=18, font=("Bookman Old Style",round(14),"bold"),borderwidth=round(3))
+                        cuadro.place(x=round(250), y=round(300))
+
+                        button_add_text=Button(ventana_add_text, text="ADD TEXT",font=("Bookman Old Style",round(14),"bold"),width=12 , command=add_text)
+                        button_add_text.place(x=round(1000), y=round(180))
+                        button_add_text.config(bg="#FACC2E")
+
+                        button_quit = Button(ventana_add_text, text="READ ENGLISH",font=("Bookman Old Style",round(14),"bold"), width=20 , command=go_read)
+                        button_quit.place(x=500, y=850)
+
+                        titulo=Label(ventana_add_text, text="ADD NEW TEXT", font=("Bookman Old Style",round(25)),bg="#e8dabd")
+                        titulo.place(x=round(680), y=(60))
+
+                        button_quit = Button(ventana_add_text, text="EXIT PROGRAM",font=("Bookman Old Style",round(14),"bold"), width=20 , command=root.quit)
+                        button_quit.place(x=930, y=850) 
+
         
 #------------------------------- Botones Funciones Ventana inicio -------------------------------------------
         if size == 1:
@@ -2390,6 +2468,10 @@ def home():
 
                 boton_configuracio=Button(background_label, text="GUIDE",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=manual)
                 boton_configuracio.place(x=800, y=750)
+                boton_configuracio.config(bg="#FACC2E")
+
+                boton_configuracio=Button(background_label, text="ADD NEW TEXT",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=add_text)
+                boton_configuracio.place(x=800, y=700)
                 boton_configuracio.config(bg="#FACC2E")  
 
 home()
