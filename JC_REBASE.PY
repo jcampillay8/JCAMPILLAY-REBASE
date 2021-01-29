@@ -16,7 +16,8 @@ root = Tk()
 
 root.title("READ ENGLISH BOOK AND STUDY ENGLISH (REBASE)")
 root.resizable(width=True,height=True)
-root.iconbitmap("North2.ico")
+root.iconbitmap(default="rebase_logo2.ico")
+
 
 archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt",encoding="utf8")
 resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.read()
@@ -80,8 +81,14 @@ def home():
                         global save_words_setence_options
                         global screen_size
 
-                        root.withdraw()
+                        #root.withdraw()
+                        
                         ventana_lectura=Toplevel()
+                        #icon=PhotoImage(file="rebase_logo2.ico")
+                        
+                        #ventana_lectura.tk.call('wm', 'iconphoto', ventana_lectura._w, icon)
+                        
+
                         if  size == 1:
                                 screen_size="1366x768"
                         elif size == 0:
