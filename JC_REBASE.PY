@@ -529,9 +529,15 @@ def home():
                                         grupo_viejo=str(cuadro_grupo.get())
                                         camino_grupo_estudio="memory/f_words/"+grupo_viejo
                                         text_file2=open(camino_grupo_estudio,"w")
+                                        primero=0
                                         for j in lista_formateada:
-                                                text_file2.write("\n")
-                                                text_file2.write(j)
+                                                if primero == 0:
+                                                        #text_file2.write("\n")
+                                                        text_file2.write(j)
+                                                        primero+=1
+                                                else:
+                                                        text_file2.write("\n")
+                                                        text_file2.write(j)
                                         text_file2.close
                                         messagebox.showinfo("REBASE"," Los cambios han sido guardado\n\n")
                                 
@@ -1714,9 +1720,15 @@ def home():
                                         grupo_viejo=str(cuadro_grupo.get())
                                         camino_grupo_estudio="memory/f_words/"+grupo_viejo
                                         text_file2=open(camino_grupo_estudio,"w")
+                                        primero=0
                                         for j in lista_formateada:
-                                                text_file2.write("\n")
-                                                text_file2.write(j)
+                                                if primero == 0:
+                                                        #text_file2.write("\n")
+                                                        text_file2.write(j)
+                                                        primero+=1
+                                                else:
+                                                        text_file2.write("\n")
+                                                        text_file2.write(j)
                                         text_file2.close
                                         messagebox.showinfo("REBASE"," Los cambios han sido guardado\n\n")
                                 
