@@ -99,13 +99,6 @@ def home():
                         almacena_page_marker=texto_contiene_page_marker.read()
                         texto_contiene_page_marker.close()
 
-                        clicked_read=StringVar()
-                        clicked_read.set(save_words_setence_options[0])
-
-                        drop_read_save=OptionMenu(ventana_lectura,clicked_read, *save_words_setence_options)
-                        drop_read_save.place(x=round(200),y=round(560))
-                        drop_read_save.config(width=round(10), font=("Book Old Style", round(10),"bold"))
-
                         clicked_texto=StringVar()
                         clicked_texto.set(lista_textos[0])
 
@@ -228,28 +221,29 @@ def home():
                                 messagebox.showinfo("English Assitant"," El marcador de página \n\n"+contador.get()+"\n\n ha sido guardado ")
                                 marcador_pagina.close()
 
-                        def save_word_sentence():
-                                save_words_setence_options=["SENTENCE","WORD"]
-                                if clicked_read.get() == "SENTENCE":
+                        def save_sentence():
 
-                                        sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","w")
-                                        sentencia_para_estudiar.write("\n")
-                                        sentencia_para_estudiar.write(cuadro_save_words_setence.get())
-                                        messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_sentences.txt")
-                                        sentencia_para_estudiar.close()
+                                sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","a")
+                                sentencia_para_estudiar.write("\n")
+                                sentencia_para_estudiar.write(cuadro_save_words_setence.get())
+                                messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_sentences.txt")
+                                sentencia_para_estudiar.close()
 
-                                elif clicked_read.get() == "WORD":
-                                        palabra_para_estudiar=open("memory/f_words/new_words.txt","w")
-                                        palabra_para_estudiar.write("\n")
-                                        palabra_para_estudiar.write(cuadro_save_words_setence.get())
-                                        messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_words.txt ")
-                                        palabra_para_estudiar.close()
+                        def save_word():
+                                palabra_para_estudiar=open("memory/f_words/new_words.txt","a")
+                                palabra_para_estudiar.write("\n")
+                                palabra_para_estudiar.write(dictionary_text.get())
+                                messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_words.txt")
+                                palabra_para_estudiar.close()
 
                 #1.1.3 ------------------------------- Botones Modo Lectura -------------------------------------------
 
-                        button_save_word_setence=Button(ventana_lectura,text="SAVE WORD/SENTENCE ",font=("Bookman Old Style",round(10),"bold"), command=save_word_sentence)
+                        button_save_word_setence=Button(ventana_lectura,text="SAVE SENTENCE ",font=("Bookman Old Style",round(10),"bold"), command=save_sentence)
                         button_save_word_setence.place(x=round(550),y=round(520))
                         button_save_word_setence.config(width=20)
+
+                        button_save_word=Button(ventana_lectura, text="SAVE WORD",font=("Bookman Old Style",round(10),"bold"),width=15 , command=save_word)
+                        button_save_word.place(x=round(1200), y=round(470))
 
                         button_spanish_translate_text=Button(ventana_lectura,text="VER TRADUCCIÓN ",font=("Bookman Old Style",round(10),"bold"), command=spanish_translate_text)
                         button_spanish_translate_text.place(x=round(50),y=round(390))
@@ -312,12 +306,6 @@ def home():
                         titulo_texto=Label(ventana_lectura, text="TITLE OF THE TEXT",font=("Bookman Old Style",round(10),"bold"),bg="#FACC2E")
                         titulo_texto.place(x=round(525), y=round(55))
 
-                #1.1.6------------------------------- Etiquetas Modo Lectura -------------------------------------------
-
-                        text_save_as=Label(ventana_lectura,text="SAVE AS",font=("Bookman Old Style",round(10),"bold"))
-                        text_save_as.place(x=round(200),y=round(520))
-                        text_save_as.config(bg="#FACC2E", width=15)
-
 #------------------------------------- funciones/Botones Consulta Ventana Palabras -------------------------------------
 
                         def consulta_elegir_grupo():
@@ -326,9 +314,7 @@ def home():
                                 messagebox.showinfo("REBASE", "Guarda el numero de sentencia,\nasí puedes cerrar el programa y retormarlo más tarde")
                         def consulta_dictionary():
                                 messagebox.showinfo("REBASE", "Diccionario soporta solo palabras simples")
-                        def consulta_save():
-                                messagebox.showinfo("REBASE", "Elige de la lista desplegable\n si guardarlo como una horación o como plabrta\n\nRecuerda que las plabras debe ser singular")
-
+                        
                         button_consulta1 = Button(ventana_lectura, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
                         button_consulta1.place(x=round(820), y=round(85))
                         button_consulta1.config(bg="#0A43B4", fg="white")
@@ -341,9 +327,7 @@ def home():
                         button_consulta_dictionary.place(x=round(1160), y=round(320))
                         button_consulta_dictionary.config(bg="#0A43B4", fg="white")
 
-                        button_consulta_save = Button(ventana_lectura, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_save, borderwidth=0)
-                        button_consulta_save.place(x=round(345), y=round(520))
-                        button_consulta_save.config(bg="#0A43B4", fg="white")
+                        
                 #1.2 ------------------------------- Ventana Modo Estudio -------------------------------------------
                 def window_study():
                         global my_img
@@ -1245,13 +1229,6 @@ def home():
                         almacena_page_marker=texto_contiene_page_marker.read()
                         texto_contiene_page_marker.close()
 
-                        clicked_read=StringVar()
-                        clicked_read.set(save_words_setence_options[0])
-
-                        drop_read_save=OptionMenu(ventana_lectura,clicked_read, *save_words_setence_options)
-                        drop_read_save.place(x=round(250),y=round(750))
-                        drop_read_save.config(width=round(10), font=("Book Old Style", round(12),"bold"))
-
                         clicked_texto=StringVar()
                         clicked_texto.set(lista_textos[0])
 
@@ -1374,28 +1351,35 @@ def home():
                                 messagebox.showinfo("English Assitant"," El marcador de página \n\n"+contador.get()+"\n\n ha sido guardado ")
                                 marcador_pagina.close()
 
-                        def save_word_sentence():
-                                save_words_setence_options=["SENTENCE","WORD"]
-                                if clicked_read.get() == "SENTENCE":
+                        def save_sentence():
+                                
+                                sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","a")
+                                sentencia_para_estudiar.write("\n")
+                                sentencia_para_estudiar.write(cuadro_save_words_setence.get())
+                                messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_sentences.txt")
+                                sentencia_para_estudiar.close()
 
-                                        sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","a")
-                                        sentencia_para_estudiar.write("\n")
-                                        sentencia_para_estudiar.write(cuadro_save_words_setence.get())
-                                        messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_sentences.txt")
-                                        sentencia_para_estudiar.close()
-
-                                elif clicked_read.get() == "WORD":
+                                """elif clicked_read.get() == "WORD":
                                         palabra_para_estudiar=open("memory/f_words/new_words.txt","a")
                                         palabra_para_estudiar.write("\n")
                                         palabra_para_estudiar.write(cuadro_save_words_setence.get())
                                         messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_words.txt")
-                                        palabra_para_estudiar.close()
+                                        palabra_para_estudiar.close()"""
+                        def save_word():
+                                palabra_para_estudiar=open("memory/f_words/new_words.txt","a")
+                                palabra_para_estudiar.write("\n")
+                                palabra_para_estudiar.write(dictionary_text.get())
+                                messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_words.txt")
+                                palabra_para_estudiar.close()
 
 #2.1.3 ------------------------------- Botones Modo Lectura -------------------------------------------
 
-                        button_save_word_setence=Button(ventana_lectura,text="SAVE WORD/SENTENCE ",font=("Bookman Old Style",round(12),"bold"), command=save_word_sentence)
-                        button_save_word_setence.place(x=round(670),y=round(700))
+                        button_save_word_setence=Button(ventana_lectura,text="SAVE SENTENCE ",font=("Bookman Old Style",round(12),"bold"), command=save_sentence)
+                        button_save_word_setence.place(x=round(700),y=round(700))
                         button_save_word_setence.config(width=25)
+
+                        button_save_word=Button(ventana_lectura, text="SAVE WORD",font=("Bookman Old Style",round(10),"bold"),width=15 , command=save_word)
+                        button_save_word.place(x=round(1200), y=round(470))
 
                         button_spanish_translate_text=Button(ventana_lectura,text="VER TRADUCCIÓN ",font=("Bookman Old Style",round(12),"bold"), command=spanish_translate_text)
                         button_spanish_translate_text.place(x=round(50),y=round(525))
@@ -1422,7 +1406,7 @@ def home():
                         button_previous_line.place(x=round(525), y=round(420))
 
                         button_quit = Button(ventana_lectura, text="Exit Program",font=("Bookman Old Style",round(12),"bold") , command=root.quit)
-                        button_quit.place(x=round(700), y=round(810))
+                        button_quit.place(x=round(750), y=round(810))
 
 #2.1.4 ------------------------------- Cuadro texto Modo Lectura -------------------------------------------
 
@@ -1458,11 +1442,7 @@ def home():
                         titulo_texto=Label(ventana_lectura, text="TITLE OF THE TEXT",font=("Bookman Old Style",round(14),"bold"),bg="#FACC2E")
                         titulo_texto.place(x=round(680), y=round(100))
 
-#2.1.6------------------------------- Etiquetas Modo Lectura -------------------------------------------
 
-                        text_save_as=Label(ventana_lectura,text="SAVE AS",font=("Bookman Old Style",round(12),"bold"))
-                        text_save_as.place(x=round(240),y=round(700))
-                        text_save_as.config(bg="#FACC2E", width=15)
 #------------------------------------- funciones/Botones Consulta Ventana Palabras -------------------------------------
 
                         def consulta_elegir_grupo():
@@ -1471,9 +1451,7 @@ def home():
                                 messagebox.showinfo("REBASE", "Guarda el numero de sentencia,\nasí puedes cerrar el programa y retormarlo más tarde")
                         def consulta_dictionary():
                                 messagebox.showinfo("REBASE", "Diccionario soporta solo palabras simples")
-                        def consulta_save():
-                                messagebox.showinfo("REBASE", "Elige de la lista desplegable\n si guardarlo como una horación o como plabrta\n\nRecuerda que las plabras debe ser singular")
-
+                        
                         button_consulta1 = Button(ventana_lectura, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_elegir_grupo, borderwidth=0)
                         button_consulta1.place(x=round(1010), y=round(200))
                         button_consulta1.config(bg="#0A43B4", fg="white")
@@ -1485,11 +1463,7 @@ def home():
                         button_consulta_dictionary = Button(ventana_lectura, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_dictionary, borderwidth=0)
                         button_consulta_dictionary.place(x=round(1450), y=round(420))
                         button_consulta_dictionary.config(bg="#0A43B4", fg="white")
-
-                        button_consulta_save = Button(ventana_lectura, text="?",font=("Bookman Old Style",round(12),"bold"), command=consulta_save, borderwidth=0)
-                        button_consulta_save.place(x=round(420), y=round(700))
-                        button_consulta_save.config(bg="#0A43B4", fg="white")
-
+                        
 #2.2 ------------------------------- Ventana Modo Estudio -------------------------------------------
                 def window_study():
                         global my_img
