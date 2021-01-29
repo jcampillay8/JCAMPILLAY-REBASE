@@ -394,6 +394,7 @@ def home():
                                         lista_formateada.append(linea)
 
                                 lista_respaldo=lista_formateada[:]
+                                lista_palabras_correctas=[]
 
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
                                 def dar_aleatorio():
@@ -413,8 +414,9 @@ def home():
                                                                 aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                                 sacar=lista_respaldo[aleatorio_lista]
                                                                 filtro=(sacar in lista_formateada)
+                                                                filtro2=(sacar in lista_palabras_correctas)
                                                                 
-                                                                if filtro == False:
+                                                                if filtro == False or filtro2 == False:
                                                                         respuesta_correcta.insert(0,"")
 
                                                                 else:
@@ -475,6 +477,7 @@ def home():
                                         recoger_respuesta_propia=respuesta_propia.get()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
                                         if recoger_respuesta_correcta == recoger_respuesta_propia:
+                                                lista_palabras_correctas.append(recoger_respuesta_correcta)
                                                 respuesta_corta.insert(0,"CORRECT")
                                                 respuesta_corta.configure(bg="#33FF51")
                                                 respuesta_correcta.configure(fg="black")
@@ -704,6 +707,7 @@ def home():
                                         lista_formateada.append(linea)
 
                                 lista_respaldo=lista_formateada[:]
+                                lista_sentencias_correctas=[]
 
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
                                 def dar_aleatorio():
@@ -722,8 +726,9 @@ def home():
                                                                 aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                                 sacar=lista_respaldo[aleatorio_lista]
                                                                 filtro=(sacar in lista_formateada)
+                                                                filtro2=(sacar in lista_sentencias_correctas)
                                                                 
-                                                                if filtro == False:
+                                                                if filtro == False or filtro2 == False:
                                                                         respuesta_espanol.insert(0,"")
 
                                                                 else:
@@ -784,10 +789,11 @@ def home():
                                         recoger_respuesta_propia=respuesta_propia.get()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
                                         if recoger_respuesta_correcta == recoger_respuesta_propia:
+                                                lista_sentencias_correctas.append(recoger_respuesta_correcta)
                                                 respuesta_corta.insert(0,"CORRECT")
                                                 respuesta_corta.configure(bg="#33FF51")
                                                 respuesta_correcta.configure(fg="black")
-                                                respuesta_correcta.config(fg="black")
+                                                
                                         else:
                                                 respuesta_corta.insert(0,"WRONG")
                                                 respuesta_corta.configure(bg="#FF3333")
@@ -1584,6 +1590,7 @@ def home():
                                         lista_formateada.append(linea)
 
                                 lista_respaldo=lista_formateada[:]
+                                lista_palabras_correctas=[]
 
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
                                 def dar_aleatorio():
@@ -1603,8 +1610,9 @@ def home():
                                                                 aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                                 sacar=lista_respaldo[aleatorio_lista]
                                                                 filtro=(sacar in lista_formateada)
+                                                                filtro2=(sacar in lista_palabras_correctas)
                                                                 
-                                                                if filtro == False:
+                                                                if filtro == False or filtro2 == False:
                                                                         respuesta_correcta.insert(0,"")
 
                                                                 else:
@@ -1666,6 +1674,7 @@ def home():
                                         recoger_respuesta_propia=respuesta_propia.get()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
                                         if recoger_respuesta_correcta == recoger_respuesta_propia:
+                                                lista_palabras_correctas.append(recoger_respuesta_correcta)
                                                 respuesta_corta.insert(0,"CORRECT")
                                                 respuesta_corta.configure(bg="#33FF51")
                                                 respuesta_correcta.configure(fg="black")
@@ -1895,6 +1904,7 @@ def home():
                                         lista_formateada.append(linea)
 
                                 lista_respaldo=lista_formateada[:]
+                                lista_sentencias_correctas=[]
 
 #2.2.1.2----------------------------Ventana Modo Sentencias Textos -------------------------------------------------
                                 def dar_aleatorio():
@@ -1913,8 +1923,9 @@ def home():
                                                                 aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                                 sacar=lista_respaldo[aleatorio_lista]
                                                                 filtro=(sacar in lista_formateada)
+                                                                filtro2=(sacar in lista_sentencias_correctas)
                                                                 
-                                                                if filtro == False:
+                                                                if filtro == False or filtro2 == False:
                                                                         respuesta_espanol.insert(0,"")
 
                                                                 else:
@@ -1975,15 +1986,16 @@ def home():
                                         recoger_respuesta_propia=respuesta_propia.get()
                                         recoger_respuesta_correcta=respuesta_correcta.get()
                                         if recoger_respuesta_correcta == recoger_respuesta_propia:
+                                                lista_sentencias_correctas.append(recoger_respuesta_correcta)
                                                 respuesta_corta.insert(0,"CORRECT")
                                                 respuesta_corta.configure(bg="#33FF51")
                                                 respuesta_correcta.configure(fg="black")
-                                                respuesta_correcta.config(fg="black")
+                                                
                                         else:
                                                 respuesta_corta.insert(0,"WRONG")
                                                 respuesta_corta.configure(bg="#FF3333")
                                                 respuesta_correcta.configure(fg="black")
-                                                respuesta_correcta.config(fg="black")
+                                                
 
                                 def ver_traduccion():
                                         control=0
