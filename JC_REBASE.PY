@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
-import os
+import shutil, os
 from tkinter import messagebox
 from PyDictionary import PyDictionary
 from google_trans_new import google_translator
@@ -41,6 +41,8 @@ lista_fondo_pantalla=os.listdir(r"images")
 group_w=os.listdir(r"memory\f_words")
 grupo_w2=os.listdir(r"memory\f_words")
 group_s=os.listdir(r"memory\f_sentences")
+lista_archivos=os.listdir(r"texto_lectura")
+lista_bookcase=os.listdir(r"baul_textos")
 
 
 if size == 1:
@@ -2387,17 +2389,13 @@ def home():
                                 str=''
                                 for i in lst:
                                         str+=i
-                                        
-                                #print(str)
+                                
                                 lst1=str.split("\n")
-                                #print(lst1)
                                 str1=""
-                                #print(str1)
-
+                                
                                 for i in lst1:
                                         str1+=i+" "
-                                str2=str1[:-2]
-                                #print(str2)
+                                str2=str1[:-2]                                
 
                                 text_name=nombre_texto.get()
                                 creation_text_name="texto_lectura/"+text_name+".txt"
@@ -2438,6 +2436,85 @@ def home():
                         titulo=Label(ventana_add_text, text="PASTE HERE YOUR TEXT PLAESE", font=("Bookman Old Style",round(14),"bold"),bg="#FACC2E")
                         titulo.place(x=round(250), y=(270))
 
+                def move_file():
+                        global my_img
+                        global lista_archivos
+
+                        root.withdraw()
+                        ventana_move_file=Toplevel()                      
+                        
+                        archivotexto_nombre_resolucion_pantalla=open("memory/resolucion_pantalla.txt",encoding="utf8")
+                        resolucion_pantalla=archivotexto_nombre_resolucion_pantalla.read()
+                        archivotexto_nombre_resolucion_pantalla.close()
+
+                        if resolucion_pantalla == 1:
+                                screen_size="1366x768"
+                        elif resolucion_pantalla == 0:
+                                screen_size="1920x1080"
+
+                        ventana_move_file.geometry("1920x1080")
+                        archivotexto_nombre_fondo_panatalla=open("memory/nombre_fondo_pantalla.txt",encoding="utf8")
+                        fondo_pantalla = camino_carpeta_images+archivotexto_nombre_fondo_panatalla.read()
+                        archivotexto_nombre_fondo_panatalla.close()                        
+
+                        my_img = ImageTk.PhotoImage(Image.open(fondo_pantalla))
+                        my_label = Label(ventana_move_file, image=my_img).place(relwidth=1, relheight=1)
+
+                        def add_text():
+                                archivo2=clicked_archivo.get()
+                                archivo3= nombre_archivo.insert(0,archivo2)
+
+                                for i in lista_archivos:
+                                        if i == nombre_archivo.get():
+                                                camino = "texto_lectura/"+i
+                                                shutil.move(camino, 'baul_textos')
+
+
+                        nombre_archivo=Entry(ventana_move_file, width=round(30), borderwidth=round(4), justify="center", font=("Bookman Old Style",round(14),"bold"))
+                        nombre_archivo.place(x=round(800), y=round(350))
+
+                        clicked_archivo= StringVar()
+                        clicked_archivo.set(lista_archivos[0])
+
+                        drop= OptionMenu(ventana_move_file, clicked_archivo, *lista_archivos)
+                        drop.place(x=round(300), y=round(350))
+                        drop.config(width=round(30), font=("Bookman Old Style",round(14),"bold"))
+
+                        button_add_text=Button(ventana_move_file, text="SEND TO THE BOOKCASE",font=("Bookman Old Style",round(14),"bold"),width=20 , command=add_text)
+                        button_add_text.place(x=round(800), y=round(280))
+                        button_add_text.config(bg="#FACC2E")
+
+                        def back_text():
+                                archivo2=clicked_archivo_bookcase.get()
+                                archivo3= nombre_archivo_bookcase.insert(0,archivo2)
+
+                                for i in lista_bookcase:
+                                        if i == nombre_archivo_bookcase.get():
+                                                camino = "baul_textos/"+i
+                                                shutil.move(camino, 'texto_lectura')
+
+
+                        nombre_archivo_bookcase=Entry(ventana_move_file, width=round(30), borderwidth=round(4), justify="center", font=("Bookman Old Style",round(14),"bold"))
+                        nombre_archivo_bookcase.place(x=round(800), y=round(580))
+
+                        clicked_archivo_bookcase= StringVar()
+                        clicked_archivo_bookcase.set(lista_bookcase[0])
+
+                        drop= OptionMenu(ventana_move_file, clicked_archivo_bookcase, *lista_bookcase)
+                        drop.place(x=round(300), y=round(580))
+                        drop.config(width=round(30), font=("Bookman Old Style",round(14),"bold"))
+
+                        button_bookcase=Button(ventana_move_file, text="TAKE OUT FROM BOOKCASE",font=("Bookman Old Style",round(14),"bold"),width=24 , command=back_text)
+                        button_bookcase.place(x=round(800), y=round(530))
+                        button_bookcase.config(bg="#FACC2E")
+
+
+                        button_quit = Button(ventana_move_file, text="EXIT PROGRAM",font=("Bookman Old Style",round(12),"bold"), width=24 , command=root.quit)
+                        button_quit.place(x=800, y=850)
+                                
+                        titulo=Label(ventana_move_file, text="WINDOW MOVE FILE", font=("Bookman Old Style",round(25)),bg="#e8dabd")
+                        titulo.place(x=round(680), y=(60))
+
         
 #------------------------------- Botones Funciones Ventana inicio -------------------------------------------
         if size == 1:
@@ -2471,17 +2548,21 @@ def home():
                 boton_configuracio.place(x=800, y=850)
                 boton_configuracio.config(bg="#FACC2E")
 
-                boton_configuracio=Button(background_label, text="PRESENTATION",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=presentacion)
-                boton_configuracio.place(x=800, y=800)
-                boton_configuracio.config(bg="#FACC2E")
+                boton_presentation=Button(background_label, text="PRESENTATION",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=presentacion)
+                boton_presentation.place(x=800, y=800)
+                boton_presentation.config(bg="#FACC2E")
 
-                boton_configuracio=Button(background_label, text="GUIDE",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=manual)
-                boton_configuracio.place(x=800, y=750)
-                boton_configuracio.config(bg="#FACC2E")
+                boton_guide=Button(background_label, text="GUIDE",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=manual)
+                boton_guide.place(x=800, y=750)
+                boton_guide.config(bg="#FACC2E")
 
-                boton_configuracio=Button(background_label, text="ADD NEW TEXT",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=add_text)
-                boton_configuracio.place(x=800, y=700)
-                boton_configuracio.config(bg="#FACC2E")  
+                boton_add_text=Button(background_label, text="ADD NEW TEXT",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=add_text)
+                boton_add_text.place(x=800, y=700)
+                boton_add_text.config(bg="#FACC2E") 
+
+                boton_move_file=Button(background_label, text="MOVE FILE",font=("Bookman Old Style",round(12),"bold"), width=round(20) , command=move_file)
+                boton_move_file.place(x=800, y=650)
+                boton_move_file.config(bg="#FACC2E")  
 
 home()
 
