@@ -431,7 +431,30 @@ def home():
                                         w_num=contador.get()
                                         grupo_nuevo=str(clicked_enviar_otro_grupo.get())
                                         camino_grupo_estudio="memory/f_words/"+grupo_nuevo
-                                        text_file=open(camino_grupo_estudio,"a")
+
+                                        control_repetidos=open(camino_grupo_estudio,"r")
+                                        lista= control_repetidos.readlines()
+                                        lista_control=[]
+
+                                        for i in lista:
+                                                elemento= i.strip()
+                                                lista_control.append(elemento)
+                                        control_repetidos.close()
+                                        
+                                        if lista_respaldo[int(w_num)] in lista_control:
+                                                
+                                                messagebox.showinfo("REBASE"," La palabra \n\n"+lista_respaldo[int(w_num)]+"\n\nya está en el grupo")
+                                        else:
+                                                text_file=open(camino_grupo_estudio,"a")
+                                                text_file.write("\n")
+                                                text_file.write(lista_respaldo[int(w_num)])
+                                                text_file.close
+                                                messagebox.showinfo("REBASE"," La palabra \n\n"+lista_respaldo[int(w_num)]+"\n\nha sido enviado al grupo\n\n"+grupo_nuevo)
+                                                #lista_palabras_temporal.append(lista_formateada[int(w_num)])
+                                                for i in lista_formateada:
+                                                        if i == lista_respaldo[int(w_num)]:
+                                                                lista_formateada.remove(i)
+                                        """text_file=open(camino_grupo_estudio,"a")
                                         text_file.write("\n")
                                         text_file.write(lista_respaldo[int(w_num)])
                                         text_file.close
@@ -439,7 +462,7 @@ def home():
                                         for i in lista_formateada:
                                                 if i == lista_respaldo[int(w_num)]:
                                                         lista_formateada.remove(i)
-                                        messagebox.showinfo("REBASE"," La palabra\n\n"+lista_respaldo[int(w_num)]+"\n\n ha sido enviada a "+clicked_enviar_otro_grupo.get())
+                                        messagebox.showinfo("REBASE"," La palabra\n\n"+lista_respaldo[int(w_num)]+"\n\n ha sido enviada a "+clicked_enviar_otro_grupo.get())"""
 
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
@@ -720,14 +743,29 @@ def home():
                                         w_num=contador.get()
                                         grupo_nuevo=str(clicked_enviar_otro_grupo.get())
                                         camino_grupo_estudio="memory/f_sentences/"+grupo_nuevo
-                                        text_file=open(camino_grupo_estudio,"a")
-                                        text_file.write("\n")
-                                        text_file.write(lista_respaldo[int(w_num)])
-                                        text_file.close
-                                        #lista_palabras_temporal.append(lista_formateada[int(w_num)])
-                                        for i in lista_formateada:
-                                                if i == lista_respaldo[int(w_num)]:
-                                                        lista_formateada.remove(i)
+
+                                        control_repetidos=open(camino_grupo_estudio,"r")
+                                        lista= control_repetidos.readlines()
+                                        lista_control=[]
+
+                                        for i in lista:
+                                                elemento= i.strip()
+                                                lista_control.append(elemento)
+                                        control_repetidos.close()
+                                        
+                                        if lista_respaldo[int(w_num)] in lista_control:
+                                                
+                                                messagebox.showinfo("REBASE"," La palabra \n\n"+lista_respaldo[int(w_num)]+"\n\nya está en el grupo")
+                                        else:
+                                                text_file=open(camino_grupo_estudio,"a")
+                                                text_file.write("\n")
+                                                text_file.write(lista_respaldo[int(w_num)])
+                                                text_file.close
+                                                messagebox.showinfo("REBASE"," La horacion \n\n"+lista_respaldo[int(w_num)]+"\n\nha sido enviado al grupo\n\n"+grupo_nuevo)
+                                                #lista_palabras_temporal.append(lista_formateada[int(w_num)])
+                                                for i in lista_formateada:
+                                                        if i == lista_respaldo[int(w_num)]:
+                                                                lista_formateada.remove(i)
                                         
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
@@ -796,9 +834,15 @@ def home():
                                         grupo_viejo=str(cuadro_grupo.get())
                                         camino_grupo_estudio="memory/f_sentences/"+grupo_viejo
                                         text_file2=open(camino_grupo_estudio,"w")
+                                        primero=0
                                         for j in lista_formateada:
-                                                text_file2.write("\n")
-                                                text_file2.write(j)
+                                                if primero == 0:
+                                                        #text_file2.write("\n")
+                                                        text_file2.write(j)
+                                                        primero+=1
+                                                else:
+                                                        text_file2.write("\n")
+                                                        text_file2.write(j)
                                         text_file2.close
                                         messagebox.showinfo("REBASE"," Los cambios han sido guardados \n\n")
                                 
@@ -1571,7 +1615,31 @@ def home():
                                         w_num=contador.get()
                                         grupo_nuevo=str(clicked_enviar_otro_grupo.get())
                                         camino_grupo_estudio="memory/f_words/"+grupo_nuevo
-                                        text_file=open(camino_grupo_estudio,"a")
+
+                                        control_repetidos=open(camino_grupo_estudio,"r")
+                                        lista= control_repetidos.readlines()
+                                        lista_control=[]
+
+                                        for i in lista:
+                                                elemento= i.strip()
+                                                lista_control.append(elemento)
+                                        control_repetidos.close()
+                                        
+                                        if lista_respaldo[int(w_num)] in lista_control:
+                                                
+                                                messagebox.showinfo("REBASE"," La palabra \n\n"+lista_respaldo[int(w_num)]+"\n\nya está en el grupo")
+                                        else:
+                                                text_file=open(camino_grupo_estudio,"a")
+                                                text_file.write("\n")
+                                                text_file.write(lista_respaldo[int(w_num)])
+                                                text_file.close
+                                                messagebox.showinfo("REBASE"," La palabra \n\n"+lista_respaldo[int(w_num)]+"\n\nha sido enviado al grupo\n\n"+grupo_nuevo)
+                                                #lista_palabras_temporal.append(lista_formateada[int(w_num)])
+                                                for i in lista_formateada:
+                                                        if i == lista_respaldo[int(w_num)]:
+                                                                lista_formateada.remove(i)
+
+                                        """text_file=open(camino_grupo_estudio,"a")
                                         text_file.write("\n")
                                         text_file.write(lista_respaldo[int(w_num)])
                                         text_file.close
@@ -1579,7 +1647,7 @@ def home():
                                         for i in lista_formateada:
                                                 if i == lista_respaldo[int(w_num)]:
                                                         lista_formateada.remove(i)
-                                        messagebox.showinfo("REBASE"," La palabra\n\n"+lista_respaldo[int(w_num)]+"\n\n ha sido enviada a "+clicked_enviar_otro_grupo.get())
+                                        messagebox.showinfo("REBASE"," La palabra\n\n"+lista_respaldo[int(w_num)]+"\n\n ha sido enviada a "+clicked_enviar_otro_grupo.get())"""
 
                                 def ver_respuesta():
                                         recoger_respuesta_propia=respuesta_propia.get()
@@ -1878,6 +1946,7 @@ def home():
                                                 text_file.write("\n")
                                                 text_file.write(lista_respaldo[int(w_num)])
                                                 text_file.close
+                                                messagebox.showinfo("REBASE"," La horacion \n\n"+lista_respaldo[int(w_num)]+"\n\nha sido enviado al grupo\n\n"+grupo_nuevo)
                                                 #lista_palabras_temporal.append(lista_formateada[int(w_num)])
                                                 for i in lista_formateada:
                                                         if i == lista_respaldo[int(w_num)]:
