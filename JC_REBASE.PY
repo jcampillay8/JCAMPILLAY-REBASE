@@ -249,10 +249,6 @@ def home():
                         button_spanish_translate_text.place(x=round(50),y=round(390))
                         button_spanish_translate_text.config(bg="#FACC2E", width=15)
 
-                        button_texto_inicio=Button(ventana_lectura,text="DAR INICO ",font=("Bookman Old Style",round(10),"bold"),command=texto_inicio)
-                        button_texto_inicio.place(x=round(50),y=round(200))
-                        button_texto_inicio.config(bg="#FACC2E", width=15)
-
                         button_page_marker=Button(ventana_lectura, text="PAGE MARKER",font=("Bookman Old Style",round(10),"bold"),width=12 , command=page_marker)
                         button_page_marker.place(x=round(220), y=round(320))
                         button_page_marker.config(bg="#FACC2E")
@@ -305,6 +301,11 @@ def home():
                         titulo.place(x=round(450), y=round(10))
                         titulo_texto=Label(ventana_lectura, text="TITLE OF THE TEXT",font=("Bookman Old Style",round(10),"bold"),bg="#FACC2E")
                         titulo_texto.place(x=round(525), y=round(55))
+
+                        english_text=Label(ventana_lectura, text="ENGLISH TEXT",font=("Bookman Old Style",round(14),"bold"),bg="#FACC2E")
+                        english_text.place(x=round(50), y=round(200))
+
+                        texto_inicio()
 
 #------------------------------------- funciones/Botones Consulta Ventana Palabras -------------------------------------
 
@@ -510,6 +511,10 @@ def home():
                                                 text_file2.write(j)
                                         text_file2.close
                                         messagebox.showinfo("REBASE"," Los cambios han sido guardado\n\n")
+                                
+                                def salir():
+                                        guardar_cambios()
+                                        ventana_studiow.destroy()
 
 #--------------------------------- ------------CLICKED VENTANA PALABRAS ---------------------------------------------
 
@@ -528,9 +533,9 @@ def home():
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(10),"bold"))
 # --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
 
-                                button_guardar_cambios=Button(ventana_studiow, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
+                                """button_guardar_cambios=Button(ventana_studiow, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
                                 button_guardar_cambios.place(x=820, y=600)
-                                button_guardar_cambios.config(bg="#FACC2E")
+                                button_guardar_cambios.config(bg="#FACC2E")"""
 
                                 button_cambiar_grupo=Button(ventana_studiow, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
                                 button_cambiar_grupo.place(x=370, y=600)
@@ -555,7 +560,7 @@ def home():
                                 boton_ver_respuesta_espanol.place(x=370, y=520)
                                 boton_ver_respuesta_espanol.config(bg="#FACC2E")
 
-                                button_quit = Button(ventana_studiow, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                                button_quit = Button(ventana_studiow, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=salir)
                                 button_quit.place(x=round(600), y=round(680))
 #------------------------------------------- ETIQUETAS VENTANA PALABRAS ------------------------------------------
                                 titulo=Label(ventana_studiow, text="WORKING VOCABULARY", font=("Bookman Old Style",round(24)),bg="#e8dabd")
@@ -797,6 +802,10 @@ def home():
                                         text_file2.close
                                         messagebox.showinfo("REBASE"," Los cambios han sido guardados \n\n")
                                 
+                                def salir():
+                                        guardar_cambios()
+                                        ventana_studios.destroy()
+                                
                                 def hablar_respuesta():
                                         #cuadro_speak.insert(0,"SPEAK!")
                                         #cuadro_speak.configure(bg="#33FF51")                                  
@@ -829,9 +838,9 @@ def home():
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA SENTENCES-------------------------------------------------
 
-                                button_guardar_cambios=Button(ventana_studios, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
+                                """button_guardar_cambios=Button(ventana_studios, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
                                 button_guardar_cambios.place(x=905, y=575)
-                                button_guardar_cambios.config(bg="#FACC2E")
+                                button_guardar_cambios.config(bg="#FACC2E")"""
 
                                 button_cambiar_grupo=Button(ventana_studios, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
                                 button_cambiar_grupo.place(x=405, y=575)
@@ -856,7 +865,7 @@ def home():
                                 boton_ver_respuesta_speech.place(x=400, y=275)
                                 boton_ver_respuesta_speech.config(bg="#FACC2E")
 
-                                button_quit = Button(ventana_studios, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                                button_quit = Button(ventana_studios, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=salir)
                                 button_quit.place(x=round(660), y=round(650))
 #------------------------------------------- ETIQUETAS VENTANA SENTENCIA ------------------------------------------
                                 titulo=Label(ventana_studios, text="WORKING SENTENCES", font=("Bookman Old Style",round(24)),bg="#e8dabd")
@@ -1358,13 +1367,7 @@ def home():
                                 sentencia_para_estudiar.write(cuadro_save_words_setence.get())
                                 messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_sentences.txt")
                                 sentencia_para_estudiar.close()
-
-                                """elif clicked_read.get() == "WORD":
-                                        palabra_para_estudiar=open("memory/f_words/new_words.txt","a")
-                                        palabra_para_estudiar.write("\n")
-                                        palabra_para_estudiar.write(cuadro_save_words_setence.get())
-                                        messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_words.txt")
-                                        palabra_para_estudiar.close()"""
+                                
                         def save_word():
                                 palabra_para_estudiar=open("memory/f_words/new_words.txt","a")
                                 palabra_para_estudiar.write("\n")
@@ -1384,10 +1387,7 @@ def home():
                         button_spanish_translate_text=Button(ventana_lectura,text="VER TRADUCCIÓN ",font=("Bookman Old Style",round(12),"bold"), command=spanish_translate_text)
                         button_spanish_translate_text.place(x=round(50),y=round(525))
                         button_spanish_translate_text.config(bg="#FACC2E", width=15)
-
-                        button_texto_inicio=Button(ventana_lectura,text="DAR INICO ",font=("Bookman Old Style",round(12),"bold"),command=texto_inicio)
-                        button_texto_inicio.place(x=round(50),y=round(280))
-                        button_texto_inicio.config(bg="#FACC2E", width=15)
+                        
 
                         button_page_marker=Button(ventana_lectura, text="PAGE MARKER",font=("Bookman Old Style",round(10),"bold"),width=12 , command=page_marker)
                         button_page_marker.place(x=round(255), y=round(420))
@@ -1441,6 +1441,11 @@ def home():
                         titulo.place(x=round(520), y=round(30))
                         titulo_texto=Label(ventana_lectura, text="TITLE OF THE TEXT",font=("Bookman Old Style",round(14),"bold"),bg="#FACC2E")
                         titulo_texto.place(x=round(680), y=round(100))
+
+                        english_text=Label(ventana_lectura, text="ENGLISH TEXT",font=("Bookman Old Style",round(14),"bold"),bg="#FACC2E")
+                        english_text.place(x=round(50), y=round(280))
+
+                        texto_inicio()
 
 
 #------------------------------------- funciones/Botones Consulta Ventana Palabras -------------------------------------
@@ -1646,6 +1651,10 @@ def home():
                                                 text_file2.write(j)
                                         text_file2.close
                                         messagebox.showinfo("REBASE"," Los cambios han sido guardado\n\n")
+                                
+                                def salir():
+                                        guardar_cambios()
+                                        ventana_studiow.destroy()
 
 #--------------------------------- ------------CLICKED VENTANA PALABRAS ---------------------------------------------
 
@@ -1664,9 +1673,9 @@ def home():
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA PALABRAS-------------------------------------------------
 
-                                button_guardar_cambios=Button(ventana_studiow, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
+                                """button_guardar_cambios=Button(ventana_studiow, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
                                 button_guardar_cambios.place(x=1000, y=740)
-                                button_guardar_cambios.config(bg="#FACC2E")
+                                button_guardar_cambios.config(bg="#FACC2E")"""
 
                                 button_cambiar_grupo=Button(ventana_studiow, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
                                 button_cambiar_grupo.place(x=500, y=740)
@@ -1691,7 +1700,7 @@ def home():
                                 boton_ver_respuesta_espanol.place(x=500, y=620)
                                 boton_ver_respuesta_espanol.config(bg="#FACC2E")
 
-                                button_quit = Button(ventana_studiow, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                                button_quit = Button(ventana_studiow, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=salir)
                                 button_quit.place(x=round(740), y=round(850))
 #------------------------------------------- ETIQUETAS VENTANA PALABRAS ------------------------------------------
                                 titulo=Label(ventana_studiow, text="WORKING VOCABULARY", font=("Bookman Old Style",round(30)),bg="#e8dabd")
@@ -1933,10 +1942,13 @@ def home():
                                         text_file2.close
                                         messagebox.showinfo("REBASE"," Los cambios han sido guardados \n\n")
                                 
+                                def salir():
+                                        guardar_cambios()
+                                        ventana_studios.destroy()
+
+                                
                                 def hablar_respuesta():
-                                        #cuadro_speak.insert(0,"SPEAK!")
-                                        #cuadro_speak.configure(bg="#33FF51")                                  
-                                        #if cuadro_speak.get=="SPEAK!":
+                                        
                                         r = sr.Recognizer()
                                         with sr.Microphone() as source:
                                                 r.adjust_for_ambient_noise(source)
@@ -1965,9 +1977,9 @@ def home():
                                 drop_enviar_palabra.config(width=round(25), font=("Book Old Style", round(12),"bold"))
 # --------------------------------------------- BOTONES VENTANA SENTENCES-------------------------------------------------
 
-                                button_guardar_cambios=Button(ventana_studios, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
+                                """button_guardar_cambios=Button(ventana_studios, text="SAVE CHANGES",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=guardar_cambios)
                                 button_guardar_cambios.place(x=1000, y=750)
-                                button_guardar_cambios.config(bg="#FACC2E")
+                                button_guardar_cambios.config(bg="#FACC2E")"""
 
                                 button_cambiar_grupo=Button(ventana_studios, text="SEND TO",font=("Bookman Old Style",round(10),"bold"), width=round(20) , command=recoger_enviar_otrogrupo)
                                 button_cambiar_grupo.place(x=500, y=750)
@@ -1992,7 +2004,7 @@ def home():
                                 boton_ver_respuesta_espanol.place(x=500, y=400)
                                 boton_ver_respuesta_espanol.config(bg="#FACC2E")
 
-                                button_quit = Button(ventana_studios, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=root.quit)
+                                button_quit = Button(ventana_studios, text="Exit Program",font=("Bookman Old Style",round(10),"bold") , command=salida)
                                 button_quit.place(x=round(790), y=round(850))
 #------------------------------------------- ETIQUETAS VENTANA SENTENCIA ------------------------------------------
                                 titulo=Label(ventana_studios, text="WORKING SENTENCES", font=("Bookman Old Style",round(30)),bg="#e8dabd")
