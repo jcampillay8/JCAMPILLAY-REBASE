@@ -1612,7 +1612,7 @@ def home():
                                                                 filtro=(sacar in lista_formateada)
                                                                 filtro2=(sacar in lista_palabras_correctas)
                                                                 
-                                                                if filtro == False or filtro2 == False:
+                                                                if filtro == False or filtro2==True:
                                                                         respuesta_correcta.insert(0,"")
 
                                                                 else:
@@ -1925,7 +1925,7 @@ def home():
                                                                 filtro=(sacar in lista_formateada)
                                                                 filtro2=(sacar in lista_sentencias_correctas)
                                                                 
-                                                                if filtro == False or filtro2 == False:
+                                                                if filtro == False or filtro2==True:
                                                                         respuesta_espanol.insert(0,"")
 
                                                                 else:
