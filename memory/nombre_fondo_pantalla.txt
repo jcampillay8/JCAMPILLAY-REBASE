@@ -1,1 +1,1 @@
-library_wall.png
+book_green.png

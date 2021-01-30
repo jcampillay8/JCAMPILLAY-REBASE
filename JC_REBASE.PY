@@ -1312,7 +1312,7 @@ def home():
                         def texto_inicio():
                                 num_lista=contador.get()
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
-                                abrir_texto_inicio=open(camino_texto_lectura, encoding="utf8")
+                                abrir_texto_inicio=open(camino_texto_lectura, "r")
                                 for line in abrir_texto_inicio:
                                         line=line.split(".")
                                         line=line[int(num_lista)]
@@ -1322,7 +1322,7 @@ def home():
                         def ingresar_texto():
                                 texto_nuevo=str(clicked_texto.get())
                                 camino_texto_lectura="texto_lectura/"+texto_nuevo
-                                abrir_texto=open(camino_texto_lectura, encoding="utf8")
+                                abrir_texto=open(camino_texto_lectura, "r")
                                 lectura_libro_texto=abrir_texto.read()
                                 abrir_texto.close
 
@@ -1339,7 +1339,7 @@ def home():
                                 while cntrl==0:
                                         num_lista=contador.get()
                                         camino_texto_lectura="texto_lectura/"+almacena_titulo
-                                        abrir_texto=open(camino_texto_lectura, encoding="utf8")
+                                        abrir_texto=open(camino_texto_lectura, "r")
 
                                         try:
                                                 for line in abrir_texto:
@@ -1371,7 +1371,7 @@ def home():
                                 contador.insert(0,siguiente)
 
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
-                                abrir_texto_inicio=open(camino_texto_lectura, encoding="utf8")
+                                abrir_texto_inicio=open(camino_texto_lectura, "r")
 
                                 for line in abrir_texto_inicio:
                                         line=line.split(".")
@@ -1400,7 +1400,7 @@ def home():
                                 contador.insert(0,anterior)
 
                                 camino_texto_lectura="texto_lectura/"+almacena_titulo
-                                abrir_texto_inicio=open(camino_texto_lectura, encoding="utf8")
+                                abrir_texto_inicio=open(camino_texto_lectura, "r")
 
                                 for line in abrir_texto_inicio:
                                         line=line.split(".")
@@ -1435,7 +1435,7 @@ def home():
                                 palabra_para_estudiar=open("memory/f_words/new_words.txt","a")
                                 palabra_para_estudiar.write("\n")
                                 palabra_para_estudiar.write(dictionary_text.get())
-                                messagebox.showinfo("English Assitant"," La Palabra \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_words.txt")
+                                messagebox.showinfo("English Assitant"," La Palabra \n\n"+dictionary_text.get()+"\n\n fue incluida a new_words.txt")
                                 palabra_para_estudiar.close()
 
 #2.1.3 ------------------------------- Botones Modo Lectura -------------------------------------------
@@ -2574,6 +2574,8 @@ def home():
                                         if i == nombre_archivo.get():
                                                 camino = "texto_lectura/"+i
                                                 shutil.move(camino, 'baul_textos')
+                                                messagebox.showinfo("REBASE"," El archivo con nombre: \n\n"+nombre_archivo.get()+"\n\n Ha sido movido exitosamente!!")
+                                                nombre_archivo.delete(0,END)
 
 
                         nombre_archivo=Entry(ventana_move_file, width=round(30), borderwidth=round(4), justify="center", font=("Bookman Old Style",round(14),"bold"))
@@ -2598,6 +2600,8 @@ def home():
                                         if i == nombre_archivo_bookcase.get():
                                                 camino = "baul_textos/"+i
                                                 shutil.move(camino, 'texto_lectura')
+                                                messagebox.showinfo("REBASE"," El archivo con nombre: \n\n"+nombre_archivo_bookcase.get()+"\n\n Ha sido creado exitosamente!!")
+                                                nombre_archivo_bookcase.delete(0,END)
 
 
                         nombre_archivo_bookcase=Entry(ventana_move_file, width=round(30), borderwidth=round(4), justify="center", font=("Bookman Old Style",round(14),"bold"))
