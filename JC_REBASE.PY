@@ -1605,7 +1605,7 @@ def home():
                                         num_aleatorio=len(lista_respaldo)
                                         if len(lista_formateada)>=1:
 
-                                                while respuesta_correcta.get() == "":
+                                                while respuesta_correcta.get() == "" or respuesta_correcta.get() == "again":
                                                         try:
                                                                 aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                                 sacar=lista_respaldo[aleatorio_lista]
@@ -1614,6 +1614,9 @@ def home():
                                                                 
                                                                 if filtro == False or filtro2==True:
                                                                         respuesta_correcta.insert(0,"")
+                                                                
+                                                                elif aleatorio_lista == 0:
+                                                                        respuesta_correcta.insert(0,"again")
 
                                                                 else:
                                                                         contador.insert(0,int(aleatorio_lista))
@@ -1918,7 +1921,7 @@ def home():
                                         num_aleatorio=len(lista_respaldo)
 
                                         if len(lista_formateada)>=1:
-                                                while respuesta_espanol.get() == "":
+                                                while respuesta_espanol.get() == "" or respuesta_correcta.get() =="again":
                                                         try:
                                                                 aleatorio_lista = random.randint(0,int(num_aleatorio))
                                                                 sacar=lista_respaldo[aleatorio_lista]
@@ -1927,6 +1930,9 @@ def home():
                                                                 
                                                                 if filtro == False or filtro2==True:
                                                                         respuesta_espanol.insert(0,"")
+                                                                
+                                                                elif aleatorio_lista == "0":
+                                                                        respuesta_espanol .insert(0,"again")
 
                                                                 else:
                                                                         contador.insert(0,int(aleatorio_lista))
