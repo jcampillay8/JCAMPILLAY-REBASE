@@ -15,7 +15,7 @@ import webbrowser
 root = Tk()
 
 root.title("READ ENGLISH BOOK AND STUDY ENGLISH (REBASE)")
-root.resizable(width=True,height=True)
+#root.resizable(width=True,height=True)
 root.iconbitmap(default="rebase_logo2.ico")
 
 
@@ -28,10 +28,10 @@ archivotexto_nombre_resolucion_pantalla.close()
 size=int(resolucion_pantalla)
 screen_size=None
 
-if size == 1:
+"""if size == 1:
         screen_size="1366x768"
 elif size==0:
-        screen_size="1920x1080"
+        screen_size="1920x1080"""
 
 size_options=["1366x768","1920x1080"]
 
@@ -1358,6 +1358,32 @@ def home():
                                                 texto_ESP.delete(1.0,END)
                                         else:
                                                 cntrl+=1
+                        
+                        def spanish_translate_text2(event):
+                                cntrl=0
+                                while cntrl==0:
+                                        num_lista=contador.get()
+                                        camino_texto_lectura="texto_lectura/"+almacena_titulo
+                                        abrir_texto=open(camino_texto_lectura, "r")
+
+                                        try:
+                                                for line in abrir_texto:
+                                                        line=line.rstrip("\n")
+                                                        line=line.split(".")
+                                                        linea_Esp=line[int(num_lista)]
+                                                        translator=google_translator()
+                                                        translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+                                                        texto_ESP.insert(END, translation)
+                                        except:
+                                                texto_ESP.insert(END,0)
+                                        abrir_texto.close()
+                                        recoger_respuesta=int(texto_ESP.get(1.0,END))
+                                        if recoger_respuesta == 0:
+                                                cntrl+=0
+                                                texto_ESP.delete(1.0,END)
+                                        else:
+                                                cntrl+=1
+                        ventana_lectura.bind("<Control-t>",spanish_translate_text2)
 
 
                         def next_line():
@@ -1387,6 +1413,35 @@ def home():
                                                 texto_ENG.config(bg="#109FEC")
 
                                 abrir_texto_inicio.close
+                        
+                        def next_line2(event):
+                                texto_ESP.delete(1.0,END)
+                                texto_ENG.delete(1.0,END)
+                                cuadro_save_words_setence.delete(0,END)
+                                dictionary_text.delete(0,END)
+                                num_lista=contador.get()
+                                siguiente=int(num_lista)+1
+                                contador.delete(0,END)
+                                contador.insert(0,siguiente)
+
+                                camino_texto_lectura="texto_lectura/"+almacena_titulo
+                                abrir_texto_inicio=open(camino_texto_lectura, "r")
+
+                                for line in abrir_texto_inicio:
+                                        line=line.split(".")
+                                        texto = len(line)
+                                        if (texto-siguiente) >= 1:
+                                                line=line[siguiente]
+                                                line=line.strip()
+                                                texto_ENG.insert(END, line)
+                                                texto-=1
+                                                print(texto)
+                                        else:
+                                                texto_ENG.insert(END,"END OF TEXT, CONGRATULATION")
+                                                texto_ENG.config(bg="#109FEC")
+
+                                abrir_texto_inicio.close
+                        ventana_lectura.bind("<Control-Right>",next_line2)
 
 
                         def previous_line():
@@ -1408,6 +1463,27 @@ def home():
                                         line=line.strip()
                                         texto_ENG.insert(END, line)
                                 abrir_texto_inicio.close
+                        
+                        def previous_line2(event):
+                                texto_ESP.delete(1.0,END)
+                                texto_ENG.delete(1.0,END)
+                                cuadro_save_words_setence.delete(0,END)
+                                dictionary_text.delete(0,END)
+                                num_lista=contador.get()
+                                anterior=int(num_lista)-1
+                                contador.delete(0,END)
+                                contador.insert(0,anterior)
+
+                                camino_texto_lectura="texto_lectura/"+almacena_titulo
+                                abrir_texto_inicio=open(camino_texto_lectura, "r")
+
+                                for line in abrir_texto_inicio:
+                                        line=line.split(".")
+                                        line=line[anterior]
+                                        line=line.strip()
+                                        texto_ENG.insert(END, line)
+                                abrir_texto_inicio.close
+                        ventana_lectura.bind("<Control-Left>",previous_line2)
 
                         def english_dictionary():
 
@@ -1424,19 +1500,45 @@ def home():
                                 marcador_pagina.close()
 
                         def save_sentence():
-                                
-                                sentencia_para_estudiar=open("memory/f_sentences/new_sentences.txt","a")
-                                sentencia_para_estudiar.write("\n")
-                                sentencia_para_estudiar.write(cuadro_save_words_setence.get())
-                                messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_sentences.txt")
-                                sentencia_para_estudiar.close()
-                                
+
+                                control_repetidos=open("memory/archivo_sentencias.txt","r")
+                                lista= control_repetidos.readlines()
+                                lista_control=[]
+
+                                for i in lista:
+                                        elemento= i.strip()
+                                        lista_control.append(elemento)
+                                control_repetidos.close()
+
+                                if cuadro_save_words_setence.get() in lista_control:
+                                        messagebox.showinfo("REBASE"," La horación \n\n"+cuadro_save_words_setence.get()+"\n\nya fue incluida.")
+
+                                else:
+                                        sentencia_para_estudiar=open("memory/archivo_sentencias.txt","a")
+                                        sentencia_para_estudiar.write("\n")
+                                        sentencia_para_estudiar.write(cuadro_save_words_setence.get())
+                                        messagebox.showinfo("English Assitant"," La Sentencia \n\n"+cuadro_save_words_setence.get()+"\n\n fue incluida a new_sentences.txt")
+                                        sentencia_para_estudiar.close()
+                                        
                         def save_word():
-                                palabra_para_estudiar=open("memory/f_words/new_words.txt","a")
-                                palabra_para_estudiar.write("\n")
-                                palabra_para_estudiar.write(dictionary_text.get())
-                                messagebox.showinfo("English Assitant"," La Palabra \n\n"+dictionary_text.get()+"\n\n fue incluida a new_words.txt")
-                                palabra_para_estudiar.close()
+                                control_repetidos=open("memory/archivo_palabras.txt","r")
+                                lista= control_repetidos.readlines()
+                                lista_control=[]
+
+                                for i in lista:
+                                        elemento= i.strip()
+                                        lista_control.append(elemento)
+                                control_repetidos.close()
+
+                                if dictionary_text.get() in lista_control:
+                                        messagebox.showinfo("REBASE"," La palabra \n\n"+dictionary_text.get()+"\n\nya fue incluida.")
+
+                                else:
+                                        palabra_para_estudiar=open("memory/archivo_palabras.txt","a")
+                                        palabra_para_estudiar.write("\n")
+                                        palabra_para_estudiar.write(dictionary_text.get())
+                                        messagebox.showinfo("English Assitant"," La Palabra \n\n"+dictionary_text.get()+"\n\n fue incluida a new_words.txt")
+                                        palabra_para_estudiar.close()
 
 #2.1.3 ------------------------------- Botones Modo Lectura -------------------------------------------
 
@@ -2582,6 +2684,12 @@ def home():
                                                 shutil.move(camino, 'baul_textos')
                                                 messagebox.showinfo("REBASE"," El archivo con nombre: \n\n"+nombre_archivo.get()+"\n\n Ha sido movido exitosamente!!")
                                                 nombre_archivo.delete(0,END)
+                                
+                        def eliminar_texto():
+                                archivo2=clicked_archivo.get()
+                                camino_borrar="texto_lectura/"+archivo2
+                                os.remove(camino_borrar)
+                                messagebox.showinfo("REBASE"," El archivo con nombre: \n\n"+clicked_archivo.get()+"\n\n Se ha eliminado exitosamente!!")
 
 
                         nombre_archivo=Entry(ventana_move_file, width=round(30), borderwidth=round(4), justify="center", font=("Bookman Old Style",round(14),"bold"))
@@ -2595,8 +2703,12 @@ def home():
                         drop.config(width=round(30), font=("Bookman Old Style",round(14),"bold"))
 
                         button_add_text=Button(ventana_move_file, text="SEND TO THE BOOKCASE",font=("Bookman Old Style",round(14),"bold"),width=20 , command=add_text)
-                        button_add_text.place(x=round(800), y=round(280))
+                        button_add_text.place(x=round(650), y=round(280))
                         button_add_text.config(bg="#FACC2E")
+
+                        button_add_text_remove=Button(ventana_move_file, text="DELETE THE BOOKCASE",font=("Bookman Old Style",round(14),"bold"),width=20 , command=eliminar_texto)
+                        button_add_text_remove.place(x=round(1050), y=round(280))
+                        button_add_text_remove.config(bg="#FACC2E")
 
                         def back_text():
                                 archivo2=clicked_archivo_bookcase.get()
@@ -2608,7 +2720,11 @@ def home():
                                                 shutil.move(camino, 'texto_lectura')
                                                 messagebox.showinfo("REBASE"," El archivo con nombre: \n\n"+nombre_archivo_bookcase.get()+"\n\n Ha sido creado exitosamente!!")
                                                 nombre_archivo_bookcase.delete(0,END)
-
+                        def eliminar_texto2():
+                                archivo2=clicked_archivo_bookcase.get()
+                                camino_borrar="baul_textos/"+archivo2
+                                os.remove(camino_borrar)
+                                messagebox.showinfo("REBASE"," El archivo con nombre: \n\n"+clicked_archivo_bookcase.get()+"\n\n Se ha eliminado exitosamente!!")
 
                         nombre_archivo_bookcase=Entry(ventana_move_file, width=round(30), borderwidth=round(4), justify="center", font=("Bookman Old Style",round(14),"bold"))
                         nombre_archivo_bookcase.place(x=round(800), y=round(580))
@@ -2621,12 +2737,17 @@ def home():
                         drop.config(width=round(30), font=("Bookman Old Style",round(14),"bold"))
 
                         button_bookcase=Button(ventana_move_file, text="TAKE OUT FROM BOOKCASE",font=("Bookman Old Style",round(14),"bold"),width=24 , command=back_text)
-                        button_bookcase.place(x=round(800), y=round(530))
-                        button_bookcase.config(bg="#FACC2E")
+                        button_bookcase.place(x=round(650), y=round(530))
+                        button_bookcase.config(bg="#FACC2E")                      
+                        
+                        button_bookcase_remove=Button(ventana_move_file, text="DELETE FROM BOOKCASE",font=("Bookman Old Style",round(14),"bold"),width=24 , command=eliminar_texto2)
+                        button_bookcase_remove.place(x=round(1050), y=round(530))
+                        button_bookcase_remove.config(bg="#FACC2E")
+
 
 
                         button_quit = Button(ventana_move_file, text="EXIT PROGRAM",font=("Bookman Old Style",round(12),"bold"), width=24 , command=root.quit)
-                        button_quit.place(x=800, y=850)
+                        button_quit.place(x=800, y=900)
                                 
                         titulo=Label(ventana_move_file, text="WINDOW MOVE FILE", font=("Bookman Old Style",round(25)),bg="#e8dabd")
                         titulo.place(x=round(680), y=(60))
